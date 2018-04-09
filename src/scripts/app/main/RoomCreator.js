@@ -45,9 +45,8 @@ class RoomCreator extends React.Component {
           name="description"
           placeholder="Room Description"
           onChange={this.handleInputChange}
-        >
-          {this.state.description}
-        </textarea>
+          value={this.state.description}
+        />
         <button
           onClick={this.createRoom}
         >
