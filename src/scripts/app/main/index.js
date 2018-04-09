@@ -2,6 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { increaseClick } from './actions'
+import RoomCreator from './RoomCreator'
 
 const Button = ({ onClick }) => {
   console.log('buton')
@@ -15,6 +16,7 @@ const Button = ({ onClick }) => {
 
 const Main = props => (
   <div>
+    <RoomCreator />
     <Button
       onClick={props.increaseClick}
     />
