@@ -1,6 +1,28 @@
+const play = ({
+  spotify_uri,
+  playerInstance: {
+    _options: {
+      getOAuthToken,
+      id,
+    },
+  },
+}) => {
+  getOAuthToken((access_token) => {
+    fetch(`https://api.spotify.com/v1/me/player/play?device_id=${id}`, {
+      method: 'PUT',
+      body: JSON.stringify({ uris: [spotify_uri] }),
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${access_token}`,
+      },
+    });
+  });
+};
+
+
 export default () => {
-  const token = 'BQA5S1f8MpjQIDCF4Ezc33hnIb-EmvtPJ7HjxCytvf2k4FTtLq9IrpxujTFrNxTJ4n6DmXkzW9DsIk-RzFOFClU1f03H1f-ciXjW5ldzBNr7YVXTYhZNEf9tormxE0iZZuxZOZfUAodxGqbvUGhDpQ5JbF3MJ67XIbzpnw';
-  const player = new Spotify.Player({
+  const token = 'BQBfc6EDDZeP8A7ZhPG23RDD4J06IyM3TOwCX5f1hZKeNqlXic9-QTg5F4vb7y7k-5gvHtt5zdfG9AP10if5OuJ82ylasUk7vw0Y0Zai8YwFkrDf7aZilGbDWH1hW4NwwP21lp70WrPtnGDulDaLjiyJMaupv7Ysi_Soeg';
+  const player = new window.Spotify.Player({
     name: 'Tunespinner',
     getOAuthToken: (cb) => { cb(token); },
   });
@@ -16,7 +38,10 @@ export default () => {
 
   // Ready
   player.addListener('ready', ({ device_id }) => {
-    console.log('Ready with Device ID', device_id);
+    play({
+      playerInstance: player,
+      spotify_uri: 'spotify:track:7xGfFoTpQ2E7fRF5lN10tr',
+    });
   });
 
   // Connect to the player!

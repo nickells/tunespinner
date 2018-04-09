@@ -3,15 +3,11 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { increaseClick } from './actions'
 
-const Button = ({ onClick }) => {
-  console.log('buton')
-
-  return (
-    <div className="button" onClick={onClick}>
-      Click Me!
-    </div>
-  )
-}
+const Button = ({ onClick }) => (
+  <div className="button" onClick={onClick}>
+    Click Me!
+  </div>
+)
 
 const Main = props => (
   <div>

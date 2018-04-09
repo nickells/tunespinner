@@ -36049,9 +36049,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var Button = function Button(_ref) {
   var onClick = _ref.onClick;
-
-  console.log('buton');
-
   return _react2.default.createElement(
     'div',
     { className: 'button', onClick: onClick },
@@ -36099,7 +36096,6 @@ Object.defineProperty(exports, "__esModule", {
 var INCREASE_CLICK = exports.INCREASE_CLICK = 'INCREASE_CLICK';
 
 var increaseClick = exports.increaseClick = function increaseClick() {
-  console.log('hello');
   return {
     type: INCREASE_CLICK
   };
@@ -36115,10 +36111,27 @@ var increaseClick = exports.increaseClick = function increaseClick() {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+var play = function play(_ref) {
+  var spotify_uri = _ref.spotify_uri,
+      _ref$playerInstance$_ = _ref.playerInstance._options,
+      getOAuthToken = _ref$playerInstance$_.getOAuthToken,
+      id = _ref$playerInstance$_.id;
+
+  getOAuthToken(function (access_token) {
+    fetch('https://api.spotify.com/v1/me/player/play?device_id=' + id, {
+      method: 'PUT',
+      body: JSON.stringify({ uris: [spotify_uri] }),
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + access_token
+      }
+    });
+  });
+};
 
 exports.default = function () {
-  var token = 'BQA5S1f8MpjQIDCF4Ezc33hnIb-EmvtPJ7HjxCytvf2k4FTtLq9IrpxujTFrNxTJ4n6DmXkzW9DsIk-RzFOFClU1f03H1f-ciXjW5ldzBNr7YVXTYhZNEf9tormxE0iZZuxZOZfUAodxGqbvUGhDpQ5JbF3MJ67XIbzpnw';
-  var player = new Spotify.Player({
+  var token = 'BQBfc6EDDZeP8A7ZhPG23RDD4J06IyM3TOwCX5f1hZKeNqlXic9-QTg5F4vb7y7k-5gvHtt5zdfG9AP10if5OuJ82ylasUk7vw0Y0Zai8YwFkrDf7aZilGbDWH1hW4NwwP21lp70WrPtnGDulDaLjiyJMaupv7Ysi_Soeg';
+  var player = new window.Spotify.Player({
     name: 'Tunespinner',
     getOAuthToken: function getOAuthToken(cb) {
       cb(token);
@@ -36126,20 +36139,20 @@ exports.default = function () {
   });
 
   // Error handling
-  player.addListener('initialization_error', function (_ref) {
-    var message = _ref.message;
-    console.error(message);
-  });
-  player.addListener('authentication_error', function (_ref2) {
+  player.addListener('initialization_error', function (_ref2) {
     var message = _ref2.message;
     console.error(message);
   });
-  player.addListener('account_error', function (_ref3) {
+  player.addListener('authentication_error', function (_ref3) {
     var message = _ref3.message;
     console.error(message);
   });
-  player.addListener('playback_error', function (_ref4) {
+  player.addListener('account_error', function (_ref4) {
     var message = _ref4.message;
+    console.error(message);
+  });
+  player.addListener('playback_error', function (_ref5) {
+    var message = _ref5.message;
     console.error(message);
   });
 
@@ -36149,10 +36162,13 @@ exports.default = function () {
   });
 
   // Ready
-  player.addListener('ready', function (_ref5) {
-    var device_id = _ref5.device_id;
+  player.addListener('ready', function (_ref6) {
+    var device_id = _ref6.device_id;
 
-    console.log('Ready with Device ID', device_id);
+    play({
+      playerInstance: player,
+      spotify_uri: 'spotify:track:7xGfFoTpQ2E7fRF5lN10tr'
+    });
   });
 
   // Connect to the player!
