@@ -19,7 +19,10 @@ export const createRoom = (_data = {}) => {
     id: roomRef.key,
   }
 
-  return roomRef.set(roomData)
+  return new Promise((resolve) => {
+    roomRef.set(roomData)
+      .then(() => resolve(roomData))
+  })
 }
 
 export const updateRoom = (id, _data = {}) => {

@@ -1,4 +1,7 @@
-import { INCREASE_CLICK } from './actions'
+import {
+  INCREASE_CLICK,
+  SET_CURRENT_ROOM,
+} from './actions'
 
 const initialState = {
   clicks: 0,
@@ -10,6 +13,11 @@ export default (state = initialState, action) => {
       return {
         ...state,
         clicks: state.clicks + 1,
+      }
+    case SET_CURRENT_ROOM:
+      return {
+        ...state,
+        currentRoom: action.data.room,
       }
     default:
       return state

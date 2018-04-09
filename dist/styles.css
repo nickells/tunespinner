@@ -9,3 +9,11 @@ button {
   border: none;
   padding: 5px;
 }
+.menu {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 100%;
+  max-width: 400px;
+  height: 100%;
+}

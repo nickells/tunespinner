@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { increaseClick } from './actions'
 import RoomCreator from './RoomCreator'
+import Room from './Room'
 
 const Button = ({ onClick }) => {
   console.log('buton')
@@ -16,11 +17,10 @@ const Button = ({ onClick }) => {
 
 const Main = props => (
   <div>
-    <RoomCreator />
-    <Button
-      onClick={props.increaseClick}
-    />
-    you've clicked { props.clicks } times
+    <Room />
+    <menu className="menu">
+      <RoomCreator />
+    </menu>
   </div>
 )
 
