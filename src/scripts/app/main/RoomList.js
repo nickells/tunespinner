@@ -26,6 +26,7 @@ class RoomList extends React.Component {
   render() {
     return (
       <div className="room-list">
+        <h3>ROOMS</h3>
         {this.renderRooms()}
       </div>
     )

@@ -1,6 +1,10 @@
+* {
+  margin: 0;
+  padding: 0;
+}
 body {
   background: lightgrey;
-  font-family: sans-serif;
+  font-family: 'Futura', sans-serif;
 }
 input,
 textarea,
@@ -9,6 +13,10 @@ button {
   border: none;
   padding: 5px;
 }
+h3 {
+  font-size: 11px;
+  letter-spacing: 0.1em;
+}
 .menu {
   position: fixed;
   top: 0;
@@ -16,9 +24,14 @@ button {
   width: 100%;
   max-width: 400px;
   height: 100%;
+  background-color: #F1F1F1;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+.menu .room-list {
+  padding: 10px;
 }
 .menu .room-list .room {
-  border: 1px solid gray;
+  background-color: #FFF;
   padding: 5px;
   margin: 5px 0;
   cursor: pointer;
