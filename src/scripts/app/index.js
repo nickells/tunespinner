@@ -9,9 +9,6 @@ import Main from './main'
 import onSpotifyReady from '../spotify'
 
 
-window.onSpotifyWebPlaybackSDKReady = onSpotifyReady
-
-
 class Root extends React.PureComponent {
   render() {
     return (

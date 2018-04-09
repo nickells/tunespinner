@@ -3,6 +3,7 @@ import {
   SET_CURRENT_ROOM,
   SET_ROOMS,
   SET_CURRENT_USER,
+  STORE_PLAYER_INSTANCE,
 } from './actions'
 
 const initialState = {
@@ -32,6 +33,11 @@ export default (state = initialState, action) => {
       return {
         ...state,
         accessToken: action.token,
+      }
+    case STORE_PLAYER_INSTANCE:
+      return {
+        ...state,
+        player: action.player,
       }
     default:
       return state

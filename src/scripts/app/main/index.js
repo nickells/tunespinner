@@ -1,10 +1,11 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { increaseClick, setCurrentUser, login } from './actions'
+import { increaseClick, setCurrentUser, login, initPlayer, playSong } from './actions'
 import RoomCreator from './RoomCreator'
 import RoomList from './RoomList'
 import Room from './Room'
+
 
 const Login = ({ onClick }) => (
   <div className="button" onClick={onClick}>
@@ -13,8 +14,19 @@ const Login = ({ onClick }) => (
 )
 
 class Main extends React.Component {
-  componentDidMount() {
+  async componentDidMount() {
     this.props.setCurrentUser()
+    await this.waitForPlayerReady()
+    this.props.playSong('spotify:track:1oOD1pV43cV9sHg97aBdLs')
+  }
+
+  waitForPlayerReady() {
+    return new Promise((resolve, reject) => {
+      window.onSpotifyWebPlaybackSDKReady = async () => {
+        await this.props.initPlayer()
+        resolve()
+      }
+    })
   }
   render() {
     return (
@@ -40,6 +52,8 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   increaseClick,
   setCurrentUser,
   login,
+  initPlayer,
+  playSong,
 }, dispatch)
 
 export default connect(

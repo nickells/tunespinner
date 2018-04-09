@@ -40,10 +40,10 @@ export default () => {
 
   // Ready
   player.addListener('ready', ({ device_id }) => {
-    play({
-      playerInstance: player,
-      spotify_uri: 'spotify:track:7xGfFoTpQ2E7fRF5lN10tr',
-    });
+    // play({
+    //   playerInstance: player,
+    //   spotify_uri: 'spotify:track:7xGfFoTpQ2E7fRF5lN10tr',
+    // });
     // player.pause()
     window.player = player
   });
