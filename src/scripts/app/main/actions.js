@@ -1,5 +1,7 @@
 import loginPromise from '../../auth'
 
+import queryString from 'query-string'
+
 export const INCREASE_CLICK = 'INCREASE_CLICK'
 export const SET_CURRENT_ROOM = 'SET_CURRENT_ROOM'
 export const SET_ROOMS = 'SET_ROOMS'
@@ -28,10 +30,10 @@ export const login = () => async (dispatch, getState) => {
 }
 
 export const setCurrentUser = () => (dispatch) => {
-  const [domain, token] = window.location.href.split('access_token=')
-  if (!token) return
+  const { access_token, refresh_token } = queryString.parse(window.location.search)
+  if (!access_token) return
   dispatch({
     type: SET_CURRENT_USER,
-    token,
+    token: access_token,
   })
 }
