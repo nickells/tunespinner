@@ -1,0 +1,19 @@
+{
+  "plugins": [
+    "transform-object-rest-spread",
+  ],
+  "presets": [
+    "react",
+    [
+      "env",
+      {
+        "targets": {
+          "browsers": [
+            "last 3 major versions",
+            "not ie <= 10"
+          ]
+        }
+      }
+    ]
+  ]
+}
