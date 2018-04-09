@@ -8,7 +8,6 @@ import RoomList from './RoomList'
 import Room from './Room'
 import TrackSearch from './TrackSearch'
 
-
 const waitForSpotify = () => new Promise((resolve) => {
   if (window.Spotify) {
     resolve()
@@ -34,10 +33,12 @@ class Main extends React.Component {
   }
 
   render() {
+    const room = this.props.rooms[this.props.currentRoomId]
+    console.log('curr room', room)
     return (
       <div>
         You are {this.props.accessToken}
-        <Room />
+        <Room room={room} />
         <menu className="menu">
           <Login onClick={this.props.login} />
           <RoomList />
@@ -52,6 +53,8 @@ class Main extends React.Component {
 const mapStateToProps = state => ({
   clicks: state.MainReducer.clicks,
   accessToken: state.MainReducer.accessToken,
+  rooms: state.MainReducer.rooms,
+  currentRoomId: state.MainReducer.currentRoomId,
 })
 
 const mapDispatchToProps = dispatch => bindActionCreators({
@@ -67,4 +70,3 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps,
 )(Main)
-

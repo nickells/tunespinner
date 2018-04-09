@@ -11,10 +11,10 @@ export const SET_ROOMS = 'SET_ROOMS'
 export const LOGIN = 'LOGIN'
 export const SET_CURRENT_USER = 'SET_CURRENT_USER'
 
-export const setCurrentRoom = room => ({
+export const setCurrentRoom = roomId => ({
   type: SET_CURRENT_ROOM,
   data: {
-    room,
+    roomId,
   },
 })
 

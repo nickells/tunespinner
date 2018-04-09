@@ -1,4 +1,5 @@
 import firebase from './firebase'
+import { getUser } from './user'
 
 const db = firebase.database()
 
@@ -53,6 +54,17 @@ export const watchRooms = (callback) => {
   })
 }
 
+export const watchRoom = (id, callback) => {
+  db.ref(`/rooms/${id}`).on('value', (snapshot) => {
+    const room = snapshot.val()
+    callback(room)
+  })
+}
+
+export const unwatchRoom = (id, callback) => {
+  db.ref(`/rooms/${id}`).off('value', callback)
+}
+
 export const addUserToRoom = async (userId, roomId, key = 'fans') => {
   const room = await getRoom(roomId)
   const roomCopy = { ...room }
@@ -68,8 +80,14 @@ export const addUserToRoom = async (userId, roomId, key = 'fans') => {
   await updateRoom(roomId, roomCopy)
 }
 
-export const removeUserFromRoom = async (userId, roomId) => {
+export const removeUserFromRoom = async (userId) => {
+  const user = await getUser(userId)
+  if (!user.currentRoom) return
+  const roomId = user.currentRoom
   const room = await getRoom(roomId)
+
+  if (!room) return
+
   const roomCopy = { ...room }
   const keys = ['djs', 'fans']
 

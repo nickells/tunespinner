@@ -20,7 +20,7 @@ class RoomCreator extends React.Component {
   createRoom() {
     createRoom(this.state)
       .then((room) => {
-        this.props.setCurrentRoom(room)
+        this.props.setCurrentRoom(room.id)
       })
   }
 

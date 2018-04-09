@@ -10,7 +10,9 @@ module.exports = {
     "class-methods-use-this": "off",
     "no_underscore_dangle": "off",
     "camelcase": "off",
-    "consistent-return": "off"
+    "consistent-return": "off",
+    "guard-for-in": "off",
+    "react/sort-comp": "off"
   },
   "env": {
     "browser": true,

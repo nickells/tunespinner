@@ -47,3 +47,5 @@ export const createUser = async (_data = {}) => {
       .then(() => resolve(userData))
   })
 }
+
+export const setUserRoom = async (userId, roomId) => updateUser(userId, { currentRoom: roomId })

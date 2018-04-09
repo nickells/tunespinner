@@ -12,12 +12,14 @@ import {
 
 const initialState = {
   clicks: 0,
-  currentRoom: null,
-  rooms: [],
+  currentRoomId: null,
+  rooms: {},
   currentUser: null,
 }
 
 export default (state = initialState, action) => {
+  console.log(action)
+
   switch (action.type) {
     case INCREASE_CLICK:
       return {
@@ -27,7 +29,7 @@ export default (state = initialState, action) => {
     case SET_CURRENT_ROOM:
       return {
         ...state,
-        currentRoom: action.data.room,
+        currentRoomId: action.data.roomId,
       }
     case SET_ROOMS:
       return {
