@@ -4,6 +4,7 @@ import {
   SET_ROOMS,
   SET_CURRENT_USER,
   STORE_PLAYER_INSTANCE,
+  ON_SONG_SEARCH
 } from './actions'
 
 const initialState = {
@@ -39,6 +40,11 @@ export default (state = initialState, action) => {
       return {
         ...state,
         player: action.player,
+      }
+    case ON_SONG_SEARCH: 
+      return {
+        ...state,
+        searchResults: action.searchResults
       }
     default:
       return state

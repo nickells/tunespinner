@@ -1,10 +1,12 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { increaseClick, setCurrentUser, login, initPlayer, playSong } from './actions'
+import { increaseClick, setCurrentUser, login, initPlayer, playSong, getCurrentSong } from './actions'
 import RoomCreator from './RoomCreator'
 import RoomList from './RoomList'
 import Room from './Room'
+import TrackSearch from './TrackSearch'
+
 
 const waitForSpotify = () => {
   return new Promise(resolve => {
@@ -28,7 +30,9 @@ class Main extends React.Component {
     await waitForSpotify()
     await this.props.setCurrentUser()
     await this.props.initPlayer()
-    this.props.playSong('spotify:track:1oOD1pV43cV9sHg97aBdLs')
+    await this.props.playSong('spotify:track:1oOD1pV43cV9sHg97aBdLs')
+    const thisSong = await this.props.getCurrentSong()
+    console.log(thisSong)
   }
 
   render() {
@@ -40,6 +44,7 @@ class Main extends React.Component {
           <Login onClick={this.props.login} />
           <RoomList />
           <RoomCreator />
+          <TrackSearch />
         </menu>
       </div>
     )
@@ -57,6 +62,7 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   login,
   initPlayer,
   playSong,
+  getCurrentSong
 }, dispatch)
 
 export default connect(
