@@ -19,10 +19,26 @@ export const createRoom = (_data = {}) => {
     id: roomRef.key,
   }
 
-  return roomRef.set(roomData)
+  return new Promise((resolve) => {
+    roomRef.set(roomData)
+      .then(() => resolve(roomData))
+  })
 }
 
 export const updateRoom = (id, _data = {}) => {
   const data = Object.assign({}, DEFAULT_ROOM, _data)
   db.ref(`/rooms/${id}`).update(data)
+}
+
+export const watchRooms = (callback) => {
+  db.ref('/rooms').on('value', (snapshot) => {
+    const rooms = []
+
+    snapshot.forEach((childSnapshot) => {
+      const room = childSnapshot.val()
+      rooms.push(room)
+    })
+
+    callback(rooms)
+  })
 }

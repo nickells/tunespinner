@@ -1,4 +1,7 @@
 import React from 'react'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import { setCurrentRoom } from './actions'
 import { createRoom } from '../../db/room'
 
 class RoomCreator extends React.Component {
@@ -16,6 +19,9 @@ class RoomCreator extends React.Component {
 
   createRoom() {
     createRoom(this.state)
+      .then((room) => {
+        this.props.setCurrentRoom(room)
+      })
   }
 
   handleInputChange(e) {
@@ -39,9 +45,8 @@ class RoomCreator extends React.Component {
           name="description"
           placeholder="Room Description"
           onChange={this.handleInputChange}
-        >
-          {this.state.description}
-        </textarea>
+          value={this.state.description}
+        />
         <button
           onClick={this.createRoom}
         >
@@ -52,4 +57,11 @@ class RoomCreator extends React.Component {
   }
 }
 
-export default RoomCreator
+const mapDispatchToProps = dispatch => bindActionCreators({
+  setCurrentRoom,
+}, dispatch)
+
+export default connect(
+  null,
+  mapDispatchToProps,
+)(RoomCreator)
