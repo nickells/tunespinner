@@ -1,22 +1,21 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { increaseClick, setCurrentUser, login, initPlayer, playSong, getCurrentSong } from './actions'
+import { increaseClick, setCurrentUser, login } from './actions'
+import { initPlayer, playSong, getCurrentSong } from './spotifyAPI'
 import RoomCreator from './RoomCreator'
 import RoomList from './RoomList'
 import Room from './Room'
 import TrackSearch from './TrackSearch'
 
 
-const waitForSpotify = () => {
-  return new Promise(resolve => {
-    if (window.Spotify) {
-      resolve()
-    } else {
-      window.onSpotifyWebPlaybackSDKReady = resolve;
-    }
-  })
-}
+const waitForSpotify = () => new Promise((resolve) => {
+  if (window.Spotify) {
+    resolve()
+  } else {
+    window.onSpotifyWebPlaybackSDKReady = resolve;
+  }
+})
 
 const Login = ({ onClick }) => (
   <div className="button" onClick={onClick}>
@@ -25,7 +24,6 @@ const Login = ({ onClick }) => (
 )
 
 class Main extends React.Component {
-
   async componentDidMount() {
     await waitForSpotify()
     await this.props.setCurrentUser()
@@ -62,7 +60,7 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   login,
   initPlayer,
   playSong,
-  getCurrentSong
+  getCurrentSong,
 }, dispatch)
 
 export default connect(

@@ -3,15 +3,15 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import {
   searchForSongs,
-  playSong
-} from './actions'
+  playSong,
+} from './spotifyAPI'
 
 
 class TrackSearch extends React.Component {
-  constructor(props){
+  constructor(props) {
     super(props)
     this.state = {
-      query: ''
+      query: '',
     }
 
     this.searchForSong = this.searchForSong.bind(this)
@@ -19,16 +19,16 @@ class TrackSearch extends React.Component {
     this.renderSearchResult = this.renderSearchResult.bind(this)
   }
 
-  searchForSong(e){
+  searchForSong(e) {
     e.preventDefault()
     this.props.searchForSongs(this.state.query)
   }
 
-  handleChange(e){
-    this.setState({query: e.target.value})
+  handleChange(e) {
+    this.setState({ query: e.target.value })
   }
 
-  renderSearchResult(song){
+  renderSearchResult(song) {
     return (
       <div key={song.id} onClick={() => this.props.playSong(song.uri)} >{song.name}</div>
     )
@@ -39,7 +39,7 @@ class TrackSearch extends React.Component {
       <React.Fragment>
         <form onSubmit={this.searchForSong}>
           <h3>get a track</h3>
-          <input type="text" placeholder="Search" onChange={this.handleChange}></input> 
+          <input type="text" placeholder="Search" onChange={this.handleChange} />
         </form>
         {
           this.props.searchResults ? this.props.searchResults.map(this.renderSearchResult) : null
@@ -50,12 +50,12 @@ class TrackSearch extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  searchResults: state.MainReducer.searchResults
+  searchResults: state.MainReducer.searchResults,
 })
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   searchForSongs,
-  playSong
+  playSong,
 }, dispatch)
 
 export default connect(

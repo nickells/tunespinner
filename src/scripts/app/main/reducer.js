@@ -3,9 +3,12 @@ import {
   SET_CURRENT_ROOM,
   SET_ROOMS,
   SET_CURRENT_USER,
-  STORE_PLAYER_INSTANCE,
-  ON_SONG_SEARCH
 } from './actions'
+
+import {
+  STORE_PLAYER_INSTANCE,
+  ON_SONG_SEARCH,
+} from './spotifyAPI'
 
 const initialState = {
   clicks: 0,
@@ -42,10 +45,10 @@ export default (state = initialState, action) => {
         ...state,
         player: action.player,
       }
-    case ON_SONG_SEARCH: 
+    case ON_SONG_SEARCH:
       return {
         ...state,
-        searchResults: action.searchResults
+        searchResults: action.searchResults,
       }
     default:
       return state
