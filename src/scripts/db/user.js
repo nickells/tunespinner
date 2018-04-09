@@ -21,10 +21,8 @@ export const getUser = id => new Promise((resolve) => {
 
 export const updateUser = (id, _data = {}) => {
   const data = Object.assign({}, DEFAULT_USER, _data)
-  return new Promise((resolve) => {
-    db.ref(`/users/${id}`).update(data)
-      .then(() => getUser(id))
-  })
+  return db.ref(`/users/${id}`).update(data)
+  .then(() => getUser(id))
 }
 
 export const createUser = async (_data = {}) => {
@@ -44,7 +42,6 @@ export const createUser = async (_data = {}) => {
     userRef = db.ref('/users').push()
     userData.id = userRef.key
   }
-
   return new Promise((resolve) => {
     userRef.set(userData)
       .then(() => resolve(userData))

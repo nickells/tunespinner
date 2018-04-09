@@ -4,7 +4,6 @@ import { createUser } from '../../db/user'
 
 import queryString from 'query-string'
 
-import loginPromise from '../../auth'
 
 export const INCREASE_CLICK = 'INCREASE_CLICK'
 export const SET_CURRENT_ROOM = 'SET_CURRENT_ROOM'
@@ -36,6 +35,7 @@ export const login = () => async (dispatch, getState) => {
 
 export const setCurrentUser = () => async (dispatch) => {
   const { access_token, refresh_token } = queryString.parse(window.location.search)
+
   if (!access_token) return
 
   const response = await axios.get('https://api.spotify.com/v1/me', {
@@ -44,11 +44,16 @@ export const setCurrentUser = () => async (dispatch) => {
 
   const user = response.data
 
-  await createUser({
-    id: user.id,
-    email: user.email,
-    username: user.display_name || user.id,
-  })
+  try {
+    await createUser({
+      id: user.id,
+      email: user.email,
+      username: user.display_name || user.id,
+    })
+  }
+  catch(e) {
+    console.log('error creating user', e)
+  }
 
   dispatch({
     type: SET_CURRENT_USER,
@@ -93,6 +98,7 @@ export const initPlayer = () => (dispatch, getState) => {
 export const playSong = spotify_uri => (dispatch, getState) => {
   const { id } = getState().MainReducer.player._options
   const { accessToken } = getState().MainReducer
+  console.log(accessToken)
   fetch(`https://api.spotify.com/v1/me/player/play?device_id=${id}`, {
     method: 'PUT',
     body: JSON.stringify({ uris: [spotify_uri] }),
