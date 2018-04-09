@@ -2,6 +2,7 @@ import {
   INCREASE_CLICK,
   SET_CURRENT_ROOM,
   SET_ROOMS,
+  SET_CURRENT_USER,
 } from './actions'
 
 const initialState = {
@@ -26,6 +27,11 @@ export default (state = initialState, action) => {
       return {
         ...state,
         rooms: action.data.rooms,
+      }
+    case SET_CURRENT_USER:
+      return {
+        ...state,
+        accessToken: action.token,
       }
     default:
       return state

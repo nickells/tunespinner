@@ -8,7 +8,6 @@ const play = ({
   },
 }) => {
   getOAuthToken((access_token) => {
-    console.log('getting auth token')
     fetch(`https://api.spotify.com/v1/me/player/play?device_id=${id}`, {
       method: 'PUT',
       body: JSON.stringify({ uris: [spotify_uri] }),
@@ -26,8 +25,6 @@ export default () => {
   const player = new window.Spotify.Player({
     name: 'Tunespinner',
     getOAuthToken: (cb) => {
-      console.log('getting auth token?')
-      console.log('cb', cb)
       cb(token)
     },
   });
