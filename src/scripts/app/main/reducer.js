@@ -32,7 +32,8 @@ export default (state = initialState, action) => {
     case SET_CURRENT_USER:
       return {
         ...state,
-        accessToken: action.token,
+        accessToken: action.access_token,
+        user: action.user,
       }
     case STORE_PLAYER_INSTANCE:
       return {

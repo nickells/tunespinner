@@ -9,6 +9,7 @@ module.exports = {
     "jsx-a11y/no-static-element-interactions": "off",
     "class-methods-use-this": "off",
     "no_underscore_dangle": "off"
+    "camelcase": "off"
   },
   "env": {
     "browser": true,

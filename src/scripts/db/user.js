@@ -10,18 +10,43 @@ const DEFAULT_USER = {
   score: 0,
 }
 
-export const createUser = (_data = {}) => {
-  const data = Object.assign({}, DEFAULT_USER, _data)
-  const userRef = db.ref('/users').push()
-  const userData = {
-    ...data,
-    id: userRef.key,
-  }
-
-  return userRef.set(userData)
-}
+export const getUser = id => new Promise((resolve) => {
+  db.ref(`/users/${id}`).once('value', (snapshot) => {
+    if (!snapshot) {
+      return resolve(null)
+    }
+    resolve(snapshot.val())
+  })
+})
 
 export const updateUser = (id, _data = {}) => {
   const data = Object.assign({}, DEFAULT_USER, _data)
-  db.ref(`/users/${id}`).update(data)
+  return new Promise((resolve) => {
+    db.ref(`/users/${id}`).update(data)
+      .then(() => getUser(id))
+  })
+}
+
+export const createUser = async (_data = {}) => {
+  const data = Object.assign({}, DEFAULT_USER, _data)
+
+  if (data.id && await getUser(data.id)) {
+    return updateUser(data.id, data)
+  }
+
+  let userRef
+  const userData = { ...data }
+
+  if (data.id) {
+    userRef = db.ref(`/users/${data.id}`)
+    userData.id = data.id
+  } else {
+    userRef = db.ref('/users').push()
+    userData.id = userRef.key
+  }
+
+  return new Promise((resolve) => {
+    userRef.set(userData)
+      .then(() => resolve(userData))
+  })
 }
