@@ -6,13 +6,13 @@ import { ConnectedRouter } from 'react-router-redux'
 import { Route } from 'react-router-dom'
 import store, { history } from './store'
 import Main from './main'
+import onSpotifyReady from './spotify'
 
 
-class Root extends React.Component {
-  constructor(props){
-    super(props)
-  }
+window.onSpotifyWebPlaybackSDKReady = onSpotifyReady
 
+
+class Root extends React.PureComponent {
   render() {
     return (
       <Provider store={store}>

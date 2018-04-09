@@ -7933,6 +7933,10 @@ var _main = __webpack_require__(445);
 
 var _main2 = _interopRequireDefault(_main);
 
+var _spotify = __webpack_require__(447);
+
+var _spotify2 = _interopRequireDefault(_spotify);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -7941,13 +7945,15 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var Root = function (_React$Component) {
-  _inherits(Root, _React$Component);
+window.onSpotifyWebPlaybackSDKReady = _spotify2.default;
 
-  function Root(props) {
+var Root = function (_React$PureComponent) {
+  _inherits(Root, _React$PureComponent);
+
+  function Root() {
     _classCallCheck(this, Root);
 
-    return _possibleConstructorReturn(this, (Root.__proto__ || Object.getPrototypeOf(Root)).call(this, props));
+    return _possibleConstructorReturn(this, (Root.__proto__ || Object.getPrototypeOf(Root)).apply(this, arguments));
   }
 
   _createClass(Root, [{
@@ -7974,7 +7980,7 @@ var Root = function (_React$Component) {
   }]);
 
   return Root;
-}(_react2.default.Component);
+}(_react2.default.PureComponent);
 
 _reactDom2.default.render(_react2.default.createElement(Root, null), document.getElementById('app'));
 
@@ -36008,7 +36014,6 @@ exports.default = function () {
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState;
   var action = arguments[1];
 
-  console.log('inside reducer', action.type);
   switch (action.type) {
     case _actions.INCREASE_CLICK:
       return _extends({}, state, {
@@ -36098,6 +36103,60 @@ var increaseClick = exports.increaseClick = function increaseClick() {
   return {
     type: INCREASE_CLICK
   };
+};
+
+/***/ }),
+/* 447 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+exports.default = function () {
+  var token = 'BQA5S1f8MpjQIDCF4Ezc33hnIb-EmvtPJ7HjxCytvf2k4FTtLq9IrpxujTFrNxTJ4n6DmXkzW9DsIk-RzFOFClU1f03H1f-ciXjW5ldzBNr7YVXTYhZNEf9tormxE0iZZuxZOZfUAodxGqbvUGhDpQ5JbF3MJ67XIbzpnw';
+  var player = new Spotify.Player({
+    name: 'Tunespinner',
+    getOAuthToken: function getOAuthToken(cb) {
+      cb(token);
+    }
+  });
+
+  // Error handling
+  player.addListener('initialization_error', function (_ref) {
+    var message = _ref.message;
+    console.error(message);
+  });
+  player.addListener('authentication_error', function (_ref2) {
+    var message = _ref2.message;
+    console.error(message);
+  });
+  player.addListener('account_error', function (_ref3) {
+    var message = _ref3.message;
+    console.error(message);
+  });
+  player.addListener('playback_error', function (_ref4) {
+    var message = _ref4.message;
+    console.error(message);
+  });
+
+  // Playback status updates
+  player.addListener('player_state_changed', function (state) {
+    console.log(state);
+  });
+
+  // Ready
+  player.addListener('ready', function (_ref5) {
+    var device_id = _ref5.device_id;
+
+    console.log('Ready with Device ID', device_id);
+  });
+
+  // Connect to the player!
+  player.connect();
 };
 
 /***/ })

@@ -5,7 +5,6 @@ const initialState = {
 }
 
 export default (state = initialState, action) => {
-  console.log('inside reducer', action.type)
   switch (action.type) {
     case INCREASE_CLICK:
       return {
