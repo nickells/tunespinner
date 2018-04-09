@@ -6,7 +6,7 @@ import { ConnectedRouter } from 'react-router-redux'
 import { Route } from 'react-router-dom'
 import store, { history } from './store'
 import Main from './main'
-import onSpotifyReady from './spotify'
+import onSpotifyReady from '../spotify'
 
 
 window.onSpotifyWebPlaybackSDKReady = onSpotifyReady
