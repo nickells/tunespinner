@@ -1,6 +1,6 @@
-import loginPromise from '../../auth'
-
 import queryString from 'query-string'
+
+import loginPromise from '../../auth'
 
 export const INCREASE_CLICK = 'INCREASE_CLICK'
 export const SET_CURRENT_ROOM = 'SET_CURRENT_ROOM'
@@ -71,6 +71,7 @@ export const initPlayer = () => (dispatch, getState) => {
   })
 }
 
+// This can also take an array of uris - maybe use this to enqueue? Or we should just keep it on the server.
 export const playSong = spotify_uri => (dispatch, getState) => {
   const { id } = getState().MainReducer.player._options
   const { accessToken } = getState().MainReducer
