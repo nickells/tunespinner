@@ -22,7 +22,7 @@ export const getUser = id => new Promise((resolve) => {
 export const updateUser = (id, _data = {}) => {
   const data = Object.assign({}, DEFAULT_USER, _data)
   return db.ref(`/users/${id}`).update(data)
-  .then(() => getUser(id))
+    .then(() => getUser(id))
 }
 
 export const createUser = async (_data = {}) => {

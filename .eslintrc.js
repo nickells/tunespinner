@@ -8,8 +8,9 @@ module.exports = {
     "jsx-a11y/click-events-have-key-events": "off",
     "jsx-a11y/no-static-element-interactions": "off",
     "class-methods-use-this": "off",
-    "no_underscore_dangle": "off"
-    "camelcase": "off"
+    "no_underscore_dangle": "off",
+    "camelcase": "off",
+    "consistent-return": "off"
   },
   "env": {
     "browser": true,

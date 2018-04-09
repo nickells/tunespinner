@@ -10,6 +10,7 @@ const initialState = {
   clicks: 0,
   currentRoom: null,
   rooms: [],
+  currentUser: null,
 }
 
 export default (state = initialState, action) => {
@@ -33,7 +34,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         accessToken: action.access_token,
-        user: action.user,
+        currentUser: action.user,
       }
     case STORE_PLAYER_INSTANCE:
       return {
