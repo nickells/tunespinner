@@ -7,7 +7,8 @@ module.exports = {
     "react/prop-types": "off",
     "jsx-a11y/click-events-have-key-events": "off",
     "jsx-a11y/no-static-element-interactions": "off",
-    "class-methods-use-this": "off"
+    "class-methods-use-this": "off",
+    "camelcase": "off"
   },
   "env": {
     "browser": true,
