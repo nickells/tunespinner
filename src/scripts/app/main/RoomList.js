@@ -24,7 +24,7 @@ class RoomList extends React.Component {
           key={room.id}
           onClick={() => this.chooseRoom(id)}
         >
-          {room.name || 'Untitled Room'}
+          {room.name || 'Untitled Room'} {room.fans && `(${room.fans.length})`}
         </div>
       )
     })
