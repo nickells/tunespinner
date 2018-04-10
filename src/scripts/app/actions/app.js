@@ -1,4 +1,5 @@
 import axios from 'axios'
+import cookie from 'cookie'
 import loginPromise from '../../auth'
 import { createUser } from '../../db/user'
 
@@ -25,12 +26,13 @@ export const login = () => async (dispatch, getState) => {
 }
 
 export const setCurrentUser = () => async (dispatch) => {
-  const { access_token, refresh_token } = queryString.parse(window.location.search)
+  const cookies = cookie.parse(document.cookie)
+  const { spotify_access_token, spotify_refresh_token } = cookies
 
-  if (!access_token) return
+  if (!spotify_access_token) return
 
   const response = await axios.get('https://api.spotify.com/v1/me', {
-    headers: { Authorization: `Bearer ${access_token}` },
+    headers: { Authorization: `Bearer ${spotify_access_token}` },
   })
 
   const user = response.data
@@ -51,7 +53,7 @@ export const setCurrentUser = () => async (dispatch) => {
 
   dispatch({
     type: SET_CURRENT_USER,
-    access_token,
+    access_token: spotify_access_token,
     userId: resolvedUser.id,
   })
 

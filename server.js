@@ -89,26 +89,13 @@ app.get('/callback', (req, res) => {
 
     request.post(authOptions, (error, response, body) => {
       if (!error && response.statusCode === 200) {
-        let access_token = body.access_token,
-          refresh_token = body.refresh_token;
-
-        const options = {
-          url: 'https://api.spotify.com/v1/me',
-          headers: { Authorization: `Bearer ${access_token}` },
-          json: true,
-        };
-
-        // use the access token to access the Spotify Web API
-        request.get(options, (error, response, body) => {
-          console.log(body);
-        });
-
-        // we can also pass the token to the browser to make requests from there
-        res.redirect(`/?${
-          querystring.stringify({
-            access_token,
-            refresh_token,
-          })}`);
+        const opts = {
+          maxAge: 900000,
+          httpOnly: false,
+        }
+        res.cookie('spotify_access_token', body.access_token, opts)
+        res.cookie('spotify_refresh_token', body.refresh_token, opts);
+        res.redirect('/')
       } else {
         res.redirect(`/?${
           querystring.stringify({
