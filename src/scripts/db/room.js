@@ -36,9 +36,8 @@ export const createRoom = (_data = {}) => {
   })
 }
 
-export const updateRoom = (id, _data = {}) => {
-  console.log('updating room with', _data)
-  const data = Object.assign({}, DEFAULT_ROOM, _data)
+export const updateRoom = (id, data = {}) => {
+  console.log('updating room with', data)
   db.ref(`/rooms/${id}`).update(data)
 }
 
@@ -112,7 +111,6 @@ const pick = (object, ...keys) => {
 
 export const addSongToRoomQueue = async (song, roomId) => {
   const relevantSongInformation = pick(song, 'id', 'name', 'uri', 'duration_ms', 'artists')
-
   const room = await getRoom(roomId)
   room.queue = room.queue || []
   room.queue.push(relevantSongInformation)
@@ -135,5 +133,20 @@ export const makeDJ = async (userId, roomId) => {
   }
 
   room.djs.push(userId)
+  await updateRoom(roomId, room)
+}
+
+export const advanceQueue = async (roomId) => {
+  const room = await getRoom(roomId)
+
+  if (!room.queue || room.queue.length === 0) {
+    return
+  }
+  console.log('NEXT SONG IS:')
+  const currentSong = room.queue.splice(0, 1)[0]
+  room.currentSong = currentSong
+  room.currentSongStartTime = Date.now()
+  room.queue.push(currentSong)
+  console.log(currentSong, room)
   await updateRoom(roomId, room)
 }

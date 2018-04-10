@@ -2,7 +2,8 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { getCurrentRoom } from './RoomQueue'
-import { initPlayer, playSong, getCurrentSong } from '../actions/spotifyAPI'
+import { initPlayer, playSong, getCurrentSong, seek } from '../actions/spotifyAPI'
+import { advanceQueue } from '../../db/room';
 
 
 class Player extends React.Component {
@@ -18,20 +19,34 @@ class Player extends React.Component {
     this.setState({
       playerIsLoaded: true,
     })
-    const currentSong = this.props.room.queue[0]
-    this.props.playSong(currentSong.uri)
+    this.play()
   }
 
-  componentWillReceiveProps(nextProps) {
+  componentDidUpdate() {
+    this.play()
+  }
+
+  async play() {
     if (!this.state.playerIsLoaded) return
-    if (!nextProps.room || !nextProps.room.queue) return
+    if (!this.props.room) return
 
-    // dont play a new song if the first tracks are the same, for now.
-    // we should revisit this
+    const { room } = this.props
 
-    if (this.props.room.queue && (this.props.room.queue[0].uri === nextProps.room.queue[0].uri)) return
-    const currentSong = nextProps.room.queue[0]
-    this.props.playSong(currentSong.uri)
+    if (!room.currentSong || !room.currentSongStartTime) {
+      await advanceQueue(room.id)
+      return
+    }
+
+    const now = Date.now()
+    const diff = now - room.currentSongStartTime
+
+    if (diff > room.currentSong.duration_ms) {
+      await advanceQueue(room.id)
+      return
+    }
+
+    await this.props.playSong(room.currentSong.uri)
+    this.props.seek(diff)
   }
 
   render() {
@@ -48,12 +63,12 @@ class Player extends React.Component {
 
 const mapStateToProps = state => ({
   player: state.SpotifyReducer.player,
-  room: getCurrentRoom(state),
 })
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   initPlayer,
   playSong,
+  seek,
   getCurrentSong,
 }, dispatch)
 
