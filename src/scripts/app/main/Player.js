@@ -76,10 +76,15 @@ class Player extends React.Component {
     const min = Math.floor(sec / 60)
     const format = num => (num < 10 ? `0${num}` : num)
 
+    const { currentSong } = this.props.room
+
+    const artists = currentSong.artists.map(a => a.name).join('')
+
     return (
       <React.Fragment>
         <div className="current-song">
-          <h3 className="song-name">{this.props.room.currentSong.name}</h3>
+          <h3 className="song-name">{currentSong.name}</h3>
+          <h2 className="song-artist">{artists}</h2>
           <div className="song-position">{format(min)}:{format(sec % 60)}</div>
         </div>
       </React.Fragment>
