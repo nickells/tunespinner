@@ -50,7 +50,7 @@ class TrackSearch extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  searchResults: state.MainReducer.searchResults,
+  searchResults: state.SpotifyReducer.searchResults,
 })
 
 const mapDispatchToProps = dispatch => bindActionCreators({

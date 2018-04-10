@@ -41,7 +41,7 @@ export const initPlayer = () => (dispatch, getState) => {
 
 // This can also take an array of uris - maybe use this to enqueue? Or we should just keep it on the server.
 export const playSong = spotify_uri => async (dispatch, getState) => {
-  const { id } = getState().MainReducer.player._options
+  const { id } = getState().SpotifyReducer.player._options
   const { accessToken } = getState().MainReducer
   const response = await axios.put(
     `https://api.spotify.com/v1/me/player/play?device_id=${id}`,

@@ -4,11 +4,13 @@ import thunk from 'redux-thunk'
 import createHistory from 'history/createBrowserHistory'
 import MainReducer from './reducers/app'
 import FirebaseReducer from './reducers/firebase'
+import SpotifyReducer from './reducers/spotify'
 
 export const history = createHistory()
 const combinedReducers = combineReducers({
   MainReducer,
   FirebaseReducer,
+  SpotifyReducer,
 })
 
 const initialState = {}
