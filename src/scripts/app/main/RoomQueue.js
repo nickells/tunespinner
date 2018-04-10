@@ -10,8 +10,8 @@ class RoomQueue extends React.Component {
       <React.Fragment>
         Queue:
         {
-          this.props.room.queue.map(item => (
-            <div key={item.id}>{item.name}</div>
+          this.props.room.queue.map((item, i) => (
+            <div key={`${item.id}${i}`}>{item.name}</div>
           ))
         }
       </React.Fragment>

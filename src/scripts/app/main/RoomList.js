@@ -20,7 +20,7 @@ class RoomList extends React.Component {
       const room = this.props.rooms[id]
       return (
         <div
-          className="room"
+          className="room-preview"
           key={room.id}
           onClick={() => this.chooseRoom(id)}
         >

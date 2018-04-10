@@ -45,8 +45,7 @@ class Main extends React.Component {
 
   render() {
     return (
-      <div>
-        You are {this.props.accessToken}
+      <main>
         <Room />
         <menu className="menu">
           <Login onClick={this.props.login} />
@@ -55,7 +54,7 @@ class Main extends React.Component {
           { this.props.currentRoomId && <RoomQueue /> }
           <TrackSearch />
         </menu>
-      </div>
+      </main>
     )
   }
 }
