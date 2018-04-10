@@ -5,11 +5,12 @@ import { setCurrentRoom } from '../actions/app'
 
 class RoomQueue extends React.Component {
   render() {
+    if (!this.props.room || !this.props.room.queue) return null
     return (
       <React.Fragment>
         Queue:
         {
-          this.props.roomQueue.map(item => (
+          this.props.room.queue.map(item => (
             <div key={item.id}>{item.name}</div>
           ))
         }
@@ -18,14 +19,13 @@ class RoomQueue extends React.Component {
   }
 }
 
-const getCurrentQueue = (state) => {
-  const thisRoom = state.MainReducer.currentRoomId
-  const thisRoomQueue = state.FirebaseReducer.rooms[thisRoom].queue || null
-  return thisRoomQueue || []
+const getCurrentRoom = (state) => {
+  const thisRoomId = state.MainReducer.currentRoomId
+  return state.FirebaseReducer.rooms[thisRoomId]
 }
 
 const mapStateToProps = state => ({
-  roomQueue: getCurrentQueue(state),
+  room: getCurrentRoom(state),
   currentRoomId: state.MainReducer.currentRoomId,
 })
 
