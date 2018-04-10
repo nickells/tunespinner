@@ -22,8 +22,11 @@ class Player extends React.Component {
     this.play()
   }
 
-  componentDidUpdate() {
-    this.play()
+  componentDidUpdate(prevProps) {
+    if (!this.props.room || !prevProps.room) return
+    if (this.props.room.id !== prevProps.room.id) {
+      this.play()
+    }
   }
 
   async play() {
@@ -59,7 +62,6 @@ class Player extends React.Component {
     )
   }
 }
-
 
 const mapStateToProps = state => ({
   player: state.SpotifyReducer.player,
