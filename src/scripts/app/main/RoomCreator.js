@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { setCurrentRoom } from './actions'
+import { setCurrentRoom } from '../actions/app'
 import { createRoom } from '../../db/room'
 
 class RoomCreator extends React.Component {
