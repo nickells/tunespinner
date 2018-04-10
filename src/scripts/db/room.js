@@ -37,6 +37,7 @@ export const createRoom = (_data = {}) => {
 }
 
 export const updateRoom = (id, _data = {}) => {
+  console.log('updating room with', _data)
   const data = Object.assign({}, DEFAULT_ROOM, _data)
   db.ref(`/rooms/${id}`).update(data)
 }
@@ -98,4 +99,23 @@ export const removeUserFromRoom = async (userId) => {
   })
 
   await updateRoom(roomId, roomCopy)
+}
+
+/* Makes a new object with specific fields from the first object */
+const pick = (object, ...keys) => {
+  return keys.reduce((newObject, key) => {
+    if (!object[key]) console.warn(`Tried to get key ${key} from an object but it didn't exist.`)
+    newObject[key] = object[key]
+    return newObject
+  }, {})
+}
+
+export const addSongToRoomQueue = async (song, roomId) => {
+  const relevantSongInformation = pick(song, 'id', 'name', 'uri', 'duration_ms', 'artists')
+
+  const room = await getRoom(roomId)
+  room.queue = room.queue || []
+  room.queue.push(relevantSongInformation)
+
+  await updateRoom(roomId, room)
 }

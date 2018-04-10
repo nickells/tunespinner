@@ -5,6 +5,7 @@ import { increaseClick, setCurrentUser, login } from '../actions/app'
 import { setRooms, setUsers } from '../actions/firebase'
 import { initPlayer, playSong, getCurrentSong } from '../actions/spotifyAPI'
 import RoomCreator from './RoomCreator'
+import RoomQueue from './RoomQueue'
 import RoomList from './RoomList'
 import Room from './Room'
 import TrackSearch from './TrackSearch'
@@ -30,7 +31,7 @@ class Main extends React.Component {
     await waitForSpotify()
     await this.props.setCurrentUser()
     await this.props.initPlayer()
-    await this.props.playSong('spotify:track:1oOD1pV43cV9sHg97aBdLs')
+    await this.props.playSong('spotify:track:0zmOzthR1eSlpN0IMwzXyV')
     const thisSong = await this.props.getCurrentSong()
 
     watchRooms((rooms) => {
@@ -51,6 +52,7 @@ class Main extends React.Component {
           <Login onClick={this.props.login} />
           <RoomList />
           <RoomCreator />
+          { this.props.currentRoomId && <RoomQueue /> }
           <TrackSearch />
         </menu>
       </div>

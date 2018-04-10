@@ -5,6 +5,7 @@ import {
   searchForSongs,
   playSong,
 } from '../actions/spotifyAPI'
+import { addSongToRoomQueue } from '../../db/room'
 
 
 class TrackSearch extends React.Component {
@@ -28,9 +29,14 @@ class TrackSearch extends React.Component {
     this.setState({ query: e.target.value })
   }
 
+  handleSongClick(song) {
+    console.log(this.props.currentRoomId)
+    addSongToRoomQueue(song, this.props.currentRoomId)
+  }
+
   renderSearchResult(song) {
     return (
-      <div key={song.id} onClick={() => this.props.playSong(song.uri)} >{song.name}</div>
+      <div key={song.id} onClick={() => this.handleSongClick(song)} >{song.name}</div>
     )
   }
 
@@ -51,6 +57,7 @@ class TrackSearch extends React.Component {
 
 const mapStateToProps = state => ({
   searchResults: state.SpotifyReducer.searchResults,
+  currentRoomId: state.MainReducer.currentRoomId,
 })
 
 const mapDispatchToProps = dispatch => bindActionCreators({
