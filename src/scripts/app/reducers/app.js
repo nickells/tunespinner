@@ -11,7 +11,7 @@ const initialState = {
   clicks: 0,
   currentRoomId: null,
   rooms: {},
-  currentUser: null,
+  currentUserId: null,
 }
 
 export default (state = initialState, action) => {
@@ -35,7 +35,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         accessToken: action.access_token,
-        currentUser: action.user,
+        currentUserId: action.userId,
       }
 
     default:

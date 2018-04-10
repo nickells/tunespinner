@@ -9,6 +9,7 @@ class Room extends React.Component {
     if (!djs || djs.length === 0) return null
     return djs.map((userId) => {
       const user = this.props.users[userId]
+      if (!user) return null
       return <div className="user" key={user.id}>{user.username}</div>
     })
   }
@@ -18,6 +19,7 @@ class Room extends React.Component {
     if (!fans || fans.length === 0) return null
     return fans.map((userId) => {
       const user = this.props.users[userId]
+      if (!user) return null
       return <div className="user" key={user.id}>{user.username}</div>
     })
   }
@@ -52,7 +54,6 @@ class Room extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  currentUser: state.MainReducer.currentUser,
   currentRoomId: state.MainReducer.currentRoomId,
   rooms: state.FirebaseReducer.rooms,
   users: state.FirebaseReducer.users,
