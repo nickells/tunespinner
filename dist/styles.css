@@ -297,6 +297,7 @@ button {
 h3 {
   font-size: 11px;
   letter-spacing: 0.1em;
+  text-transform: uppercase;
 }
 main {
   position: relative;
@@ -339,6 +340,9 @@ main {
 }
 .menu .tabs .tab.active {
   background-color: rgba(0, 0, 0, 0.2);
+}
+.menu .emoji-mart-preview {
+  display: none;
 }
 .room {
   position: absolute;

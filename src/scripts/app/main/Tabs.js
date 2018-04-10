@@ -4,13 +4,13 @@ const Tabs = ({ labels, onClick, activeTab }) => (
   <div className="tabs">
     {
       labels.map(label => (
-        <div
+        <h3
           className={`tab ${activeTab === label ? 'active' : null}`}
           key={label}
           onClick={e => onClick(label)}
         >
           {label}
-        </div>
+        </h3>
       ))
     }
   </div>
