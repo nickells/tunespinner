@@ -122,6 +122,6 @@ export const addSongToRoomQueue = async (song, roomId) => {
 
 export const removeSongFromQueue = async (index, roomId) => {
   const room = await getRoom(roomId)
-  room.queue = room.queue.splice(0, index).concat(room.queue.splice(index))
+  room.queue.splice(index, 1)
   await updateRoom(roomId, room)
 }
