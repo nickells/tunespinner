@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { setCurrentRoom } from '../actions/app'
 import { makeDJ } from '../../db/room'
+import Player from './Player'
 
 class Room extends React.Component {
   constructor(props) {
@@ -61,6 +62,7 @@ class Room extends React.Component {
             <div className="speaker left" />
             <div className="speaker right" />
           </div>
+          <Player room={room} />
         </div>
         <div className="fans">
           {this.renderFans(room)}

@@ -14,14 +14,14 @@ export const initPlayer = () => (dispatch, getState) => {
     },
   });
 
-  // Error handling
-  player.addListener('initialization_error', ({ message }) => { console.error(message); });
-  player.addListener('authentication_error', ({ message }) => { console.error(message); });
-  player.addListener('account_error', ({ message }) => { console.error(message); });
-  player.addListener('playback_error', ({ message }) => { console.error(message); });
+  // // Error handling
+  // player.addListener('initialization_error', ({ message }) => { console.error(message); });
+  // player.addListener('authentication_error', ({ message }) => { console.error(message); });
+  // player.addListener('account_error', ({ message }) => { console.error(message); });
+  // player.addListener('playback_error', ({ message }) => { console.error(message); });
 
-  // Playback status updates
-  player.addListener('player_state_changed', (state) => { console.log('STATE CHANGE', state); })
+  // // Playback status updates
+  // player.addListener('player_state_changed', (state) => { console.log('STATE CHANGE', state); })
 
   player.connect()
 
@@ -53,6 +53,23 @@ export const playSong = spotify_uri => async (dispatch, getState) => {
     },
   )
   return response.data
+}
+
+export const seek = startTime => async (dispatch, getState) => {
+  const { player } = getState().SpotifyReducer
+
+  const callback = (state) => {
+    const { track_window: { current_track } } = state
+    if (current_track && state.position < startTime) {
+      player.seek(startTime)
+    }
+
+    if (state.position > startTime) {
+      player.removeListener('player_state_changed', callback)
+    }
+  }
+
+  player.addListener('player_state_changed', callback)
 }
 
 export const getCurrentSong = () => async (dispatch, getState) => {

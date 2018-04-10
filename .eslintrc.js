@@ -13,7 +13,8 @@ module.exports = {
     "consistent-return": "off",
     "guard-for-in": "off",
     "react/sort-comp": "off",
-    "arrow-body-style": "off"
+    "arrow-body-style": "off",
+    "no-underscore-dangle": "off"
   },
   "env": {
     "browser": true,
