@@ -8,9 +8,17 @@ import RoomQueue from './RoomQueue'
 import RoomList from './RoomList'
 import Player from './Player'
 import Room from './Room'
+import Profile from './Profile'
 import TrackSearch from './TrackSearch'
+import Tabs from './Tabs'
 import { watchRooms } from '../../db/room'
 import { watchUsers } from '../../db/user'
+
+export const TAB_NAMES = {
+  rooms: 'Rooms',
+  queue: 'Queue',
+  profile: 'Profile',
+}
 
 const waitForSpotify = () => new Promise((resolve) => {
   if (window.Spotify) {
@@ -31,7 +39,10 @@ class Main extends React.Component {
     super(props)
     this.state = {
       ready: false,
+      activeTab: TAB_NAMES.rooms,
     }
+
+    this.changeActiveTab = this.changeActiveTab.bind(this)
   }
 
   async componentWillMount() {
@@ -49,18 +60,44 @@ class Main extends React.Component {
     })
   }
 
+  changeActiveTab(tab) {
+    this.setState({ activeTab: tab })
+  }
+
+  renderRoomsTab() {
+    return (
+      <React.Fragment>
+        <RoomList />
+        <RoomCreator />
+      </React.Fragment>
+    )
+  }
+
+  renderQueueTab() {
+    return (
+      <React.Fragment>
+        {this.props.currentRoomId && <RoomQueue />}
+        <TrackSearch />
+      </React.Fragment>
+    )
+  }
+
   render() {
     return (
       this.state.ready && (
         <main>
           <Room />
+          <Player />
           <menu className="menu">
             <Login onClick={this.props.login} />
-            <RoomList />
-            <RoomCreator />
-            <Player />
-            { this.props.currentRoomId && <RoomQueue /> }
-            <TrackSearch />
+            { this.state.activeTab === TAB_NAMES.rooms && this.renderRoomsTab() }
+            { this.state.activeTab === TAB_NAMES.queue && this.renderQueueTab() }
+            { this.state.activeTab === TAB_NAMES.profile && <Profile />}
+            <Tabs
+              labels={Object.values(TAB_NAMES)}
+              activeTab={this.state.activeTab}
+              onClick={this.changeActiveTab}
+            />
           </menu>
         </main>
       )

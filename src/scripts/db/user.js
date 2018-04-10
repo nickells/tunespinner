@@ -26,11 +26,11 @@ export const updateUser = (id, data = {}) => {
 }
 
 export const createUser = async (_data = {}) => {
-  const data = Object.assign({}, DEFAULT_USER, _data)
-
-  if (data.id && await getUser(data.id)) {
-    return updateUser(data.id, data)
+  if (_data.id && await getUser(_data.id)) {
+    return updateUser(_data.id, _data)
   }
+
+  const data = Object.assign({}, DEFAULT_USER, _data)
 
   let userRef
   const userData = { ...data }
