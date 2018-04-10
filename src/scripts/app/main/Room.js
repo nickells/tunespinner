@@ -2,11 +2,22 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { setCurrentRoom } from '../actions/app'
+import { makeDJ } from '../../db/room'
 
 class Room extends React.Component {
+  constructor(props) {
+    super(props)
+    this.becomeDJ = this.becomeDJ.bind(this)
+  }
+
+  becomeDJ() {
+    const { currentRoomId, currentUserId } = this.props
+    makeDJ(currentUserId, currentRoomId)
+  }
+
   renderDJs(room = {}) {
     const { djs } = room
-    return this.renderUsers(djs)
+    return this.renderUsers(djs, 'DJ ')
   }
 
   renderFans(room = {}) {
@@ -14,7 +25,7 @@ class Room extends React.Component {
     return this.renderUsers(fans)
   }
 
-  renderUsers(users) {
+  renderUsers(users, title) {
     if (!users || users.length === 0) return null
     return users.map((userId) => {
       const user = this.props.users[userId]
@@ -22,7 +33,7 @@ class Room extends React.Component {
       return (
         <div className="user" key={user.id}>
           <div className="emoji">{user.emoji}</div>
-          <div className="info">{user.username}</div>
+          <div className="info">{title}{user.username}</div>
         </div>
       )
     })
@@ -42,9 +53,14 @@ class Room extends React.Component {
 
     return (
       <div className="room">
+        <button onClick={this.becomeDJ}>Be a DJ</button>
         <h1 className="room-name">{room.name}</h1>
-        <div className="djs">
-          {this.renderDJs(room)}
+        <div className="djs-wrapper">
+          <div className="djs">
+            {this.renderDJs(room)}
+            <div className="speaker left" />
+            <div className="speaker right" />
+          </div>
         </div>
         <div className="fans">
           <h3>FANS:</h3>
@@ -56,6 +72,7 @@ class Room extends React.Component {
 }
 
 const mapStateToProps = state => ({
+  currentUserId: state.MainReducer.currentUserId,
   currentRoomId: state.MainReducer.currentRoomId,
   rooms: state.FirebaseReducer.rooms,
   users: state.FirebaseReducer.users,
