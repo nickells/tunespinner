@@ -63,7 +63,6 @@ class Room extends React.Component {
           </div>
         </div>
         <div className="fans">
-          <h3>FANS:</h3>
           {this.renderFans(room)}
         </div>
       </div>
