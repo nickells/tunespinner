@@ -3,10 +3,10 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { increaseClick, setCurrentUser, login } from '../actions/app'
 import { setRooms, setUsers } from '../actions/firebase'
-import { initPlayer, playSong, getCurrentSong } from '../actions/spotifyAPI'
 import RoomCreator from './RoomCreator'
 import RoomQueue from './RoomQueue'
 import RoomList from './RoomList'
+import Player from './Player'
 import Room from './Room'
 import TrackSearch from './TrackSearch'
 import { watchRooms } from '../../db/room'
@@ -27,13 +27,19 @@ const Login = ({ onClick }) => (
 )
 
 class Main extends React.Component {
-  async componentDidMount() {
+  constructor(props) {
+    super(props)
+    this.state = {
+      ready: false,
+    }
+  }
+
+  async componentWillMount() {
     await waitForSpotify()
     await this.props.setCurrentUser()
-    await this.props.initPlayer()
-    await this.props.playSong('spotify:track:0zmOzthR1eSlpN0IMwzXyV')
-    const thisSong = await this.props.getCurrentSong()
-
+    this.setState({
+      ready: true,
+    })
     watchRooms((rooms) => {
       this.props.setRooms(rooms)
     })
@@ -45,17 +51,20 @@ class Main extends React.Component {
 
   render() {
     return (
-      <div>
-        You are {this.props.accessToken}
-        <Room />
-        <menu className="menu">
-          <Login onClick={this.props.login} />
-          <RoomList />
-          <RoomCreator />
-          { this.props.currentRoomId && <RoomQueue /> }
-          <TrackSearch />
-        </menu>
-      </div>
+      this.state.ready && (
+        <div>
+          You are {this.props.accessToken}
+          <Room />
+          <Player />
+          <menu className="menu">
+            <Login onClick={this.props.login} />
+            <RoomList />
+            <RoomCreator />
+            { this.props.currentRoomId && <RoomQueue /> }
+            <TrackSearch />
+          </menu>
+        </div>
+      )
     )
   }
 }
@@ -73,9 +82,7 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   setRooms,
   setUsers,
   login,
-  initPlayer,
-  playSong,
-  getCurrentSong,
+
 }, dispatch)
 
 export default connect(

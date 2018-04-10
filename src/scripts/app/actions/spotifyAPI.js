@@ -57,7 +57,6 @@ export const playSong = spotify_uri => async (dispatch, getState) => {
 
 export const getCurrentSong = () => async (dispatch, getState) => {
   const { accessToken } = getState().MainReducer
-  console.log('gettting song')
   const response = await axios.get(
     'https://api.spotify.com/v1/me/player',
     {

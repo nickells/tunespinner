@@ -30,7 +30,6 @@ class TrackSearch extends React.Component {
   }
 
   handleSongClick(song) {
-    console.log(this.props.currentRoomId)
     addSongToRoomQueue(song, this.props.currentRoomId)
   }
 
