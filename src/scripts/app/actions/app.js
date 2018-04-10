@@ -35,8 +35,10 @@ export const setCurrentUser = () => async (dispatch) => {
 
   const user = response.data
 
+  let resolvedUser
+
   try {
-    await createUser({
+    resolvedUser = await createUser({
       id: user.id,
       email: user.email,
       username: user.display_name || user.id,
@@ -45,9 +47,20 @@ export const setCurrentUser = () => async (dispatch) => {
     console.log('error creating user', e)
   }
 
+  if (!resolvedUser) return
+
   dispatch({
     type: SET_CURRENT_USER,
     access_token,
-    user,
+    userId: resolvedUser.id,
   })
+
+  if (resolvedUser.currentRoom) {
+    dispatch({
+      type: SET_CURRENT_ROOM,
+      data: {
+        roomId: resolvedUser.currentRoom,
+      },
+    })
+  }
 }

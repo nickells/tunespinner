@@ -7,9 +7,9 @@ import { addUserToRoom, removeUserFromRoom } from '../../db/room'
 
 class RoomList extends React.Component {
   async chooseRoom(id) {
-    await removeUserFromRoom(this.props.currentUser.id)
-    addUserToRoom(this.props.currentUser.id, id)
-    setUserRoom(this.props.currentUser.id, id)
+    await removeUserFromRoom(this.props.currentUserId)
+    addUserToRoom(this.props.currentUserId, id)
+    setUserRoom(this.props.currentUserId, id)
     this.props.setCurrentRoom(id)
   }
 
@@ -42,7 +42,7 @@ class RoomList extends React.Component {
 
 const mapStateToProps = state => ({
   currentRoomId: state.MainReducer.currentRoomId,
-  currentUser: state.MainReducer.currentUser,
+  currentUserId: state.MainReducer.currentUserId,
   rooms: state.FirebaseReducer.rooms,
 })
 
