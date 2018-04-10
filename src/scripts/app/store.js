@@ -2,11 +2,13 @@ import { combineReducers, createStore, applyMiddleware, compose } from 'redux'
 import { routerMiddleware } from 'react-router-redux'
 import thunk from 'redux-thunk'
 import createHistory from 'history/createBrowserHistory'
-import MainReducer from './main/reducer'
+import MainReducer from './reducers/app'
+import FirebaseReducer from './reducers/firebase'
 
 export const history = createHistory()
 const combinedReducers = combineReducers({
   MainReducer,
+  FirebaseReducer,
 })
 
 const initialState = {}
