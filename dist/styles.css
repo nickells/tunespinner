@@ -416,6 +416,24 @@ main {
   right: 0;
   transform: translate3d(110%, -50%, 0);
 }
+.room .current-song {
+  position: absolute;
+  color: #FFF;
+  z-index: 1;
+  text-align: center;
+}
+.room .current-song .song-name {
+  font-size: 13px;
+  font-weight: 300;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+.room .current-song .song-position {
+  font-size: 9px;
+  font-weight: 300;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
 .room .user {
   display: inline-block;
   text-align: center;

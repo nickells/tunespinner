@@ -1,7 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { getCurrentRoom } from './RoomQueue'
 import { initPlayer, playSong, getCurrentSong, seek } from '../actions/spotifyAPI'
 import { advanceQueue } from '../../db/room';
 
@@ -11,6 +10,7 @@ class Player extends React.Component {
     super(props)
     this.state = {
       playerIsLoaded: false,
+      songPosition: 0,
     }
   }
 
@@ -18,20 +18,35 @@ class Player extends React.Component {
     await this.props.initPlayer()
     this.setState({
       playerIsLoaded: true,
+    }, () => {
+      this.play()
     })
-    this.play()
+
+    this.interval = setInterval(this.setSongPosition.bind(this), 800)
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.interval)
   }
 
   componentDidUpdate(prevProps) {
-    if (!this.props.room || !prevProps.room) return
+    if (!prevProps.room) return
     if (this.props.room.id !== prevProps.room.id) {
       this.play()
     }
   }
 
+  async setSongPosition() {
+    const { room } = this.props
+    if (!room.currentSongStartTime) return
+    const now = Date.now()
+    const diff = now - room.currentSongStartTime
+    const songPosition = diff
+    await this.setState({ songPosition })
+  }
+
   async play() {
     if (!this.state.playerIsLoaded) return
-    if (!this.props.room) return
 
     const { room } = this.props
 
@@ -40,24 +55,33 @@ class Player extends React.Component {
       return
     }
 
-    const now = Date.now()
-    const diff = now - room.currentSongStartTime
-
-    if (diff > room.currentSong.duration_ms) {
+    await this.setSongPosition()
+    if (this.state.songPosition > room.currentSong.duration_ms) {
+      console.log('NEXT SONG!')
       await advanceQueue(room.id)
       return
     }
 
     await this.props.playSong(room.currentSong.uri)
-    this.props.seek(diff)
+    this.props.seek(this.state.songPosition, room.currentSong.id)
   }
 
   render() {
     if (!this.state.playerIsLoaded) return null
-    if (!this.props.room || !this.props.room.currentSong) return null
+    if (!this.props.room.currentSong) return null
+
+    const { songPosition } = this.state
+
+    const sec = Math.round(songPosition / 1000)
+    const min = Math.floor(sec / 60)
+    const format = num => (num < 10 ? `0${num}` : num)
+
     return (
       <React.Fragment>
-        <div className="currently-playing">Currently playing: {this.props.room.currentSong.name}</div>
+        <div className="current-song">
+          <h3 className="song-name">{this.props.room.currentSong.name}</h3>
+          <div className="song-position">{format(min)}:{format(sec % 60)}</div>
+        </div>
       </React.Fragment>
     )
   }

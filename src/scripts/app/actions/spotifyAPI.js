@@ -55,17 +55,15 @@ export const playSong = spotify_uri => async (dispatch, getState) => {
   return response.data
 }
 
-export const seek = startTime => async (dispatch, getState) => {
+export const seek = (startTime, songId) => async (dispatch, getState) => {
   const { player } = getState().SpotifyReducer
 
   const callback = (state) => {
     const { track_window: { current_track } } = state
-    if (current_track && state.position < startTime) {
-      player.seek(startTime)
-    }
-
-    if (state.position > startTime) {
+    if (current_track.id === songId && state.position >= startTime) {
       player.removeListener('player_state_changed', callback)
+    } else {
+      player.seek(startTime)
     }
   }
 
