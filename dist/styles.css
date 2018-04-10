@@ -371,6 +371,9 @@ main {
   position: relative;
   display: inline-block;
 }
+.room .djs .user {
+  margin-bottom: 60px;
+}
 .room .djs .user .emoji {
   font-size: 46px;
 }
@@ -421,18 +424,26 @@ main {
   color: #FFF;
   z-index: 1;
   text-align: center;
+  margin-top: 50px;
 }
-.room .current-song .song-name {
+.room .current-song .song-name,
+.room .current-song .song-artist,
+.room .current-song .song-position {
   font-size: 13px;
   font-weight: 300;
   letter-spacing: 0.2em;
   text-transform: uppercase;
+  margin-bottom: 5px;
+}
+.room .current-song .song-artist {
+  font-size: 10px;
+  opacity: 0.4;
 }
 .room .current-song .song-position {
   font-size: 9px;
-  font-weight: 300;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
+}
+.room .fans {
+  text-align: center;
 }
 .room .user {
   display: inline-block;

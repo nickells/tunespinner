@@ -29,6 +29,8 @@
     display: inline-block;
 
     .user {
+      margin-bottom: 60px;
+
       .emoji {
         font-size: 46px;
       }
@@ -89,23 +91,30 @@
     color: @white;
     z-index: 1;
     text-align: center;
+    margin-top: 50px;
 
-    .song-name {
+    .song-name,
+    .song-artist,
+    .song-position {
       font-size: 13px;
       font-weight: 300;
       letter-spacing: 0.2em;
       text-transform: uppercase;
+      margin-bottom: 5px;
+    }
+
+    .song-artist {
+      font-size: 10px;
+      opacity: 0.4;
     }
 
     .song-position {
       font-size: 9px;
-      font-weight: 300;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
     }
   }
 
   .fans {
+    text-align: center;
   }
 
   .user {
