@@ -6,21 +6,25 @@ import { setCurrentRoom } from '../actions/app'
 class Room extends React.Component {
   renderDJs(room = {}) {
     const { djs } = room
-    if (!djs || djs.length === 0) return null
-    return djs.map((userId) => {
-      const user = this.props.users[userId]
-      if (!user) return null
-      return <div className="user" key={user.id}>{user.username}</div>
-    })
+    return this.renderUsers(djs)
   }
 
   renderFans(room = {}) {
     const { fans } = room
-    if (!fans || fans.length === 0) return null
-    return fans.map((userId) => {
+    return this.renderUsers(fans)
+  }
+
+  renderUsers(users) {
+    if (!users || users.length === 0) return null
+    return users.map((userId) => {
       const user = this.props.users[userId]
       if (!user) return null
-      return <div className="user" key={user.id}>{user.username}</div>
+      return (
+        <div className="user" key={user.id}>
+          <div className="emoji">{user.emoji}</div>
+          <div className="info">{user.username}</div>
+        </div>
+      )
     })
   }
 
@@ -29,19 +33,17 @@ class Room extends React.Component {
 
     if (!room) {
       return (
-        <div>
-        YOU ARE NOT IN A ROOM
-          <h1>sad</h1>
+        <div className="room">
+          YOU ARE NOT IN A ROOM
+          <h1 className="room-name">sad</h1>
         </div>
       )
     }
 
     return (
-      <div>
-        YOU ARE IN A ROOM
-        <h1>{room.name}</h1>
+      <div className="room">
+        <h1 className="room-name">{room.name}</h1>
         <div className="djs">
-          <h3>DJS:</h3>
           {this.renderDJs(room)}
         </div>
         <div className="fans">

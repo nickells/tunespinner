@@ -17,7 +17,7 @@ class RoomQueue extends React.Component {
         Queue:
         {
           this.props.room.queue.map((item, index) => (
-            <div onClick={() => removeSongFromQueue(index, this.props.currentRoomId)} key={index}>{item.name}</div>
+            <div onClick={() => removeSongFromQueue(index, this.props.currentRoomId)} key={`${item.id}${index}`}>{item.name}</div>
           ))
         }
       </React.Fragment>

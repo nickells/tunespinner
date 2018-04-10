@@ -5,6 +5,7 @@ const db = firebase.database()
 const DEFAULT_USER = {
   id: '',
   username: '',
+  emoji: '🦊',
   email: '',
   songs_favorited: [],
   score: 0,

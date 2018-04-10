@@ -52,18 +52,17 @@ class Main extends React.Component {
   render() {
     return (
       this.state.ready && (
-        <div>
-          You are {this.props.accessToken}
+        <main>
           <Room />
-          <Player />
           <menu className="menu">
             <Login onClick={this.props.login} />
             <RoomList />
             <RoomCreator />
+            <Player />
             { this.props.currentRoomId && <RoomQueue /> }
             <TrackSearch />
           </menu>
-        </div>
+        </main>
       )
     )
   }
