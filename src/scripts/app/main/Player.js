@@ -54,10 +54,10 @@ class Player extends React.Component {
 
   render() {
     if (!this.state.playerIsLoaded) return null
-    if (!this.props.room.queue) return null
+    if (!this.props.room || !this.props.room.currentSong) return null
     return (
       <React.Fragment>
-        <div>Currently playing: {this.props.room.queue[0].name}</div>
+        <div className="currently-playing">Currently playing: {this.props.room.currentSong.name}</div>
       </React.Fragment>
     )
   }
