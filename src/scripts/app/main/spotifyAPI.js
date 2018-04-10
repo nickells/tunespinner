@@ -4,7 +4,7 @@ export const STORE_PLAYER_INSTANCE = 'STORE_PLAYER_INSTANCE'
 export const GET_CURRENT_SONG = 'GET_CURRENT_SONG'
 export const ON_SONG_SEARCH = 'ON_SONG_SEARCH'
 
-/* Spotify */
+
 export const initPlayer = () => (dispatch, getState) => {
   const token = getState().MainReducer.accessToken
   const player = new window.Spotify.Player({
@@ -48,7 +48,6 @@ export const playSong = spotify_uri => async (dispatch, getState) => {
     JSON.stringify({ uris: [spotify_uri] }),
     {
       headers: {
-        'Content-Type': 'application/json',
         Authorization: `Bearer ${accessToken}`,
       },
     },
@@ -58,6 +57,7 @@ export const playSong = spotify_uri => async (dispatch, getState) => {
 
 export const getCurrentSong = () => async (dispatch, getState) => {
   const { accessToken } = getState().MainReducer
+  console.log('gettting song')
   const response = await axios.get(
     'https://api.spotify.com/v1/me/player',
     {
@@ -74,7 +74,7 @@ export const getCurrentSong = () => async (dispatch, getState) => {
 
 export const searchForSongs = searchParameter => async (dispatch, getState) => {
   const { accessToken } = getState().MainReducer
-  const types = ['track']
+  const types = ['track'] // artist, album, etc
   const response = await axios.get(
     `https://api.spotify.com/v1/search?q=${searchParameter}&type=${types.join(',')}`,
     {

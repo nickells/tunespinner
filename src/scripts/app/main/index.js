@@ -29,12 +29,10 @@ class Main extends React.Component {
     await this.props.initPlayer()
     await this.props.playSong('spotify:track:1oOD1pV43cV9sHg97aBdLs')
     const thisSong = await this.props.getCurrentSong()
-    console.log(thisSong)
   }
 
   render() {
     const room = this.props.rooms[this.props.currentRoomId]
-    console.log('curr room', room)
     return (
       <div>
         You are {this.props.accessToken}

@@ -8,18 +8,21 @@ import {
 import {
   STORE_PLAYER_INSTANCE,
   ON_SONG_SEARCH,
+  GET_CURRENT_SONG,
 } from '../main/spotifyAPI'
 
 const initialState = {
+  accessToken: '',
   clicks: 0,
   currentRoomId: null,
   rooms: {},
   currentUser: null,
+  player: null,
+  searchResults: [],
+  currentSong: {},
 }
 
 export default (state = initialState, action) => {
-  console.log(action)
-
   switch (action.type) {
     case INCREASE_CLICK:
       return {
@@ -51,6 +54,11 @@ export default (state = initialState, action) => {
       return {
         ...state,
         searchResults: action.searchResults,
+      }
+    case GET_CURRENT_SONG:
+      return {
+        ...state,
+        currentSong: action.data,
       }
     default:
       return state

@@ -66,6 +66,7 @@ export const unwatchRoom = (id, callback) => {
 }
 
 export const addUserToRoom = async (userId, roomId, key = 'fans') => {
+  console.log('adding', userId, 'to room')
   const room = await getRoom(roomId)
   const roomCopy = { ...room }
   const group = room[key] ? room[key].slice() : []
