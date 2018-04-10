@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { setRooms, setCurrentRoom } from './actions'
+import { setRooms, setCurrentRoom } from '../actions/app'
 import { setUserRoom } from '../../db/user'
 import { watchRooms, addUserToRoom, removeUserFromRoom } from '../../db/room'
 

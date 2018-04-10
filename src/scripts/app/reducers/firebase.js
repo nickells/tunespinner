@@ -5,37 +5,16 @@ const initialState = {
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case 'INCREASE_CLICK':
+    case 'SET_ROOMS':
       return {
         ...state,
-        clicks: state.clicks + 1,
+        rooms: action.rooms,
       }
-      //   case SET_CURRENT_ROOM:
-      //     return {
-      //       ...state,
-      //       currentRoomId: action.data.roomId,
-      //     }
-      //   case SET_ROOMS:
-      //     return {
-      //       ...state,
-      //       rooms: action.data.rooms,
-      //     }
-      //   case SET_CURRENT_USER:
-      //     return {
-      //       ...state,
-      //       accessToken: action.access_token,
-      //       currentUser: action.user,
-      //     }
-      //   case STORE_PLAYER_INSTANCE:
-      //     return {
-      //       ...state,
-      //       player: action.player,
-      //     }
-      //   case ON_SONG_SEARCH:
-      //     return {
-      //       ...state,
-      //       searchResults: action.searchResults,
-      //     }
+    case 'SET_USERS':
+      return {
+        ...state,
+        users: action.users,
+      }
     default:
       return state
   }

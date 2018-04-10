@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux'
 import {
   searchForSongs,
   playSong,
-} from './spotifyAPI'
+} from '../actions/spotifyAPI'
 
 
 class TrackSearch extends React.Component {

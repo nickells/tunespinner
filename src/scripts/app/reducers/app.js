@@ -3,12 +3,12 @@ import {
   SET_CURRENT_ROOM,
   SET_ROOMS,
   SET_CURRENT_USER,
-} from '../main/actions'
+} from '../actions/app'
 
 import {
   STORE_PLAYER_INSTANCE,
   ON_SONG_SEARCH,
-} from '../main/spotifyAPI'
+} from '../actions/spotifyAPI'
 
 const initialState = {
   clicks: 0,
