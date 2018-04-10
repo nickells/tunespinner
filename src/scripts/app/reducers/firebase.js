@@ -1,3 +1,9 @@
+import {
+  SET_ROOMS,
+  SET_USERS,
+} from '../actions/firebase'
+
+
 const initialState = {
   rooms: {},
   users: {},
@@ -5,12 +11,12 @@ const initialState = {
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case 'SET_ROOMS':
+    case SET_ROOMS:
       return {
         ...state,
         rooms: action.rooms,
       }
-    case 'SET_USERS':
+    case SET_USERS:
       return {
         ...state,
         users: action.users,

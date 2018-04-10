@@ -2,11 +2,14 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { increaseClick, setCurrentUser, login } from '../actions/app'
+import { setRooms, setUsers } from '../actions/firebase'
 import { initPlayer, playSong, getCurrentSong } from '../actions/spotifyAPI'
 import RoomCreator from './RoomCreator'
 import RoomList from './RoomList'
 import Room from './Room'
 import TrackSearch from './TrackSearch'
+import { watchRooms } from '../../db/room'
+import { watchUsers } from '../../db/user'
 
 const waitForSpotify = () => new Promise((resolve) => {
   if (window.Spotify) {
@@ -29,14 +32,21 @@ class Main extends React.Component {
     await this.props.initPlayer()
     await this.props.playSong('spotify:track:1oOD1pV43cV9sHg97aBdLs')
     const thisSong = await this.props.getCurrentSong()
+
+    watchRooms((rooms) => {
+      this.props.setRooms(rooms)
+    })
+
+    watchUsers((users) => {
+      this.props.setUsers(users)
+    })
   }
 
   render() {
-    const room = this.props.rooms[this.props.currentRoomId]
     return (
       <div>
         You are {this.props.accessToken}
-        <Room room={room} />
+        <Room />
         <menu className="menu">
           <Login onClick={this.props.login} />
           <RoomList />
@@ -58,6 +68,8 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => bindActionCreators({
   increaseClick,
   setCurrentUser,
+  setRooms,
+  setUsers,
   login,
   initPlayer,
   playSong,

@@ -43,13 +43,7 @@ export const updateRoom = (id, _data = {}) => {
 
 export const watchRooms = (callback) => {
   db.ref('/rooms').on('value', (snapshot) => {
-    const rooms = []
-
-    snapshot.forEach((childSnapshot) => {
-      const room = childSnapshot.val()
-      rooms.push(room)
-    })
-
+    const rooms = snapshot.val()
     callback(rooms)
   })
 }

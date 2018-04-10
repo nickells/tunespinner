@@ -1,22 +1,11 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { setRooms, setCurrentRoom } from '../actions/app'
+import { setCurrentRoom } from '../actions/app'
 import { setUserRoom } from '../../db/user'
-import { watchRooms, addUserToRoom, removeUserFromRoom } from '../../db/room'
+import { addUserToRoom, removeUserFromRoom } from '../../db/room'
 
 class RoomList extends React.Component {
-  componentWillMount() {
-    watchRooms((rooms) => {
-      const roomsObj = {}
-      rooms.forEach((room) => {
-        roomsObj[room.id] = room
-      })
-
-      this.props.setRooms(roomsObj)
-    })
-  }
-
   async chooseRoom(id) {
     await removeUserFromRoom(this.props.currentUser.id)
     addUserToRoom(this.props.currentUser.id, id)
@@ -54,12 +43,11 @@ class RoomList extends React.Component {
 const mapStateToProps = state => ({
   currentRoomId: state.MainReducer.currentRoomId,
   currentUser: state.MainReducer.currentUser,
-  rooms: state.MainReducer.rooms,
+  rooms: state.FirebaseReducer.rooms,
 })
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   setCurrentRoom,
-  setRooms,
 }, dispatch)
 
 export default connect(

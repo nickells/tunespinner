@@ -2,25 +2,30 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { setCurrentRoom } from '../actions/app'
-import { getUser } from '../../db/user'
 
 class Room extends React.Component {
-  renderDJs() {
-    if (!this.props.room) return null
-    const { djs } = this.props.room
-    if (!djs) return null
-    return djs.map(user => <div className="user" key={user}>{user}</div>)
+  renderDJs(room = {}) {
+    const { djs } = room
+    if (!djs || djs.length === 0) return null
+    return djs.map((userId) => {
+      const user = this.props.users[userId]
+      return <div className="user" key={user.id}>{user.username}</div>
+    })
   }
 
-  renderFans() {
-    if (!this.props.room) return null
-    const { fans } = this.props.room
-    if (!fans) return null
-    return fans.map(user => <div className="user" key={user}>{user}</div>)
+  renderFans(room = {}) {
+    const { fans } = room
+    if (!fans || fans.length === 0) return null
+    return fans.map((userId) => {
+      const user = this.props.users[userId]
+      return <div className="user" key={user.id}>{user.username}</div>
+    })
   }
 
   render() {
-    if (!this.props.room) {
+    const room = this.props.rooms[this.props.currentRoomId]
+
+    if (!room) {
       return (
         <div>
         YOU ARE NOT IN A ROOM
@@ -32,14 +37,14 @@ class Room extends React.Component {
     return (
       <div>
         YOU ARE IN A ROOM
-        <h1>{this.props.room.name}</h1>
+        <h1>{room.name}</h1>
         <div className="djs">
           <h3>DJS:</h3>
-          {this.renderDJs()}
+          {this.renderDJs(room)}
         </div>
         <div className="fans">
           <h3>FANS:</h3>
-          {this.renderFans()}
+          {this.renderFans(room)}
         </div>
       </div>
     )
@@ -48,6 +53,9 @@ class Room extends React.Component {
 
 const mapStateToProps = state => ({
   currentUser: state.MainReducer.currentUser,
+  currentRoomId: state.MainReducer.currentRoomId,
+  rooms: state.FirebaseReducer.rooms,
+  users: state.FirebaseReducer.users,
 })
 
 const mapDispatchToProps = dispatch => bindActionCreators({

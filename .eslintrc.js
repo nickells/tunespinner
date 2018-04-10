@@ -12,7 +12,8 @@ module.exports = {
     "camelcase": "off",
     "consistent-return": "off",
     "guard-for-in": "off",
-    "react/sort-comp": "off"
+    "react/sort-comp": "off",
+    "arrow-body-style": "off"
   },
   "env": {
     "browser": true,
