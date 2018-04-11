@@ -2,16 +2,14 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { setCurrentRoom } from '../actions/app'
-import { makeDJ, advanceQueue } from '../../db/room'
-import Ballot from './Ballot'
+import { advanceQueue } from '../../db/room'
+import RoomTools from './RoomTools'
 
 class Room extends React.Component {
   constructor(props) {
     super(props)
 
     this.firstUpdate = true
-
-    this.becomeDJ = this.becomeDJ.bind(this)
 
     this.state = {
       songPosition: 0,
@@ -84,9 +82,19 @@ class Room extends React.Component {
     return this.props.currentUserId === room.djs[0]
   }
 
-  becomeDJ() {
-    const { currentRoomId, currentUserId } = this.props
-    makeDJ(currentUserId, currentRoomId)
+  isDJ() {
+    if (!this.props.room || !this.props.currentUserId) return false
+    const { room } = this.props
+    if (!room.djs || room.djs.length === 0) return false
+    return room.djs.indexOf(this.props.currentUserId) > -1
+  }
+
+  isSongOwner() {
+    if (!this.props.room || !this.props.currentUserId) return false
+    const { currentSong } = this.props.room
+    if (!currentSong) return false
+    if (!currentSong.contributors || currentSong.contributors.length === 0) return false
+    return currentSong.contributors.indexOf(this.props.currentUserId) > -1
   }
 
   renderDJs(room = {}) {
@@ -147,10 +155,8 @@ class Room extends React.Component {
       )
     }
 
-
     return (
       <div className="room">
-        <button onClick={this.becomeDJ}>Be a DJ</button>
         <h1 className="room-name">{room.name}</h1>
         <div className="djs-wrapper">
           <div className="djs">
@@ -164,7 +170,12 @@ class Room extends React.Component {
         <div className="fans">
           {this.renderFans(room)}
         </div>
-        <Ballot />
+        <RoomTools
+          isDJ={this.isDJ()}
+          isSongOwner={this.isSongOwner()}
+          roomId={this.props.currentRoomId}
+          userId={this.props.currentUserId}
+        />
       </div>
     )
   }

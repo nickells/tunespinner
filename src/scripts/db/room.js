@@ -147,6 +147,20 @@ export const makeDJ = async (userId, roomId) => {
   await updateRoom(roomId, room)
 }
 
+export const removeDJ = async (userId, roomId) => {
+  const room = await getRoom(roomId)
+  room.djs = room.djs || []
+
+  const index = room.djs.indexOf(userId)
+  if (index === -1) {
+    return
+  }
+
+  room.djs.splice(index, 1)
+  await updateRoom(roomId, room)
+}
+
+
 export const advanceQueue = async (roomId) => {
   const room = await getRoom(roomId)
 
