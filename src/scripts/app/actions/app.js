@@ -3,20 +3,19 @@ import cookie from 'cookie'
 import loginPromise from '../../auth'
 import { createUser } from '../../db/user'
 
-import queryString from 'query-string'
-
-
 export const INCREASE_CLICK = 'INCREASE_CLICK'
 export const SET_CURRENT_ROOM = 'SET_CURRENT_ROOM'
 export const LOGIN = 'LOGIN'
 export const SET_CURRENT_USER = 'SET_CURRENT_USER'
 
-export const setCurrentRoom = roomId => ({
-  type: SET_CURRENT_ROOM,
-  data: {
-    roomId,
-  },
-})
+export const setCurrentRoom = (roomId) => {
+  return {
+    type: SET_CURRENT_ROOM,
+    data: {
+      roomId,
+    },
+  }
+}
 
 /* Auth */
 

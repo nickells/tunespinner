@@ -3,10 +3,10 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { increaseClick, setCurrentUser, login } from '../actions/app'
 import { setRooms, setUsers } from '../actions/firebase'
+import SpotifyPlayer from '../global/SpotifyPlayer'
 import RoomCreator from './RoomCreator'
 import RoomQueue from './RoomQueue'
 import RoomList from './RoomList'
-import Player from './Player'
 import Room from './Room'
 import Profile from './Profile'
 import TrackSearch from './TrackSearch'
@@ -48,6 +48,13 @@ class Main extends React.Component {
   async componentWillMount() {
     await waitForSpotify()
     await this.props.setCurrentUser()
+    if (this.props.accessToken) {
+      window.spotifyPlayer = new SpotifyPlayer(this.props.accessToken)
+      await window.spotifyPlayer.init()
+    } else {
+      console.log('Please log in!')
+    }
+
     this.setState({
       ready: true,
     })
@@ -87,7 +94,6 @@ class Main extends React.Component {
       this.state.ready && (
         <main>
           <Room />
-          <Player />
           <menu className="menu">
             <Login onClick={this.props.login} />
             { this.state.activeTab === TAB_NAMES.rooms && this.renderRoomsTab() }
