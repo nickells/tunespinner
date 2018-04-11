@@ -169,10 +169,10 @@ export const voteSong = diff => async (upvoterId, roomId) => {
     return
   }
 
-  // if (room.currentSong.contributors.includes(upvoterId)) {
-  //   console.warn('tried to upvote a song that you added')
-  //   return
-  // }
+  if (room.currentSong.contributors.includes(upvoterId)) {
+    console.warn('tried to upvote a song that you added')
+    return
+  }
 
   room.currentSong.score += diff
 
