@@ -35,7 +35,11 @@ class Room extends React.Component {
       const now = Date.now()
       const diff = now - currentSongStartTime
 
-      window.spotifyPlayer.setSongAt(currentSong.uri, diff)
+      if (diff < currentSong.duration_ms) {
+        window.spotifyPlayer.setSongAt(currentSong.uri, diff)
+      } else {
+        window.spotifyPlayer.pause()
+      }
 
       if (this.songTicker) clearInterval(this.songTicker)
 
@@ -48,16 +52,26 @@ class Room extends React.Component {
   checkForNextSong() {
     const { currentSong, currentSongStartTime } = this.props.room
 
-    const _diff = Date.now() - currentSongStartTime
-    const songPosition = _diff
-    this.setState({ songPosition })
+    if (!currentSong) {
+      if (this.isKingDJ(this.props.room)) {
+        advanceQueue(this.props.room.id)
+        clearInterval(this.songTicker)
+      }
+      return
+    }
 
-    if (this.isKingDJ(this.props.room)) {
-      if (_diff > currentSong.duration_ms) {
+    const _diff = Date.now() - currentSongStartTime
+    let songPosition = _diff
+
+    if (_diff > currentSong.duration_ms) {
+      songPosition = 0
+      if (this.isKingDJ(this.props.room)) {
         advanceQueue(this.props.room.id)
         clearInterval(this.songTicker)
       }
     }
+
+    this.setState({ songPosition })
   }
 
   componentWillUnmount() {
@@ -98,6 +112,28 @@ class Room extends React.Component {
     })
   }
 
+  renderCurrentSong() {
+    const { currentSong } = this.props.room
+
+    if (!currentSong) return null
+
+    const artists = currentSong.artists.map(a => a.name).join('')
+
+    const { songPosition } = this.state
+
+    const sec = Math.round(songPosition / 1000)
+    const min = Math.floor(sec / 60)
+    const format = num => (num < 10 ? `0${num}` : num)
+
+    return (
+      <div className="current-song">
+        <h3 className="song-name">{currentSong.name}</h3>
+        <h2 className="song-artist">{artists}</h2>
+        <div className="song-position">{format(min)}:{format(sec % 60)}</div>
+      </div>
+    )
+  }
+
   render() {
     const room = this.props.rooms[this.props.currentRoomId]
 
@@ -110,14 +146,6 @@ class Room extends React.Component {
       )
     }
 
-    const { currentSong } = room
-    const artists = currentSong.artists.map(a => a.name).join('')
-
-    const { songPosition } = this.state
-
-    const sec = Math.round(songPosition / 1000)
-    const min = Math.floor(sec / 60)
-    const format = num => (num < 10 ? `0${num}` : num)
 
     return (
       <div className="room">
@@ -130,11 +158,7 @@ class Room extends React.Component {
             <div className="speaker right" />
           </div>
 
-          <div className="current-song">
-            <h3 className="song-name">{currentSong.name}</h3>
-            <h2 className="song-artist">{artists}</h2>
-            <div className="song-position">{format(min)}:{format(sec % 60)}</div>
-          </div>
+          {this.renderCurrentSong()}
         </div>
         <div className="fans">
           {this.renderFans(room)}

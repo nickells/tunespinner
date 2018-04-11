@@ -63,6 +63,10 @@ class SpotifyPlayer {
     console.log(seekTime, state)
     this.player.seek(seekTime)
   }
+
+  async pause() {
+    return this.player.pause()
+  }
 }
 
 module.exports = SpotifyPlayer
