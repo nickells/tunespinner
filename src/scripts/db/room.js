@@ -176,19 +176,32 @@ export const advanceQueue = async (roomId) => {
   await updateRoom(roomId, room)
 }
 
-export const voteSong = diff => async (upvoterId, roomId) => {
+export const voteSong = diff => async (voterId, roomId) => {
   const room = await getRoom(roomId)
   if (!room.currentSong) {
     console.warn('tried to upvote a room without a song')
     return
   }
 
-  if (room.currentSong.contributors.includes(upvoterId)) {
+  if (room.currentSong.contributors.includes(voterId)) {
     console.warn('tried to upvote a song that you added')
     return
   }
 
-  room.currentSong.score += diff
+  const [key, antikey] = diff > 0 ? ['upvotes', 'downvotes'] : ['downvotes', 'upvotes']
+
+  if (!room[key]) room[key] = []
+  if (!room[antikey]) room[antikey] = []
+
+  if (room[key].includes(voterId)) {
+    console.warn('you already voted for this song')
+    return
+  }
+  if (room[antikey].includes(voterId)) {
+    room[antikey].splice(room[antikey].indexOf(voterId), 1)
+  }
+
+  room[key].push(voterId)
 
   room.currentSong.contributors.forEach(async (contributorId) => {
     const user = await getUser(contributorId)
