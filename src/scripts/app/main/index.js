@@ -15,8 +15,8 @@ import { watchRooms } from '../../db/room'
 import { watchUsers } from '../../db/user'
 
 export const TAB_NAMES = {
-  rooms: 'Rooms',
   queue: 'Queue',
+  rooms: 'Rooms',
   profile: 'Profile',
 }
 
@@ -83,6 +83,7 @@ class Main extends React.Component {
   renderQueueTab() {
     return (
       <React.Fragment>
+        {this.renderActiveRoom()}
         {this.props.currentRoomId && <RoomQueue />}
         <TrackSearch />
       </React.Fragment>
@@ -102,7 +103,6 @@ class Main extends React.Component {
     if (this.props.accessToken) {
       return (
         <React.Fragment>
-          { this.renderActiveRoom() }
           { this.state.activeTab === TAB_NAMES.rooms && this.renderRoomsTab() }
           { this.state.activeTab === TAB_NAMES.queue && this.renderQueueTab() }
           { this.state.activeTab === TAB_NAMES.profile && <Profile /> }

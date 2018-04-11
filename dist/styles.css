@@ -338,7 +338,7 @@ main {
   position: relative;
 }
 .menu .queue-item:hover:after {
-  content: "\1F6AE";
+  content: "\1F5D1";
   font-size: 25px;
   position: absolute;
   right: 25px;
