@@ -190,18 +190,18 @@ export const voteSong = diff => async (voterId, roomId) => {
 
   const [key, antikey] = diff > 0 ? ['upvotes', 'downvotes'] : ['downvotes', 'upvotes']
 
-  if (!room[key]) room[key] = []
-  if (!room[antikey]) room[antikey] = []
+  if (!room.currentSong[key]) room.currentSong[key] = []
+  if (!room.currentSong[antikey]) room.currentSong[antikey] = []
 
-  if (room[key].includes(voterId)) {
+  if (room.currentSong[key].includes(voterId)) {
     console.warn('you already voted for this song')
     return
   }
-  if (room[antikey].includes(voterId)) {
-    room[antikey].splice(room[antikey].indexOf(voterId), 1)
+  if (room.currentSong[antikey].includes(voterId)) {
+    room.currentSong[antikey].splice(room.currentSong[antikey].indexOf(voterId), 1)
   }
 
-  room[key].push(voterId)
+  room.currentSong[key].push(voterId)
 
   room.currentSong.contributors.forEach(async (contributorId) => {
     const user = await getUser(contributorId)
