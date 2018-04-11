@@ -6,6 +6,7 @@ import {
   playSong,
 } from '../actions/spotifyAPI'
 import { addSongToRoomQueue, addSongToRoomRequests } from '../../db/room'
+import SongListItem from './SongListItem'
 
 
 class TrackSearch extends React.Component {
@@ -48,7 +49,9 @@ class TrackSearch extends React.Component {
 
   renderSearchResult(song) {
     return (
-      <div key={song.id} onClick={() => this.handleSongClick(song)} >{song.name}</div>
+      <div key={song.id} style={{ borderBottom: '1px solid grey' }} >
+        <SongListItem song={song} />
+      </div>
     )
   }
 
