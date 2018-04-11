@@ -4,15 +4,15 @@ import { bindActionCreators } from 'redux'
 import { increaseClick, setCurrentUser, login, switchTab } from '../actions/app'
 import { setRooms, setUsers } from '../actions/firebase'
 import SpotifyPlayer from '../global/SpotifyPlayer'
-import RoomCreator from './RoomCreator'
 import RoomQueue from './RoomQueue'
-import RoomList from './RoomList'
 import Room from './Room'
 import Profile from './Profile'
 import TrackSearch from './TrackSearch'
 import Tabs from './Tabs'
 import { watchRooms } from '../../db/room'
 import { watchUsers } from '../../db/user'
+import RoomsTab from './RoomsTab'
+import QueueTab from './QueueTab';
 
 export const TAB_NAMES = {
   queue: 'Queue',
@@ -71,40 +71,12 @@ class Main extends React.Component {
     this.props.switchTab(tab)
   }
 
-  renderRoomsTab() {
-    return (
-      <React.Fragment>
-        <RoomList />
-        <RoomCreator />
-      </React.Fragment>
-    )
-  }
-
-  renderQueueTab() {
-    return (
-      <React.Fragment>
-        {this.renderActiveRoom()}
-        {this.props.currentRoomId && <RoomQueue />}
-        <TrackSearch />
-      </React.Fragment>
-    )
-  }
-
-  renderActiveRoom() {
-    return (
-      <div className="active-room-header">
-        <h2 className="supertext">Current Room</h2>
-        <h2>{this.props.rooms[this.props.currentRoomId] ? this.props.rooms[this.props.currentRoomId].name : 'None. Sad.'}</h2>
-      </div>
-    )
-  }
-
   renderMenu() {
     if (this.props.accessToken) {
       return (
         <React.Fragment>
-          { this.props.activeTab === TAB_NAMES.rooms && this.renderRoomsTab() }
-          { this.props.activeTab === TAB_NAMES.queue && this.renderQueueTab() }
+          { this.props.activeTab === TAB_NAMES.rooms && <RoomsTab /> }
+          { this.props.activeTab === TAB_NAMES.queue && <QueueTab currentRoom={this.props.rooms[this.props.currentRoomId]} /> }
           { this.props.activeTab === TAB_NAMES.profile && <Profile /> }
           <Tabs
             labels={Object.values(TAB_NAMES)}
