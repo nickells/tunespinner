@@ -336,7 +336,6 @@ main {
   padding: 20px 25px;
   position: relative;
   display: flex;
-  justify-content: space-between;
 }
 .menu .queue-item .remove-item {
   padding: 10px;
@@ -591,6 +590,7 @@ main {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  width: 100%;
 }
 .song-list-item .row {
   color: rgba(255, 255, 255, 0.5);

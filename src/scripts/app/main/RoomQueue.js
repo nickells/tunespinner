@@ -22,7 +22,7 @@ class RoomQueue extends React.Component {
         {
           this.props.room.queue.map((item, index) => (
             <div className="queue-item" key={`${item.id}${index}`}>
-              <span>{index + 1}.</span>
+              <span>{index + 1}. </span>
               <SongListIem song={item} />
               { canRemove(item) && <span className="remove-item" onClick={() => removeSongFromQueue(index, this.props.currentRoomId)}>✕</span> }
             </div>
