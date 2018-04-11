@@ -11,6 +11,10 @@ class Room extends React.Component {
     this.firstUpdate = true
 
     this.becomeDJ = this.becomeDJ.bind(this)
+
+    this.state = {
+      songPosition: 0,
+    }
   }
 
   componentDidUpdate(prevProps) {
@@ -20,14 +24,11 @@ class Room extends React.Component {
     const prevRoom = prevProps.room || {}
     const currentSong = room.currentSong || {}
     const prevSong = prevRoom.currentSong || {}
-    const currentDJs = room.djs || []
-    const prevDJs = prevRoom.djs || []
 
     const roomChanged = room.id !== prevRoom.id
     const songChanged = currentSong.key !== prevSong.key
-    const kingDJChanged = currentDJs[0] !== prevDJs[0]
 
-    if (roomChanged || songChanged || kingDJChanged || this.firstUpdate) {
+    if (roomChanged || songChanged || this.firstUpdate) {
       this.firstUpdate = false
 
       const { currentSongStartTime } = room
@@ -36,31 +37,31 @@ class Room extends React.Component {
 
       window.spotifyPlayer.setSongAt(currentSong.uri, diff)
 
-      if (this.kingDJInterval) clearInterval(this.kingDJInterval)
+      if (this.songTicker) clearInterval(this.songTicker)
 
-      if (this.isKingDJ(room)) {
-        this.kingDJInterval = setInterval(() => {
-          console.log('I AM KING DJ! and I say:')
-          this.checkForNextSong(room)
-        }, 800)
+      this.songTicker = setInterval(() => {
+        this.checkForNextSong(room)
+      }, 800)
+    }
+  }
+
+  checkForNextSong() {
+    const { currentSong, currentSongStartTime } = this.props.room
+
+    const _diff = Date.now() - currentSongStartTime
+    const songPosition = _diff
+    this.setState({ songPosition })
+
+    if (this.isKingDJ(this.props.room)) {
+      if (_diff > currentSong.duration_ms) {
+        advanceQueue(this.props.room.id)
+        clearInterval(this.songTicker)
       }
     }
   }
 
-  async checkForNextSong(room) {
-    const { currentSong, currentSongStartTime } = room
-
-    const _diff = Date.now() - currentSongStartTime
-    console.log('TIME LEFT:', (currentSong.duration_ms - _diff) / 1000)
-    if (_diff > currentSong.duration_ms) {
-      console.log('NEXT SONG!', currentSong)
-      advanceQueue(room.id)
-      clearInterval(this.kingDJInterval)
-    }
-  }
-
   componentWillUnmount() {
-    if (this.kingDJInterval) clearInterval(this.kingDJInterval)
+    if (this.songTicker) clearInterval(this.songTicker)
   }
 
   isKingDJ(room) {
@@ -112,6 +113,12 @@ class Room extends React.Component {
     const { currentSong } = room
     const artists = currentSong.artists.map(a => a.name).join('')
 
+    const { songPosition } = this.state
+
+    const sec = Math.round(songPosition / 1000)
+    const min = Math.floor(sec / 60)
+    const format = num => (num < 10 ? `0${num}` : num)
+
     return (
       <div className="room">
         <button onClick={this.becomeDJ}>Be a DJ</button>
@@ -126,7 +133,7 @@ class Room extends React.Component {
           <div className="current-song">
             <h3 className="song-name">{currentSong.name}</h3>
             <h2 className="song-artist">{artists}</h2>
-            {/* <div className="song-position">{format(min)}:{format(sec % 60)}</div> */}
+            <div className="song-position">{format(min)}:{format(sec % 60)}</div>
           </div>
         </div>
         <div className="fans">
