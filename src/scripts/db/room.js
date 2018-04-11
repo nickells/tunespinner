@@ -1,5 +1,5 @@
 import firebase from './firebase'
-import { getUser } from './user'
+import { getUser, updateUser } from './user'
 
 const db = firebase.database()
 
@@ -113,6 +113,7 @@ const addSongToRoom = async (song, roomId, key = 'requests') => {
   const relevantSongInformation = pick(song, 'id', 'name', 'uri', 'duration_ms', 'artists', 'contributors')
   const randomKey = Math.floor(Math.random() * 999999)
   relevantSongInformation.key = relevantSongInformation.id + randomKey
+  relevantSongInformation.score = 0 // Initialize score for upvoting purposes
   const room = await getRoom(roomId)
   room[key] = room[key] || []
   room[key].push(relevantSongInformation)
@@ -160,3 +161,29 @@ export const advanceQueue = async (roomId) => {
   console.log(currentSong, room)
   await updateRoom(roomId, room)
 }
+
+export const voteSong = diff => async (upvoterId, roomId) => {
+  const room = await getRoom(roomId)
+  if (!room.currentSong) {
+    console.warn('tried to upvote a room without a song')
+    return
+  }
+
+  // if (room.currentSong.contributors.includes(upvoterId)) {
+  //   console.warn('tried to upvote a song that you added')
+  //   return
+  // }
+
+  room.currentSong.score += diff
+
+  room.currentSong.contributors.forEach(async (contributorId) => {
+    const user = await getUser(contributorId)
+    user.score += diff
+    updateUser(contributorId, user)
+  })
+
+  await updateRoom(roomId, room)
+}
+
+export const upvoteSong = voteSong(+1)
+export const downvoteSong = voteSong(-1)

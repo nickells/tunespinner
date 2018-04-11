@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { setCurrentRoom } from '../actions/app'
 import { makeDJ, advanceQueue } from '../../db/room'
+import Ballot from './Ballot'
 
 class Room extends React.Component {
   constructor(props) {
@@ -163,6 +164,7 @@ class Room extends React.Component {
         <div className="fans">
           {this.renderFans(room)}
         </div>
+        <Ballot />
       </div>
     )
   }
