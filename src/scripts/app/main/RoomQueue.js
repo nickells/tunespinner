@@ -3,6 +3,8 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { setCurrentRoom } from '../actions/app'
 import { removeSongFromQueue } from '../../db/room'
+import SongListIem from './SongListItem';
+
 
 class RoomQueue extends React.Component {
   constructor(props) {
@@ -12,11 +14,18 @@ class RoomQueue extends React.Component {
 
   render() {
     if (!this.props.room || !this.props.room.queue) return null
+    const canRemove = (item) => {
+      return item.contributors.includes(this.props.currentUserId) && this.props.room.djs.includes(this.props.currentUserId)
+    }
     return (
       <React.Fragment>
         {
           this.props.room.queue.map((item, index) => (
-            <div className="queue-item" onClick={() => removeSongFromQueue(index, this.props.currentRoomId)} key={`${item.id}${index}`}>{index + 1}. {item.name}</div>
+            <div className="queue-item" key={`${item.id}${index}`}>
+              <span>{index + 1}.</span>
+              <SongListIem song={item} />
+              { canRemove(item) && <span className="remove-item" onClick={() => removeSongFromQueue(index, this.props.currentRoomId)}>✕</span> }
+            </div>
           ))
         }
       </React.Fragment>
@@ -32,6 +41,7 @@ export const getCurrentRoom = (state) => {
 const mapStateToProps = state => ({
   room: getCurrentRoom(state),
   currentRoomId: state.MainReducer.currentRoomId,
+  currentUserId: state.MainReducer.currentUserId,
 })
 
 const mapDispatchToProps = dispatch => bindActionCreators({
