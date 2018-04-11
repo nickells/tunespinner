@@ -30,7 +30,7 @@ class RoomTools extends React.Component {
   }
 
   skipSong() {
-    advanceQueue(this.props.room.id)
+    advanceQueue(this.props.roomId)
   }
 
   upvote() {
