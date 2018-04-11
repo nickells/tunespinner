@@ -15,7 +15,7 @@ class RoomQueue extends React.Component {
   render() {
     if (!this.props.room || !this.props.room.queue) return null
     const canRemove = (item) => {
-      return item.contributors.includes(this.props.currentUserId) && this.props.room.djs.includes(this.props.currentUserId)
+      return item.contributors && item.contributors.includes(this.props.currentUserId) && this.props.room.djs && this.props.room.djs.includes(this.props.currentUserId)
     }
     return (
       <React.Fragment>
