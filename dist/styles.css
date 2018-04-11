@@ -392,6 +392,7 @@ main {
   text-align: center;
   line-height: 0.9em;
   max-height: 12vw;
+  margin-top: 40px;
 }
 .room .djs-wrapper {
   position: relative;
@@ -521,7 +522,7 @@ main {
 }
 .room .tools {
   position: absolute;
-  bottom: 0;
+  bottom: 40px;
   left: 0;
   right: 0;
   width: 100%;
