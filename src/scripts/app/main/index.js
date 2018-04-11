@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { increaseClick, setCurrentUser, login } from '../actions/app'
+import { increaseClick, setCurrentUser, login, switchTab } from '../actions/app'
 import { setRooms, setUsers } from '../actions/firebase'
 import SpotifyPlayer from '../global/SpotifyPlayer'
 import RoomCreator from './RoomCreator'
@@ -68,7 +68,7 @@ class Main extends React.Component {
   }
 
   changeActiveTab(tab) {
-    this.setState({ activeTab: tab })
+    this.props.switchTab(tab)
   }
 
   renderRoomsTab() {
@@ -103,12 +103,12 @@ class Main extends React.Component {
     if (this.props.accessToken) {
       return (
         <React.Fragment>
-          { this.state.activeTab === TAB_NAMES.rooms && this.renderRoomsTab() }
-          { this.state.activeTab === TAB_NAMES.queue && this.renderQueueTab() }
-          { this.state.activeTab === TAB_NAMES.profile && <Profile /> }
+          { this.props.activeTab === TAB_NAMES.rooms && this.renderRoomsTab() }
+          { this.props.activeTab === TAB_NAMES.queue && this.renderQueueTab() }
+          { this.props.activeTab === TAB_NAMES.profile && <Profile /> }
           <Tabs
             labels={Object.values(TAB_NAMES)}
-            activeTab={this.state.activeTab}
+            activeTab={this.props.activeTab}
             onClick={this.changeActiveTab}
           />
         </React.Fragment>
@@ -138,6 +138,7 @@ const mapStateToProps = state => ({
   accessToken: state.MainReducer.accessToken,
   rooms: state.FirebaseReducer.rooms,
   currentRoomId: state.MainReducer.currentRoomId,
+  activeTab: state.MainReducer.activeTab,
 })
 
 const mapDispatchToProps = dispatch => bindActionCreators({
@@ -146,7 +147,7 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   setRooms,
   setUsers,
   login,
-
+  switchTab,
 }, dispatch)
 
 export default connect(

@@ -1,9 +1,10 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { setCurrentRoom } from '../actions/app'
+import { setCurrentRoom, switchTab } from '../actions/app'
 import { setUserRoom } from '../../db/user'
 import { addUserToRoom, removeUserFromRoom } from '../../db/room'
+import { TAB_NAMES } from './index';
 
 class RoomList extends React.Component {
   async chooseRoom(id) {
@@ -11,6 +12,7 @@ class RoomList extends React.Component {
     addUserToRoom(this.props.currentUserId, id)
     setUserRoom(this.props.currentUserId, id)
     this.props.setCurrentRoom(id)
+    this.props.switchTab(TAB_NAMES.queue)
   }
 
   renderRooms() {
@@ -50,6 +52,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   setCurrentRoom,
+  switchTab,
 }, dispatch)
 
 export default connect(

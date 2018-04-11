@@ -3,7 +3,9 @@ import {
   SET_CURRENT_ROOM,
   SET_ROOMS,
   SET_CURRENT_USER,
+  SWITCH_TAB,
 } from '../actions/app'
+import { TAB_NAMES } from '../main';
 
 
 const initialState = {
@@ -12,6 +14,7 @@ const initialState = {
   currentRoomId: null,
   rooms: {},
   currentUserId: null,
+  activeTab: TAB_NAMES.rooms,
 }
 
 export default (state = initialState, action) => {
@@ -37,7 +40,11 @@ export default (state = initialState, action) => {
         accessToken: action.access_token,
         currentUserId: action.userId,
       }
-
+    case SWITCH_TAB:
+      return {
+        ...state,
+        activeTab: action.tab,
+      }
     default:
       return state
   }

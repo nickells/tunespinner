@@ -7,6 +7,7 @@ export const INCREASE_CLICK = 'INCREASE_CLICK'
 export const SET_CURRENT_ROOM = 'SET_CURRENT_ROOM'
 export const LOGIN = 'LOGIN'
 export const SET_CURRENT_USER = 'SET_CURRENT_USER'
+export const SWITCH_TAB = 'SWITCH_TAB'
 
 export const setCurrentRoom = (roomId) => {
   return {
@@ -63,5 +64,12 @@ export const setCurrentUser = () => async (dispatch) => {
         roomId: resolvedUser.currentRoom,
       },
     })
+  }
+}
+
+export const switchTab = (tab) => {
+  return {
+    type: SWITCH_TAB,
+    tab,
   }
 }
