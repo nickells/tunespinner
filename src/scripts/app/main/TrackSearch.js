@@ -5,7 +5,7 @@ import {
   searchForSongs,
   playSong,
 } from '../actions/spotifyAPI'
-import { addSongToRoomQueue } from '../../db/room'
+import { addSongToRoomQueue, addSongToRoomRequests } from '../../db/room'
 
 
 class TrackSearch extends React.Component {
@@ -20,6 +20,12 @@ class TrackSearch extends React.Component {
     this.renderSearchResult = this.renderSearchResult.bind(this)
   }
 
+  isDJ() {
+    if (!this.props.room) return
+    const djs = this.props.room.djs || []
+    return djs.indexOf(this.props.currentUserId) > -1
+  }
+
   searchForSong(e) {
     e.preventDefault()
     this.props.searchForSongs(this.state.query)
@@ -29,8 +35,15 @@ class TrackSearch extends React.Component {
     this.setState({ query: e.target.value })
   }
 
-  handleSongClick(song) {
-    addSongToRoomQueue(song, this.props.currentRoomId)
+  handleSongClick(_song) {
+    const song = Object.assign({}, _song)
+    song.contributors = [this.props.currentUserId]
+
+    if (this.isDJ()) {
+      addSongToRoomQueue(song, this.props.currentRoomId)
+    } else {
+      addSongToRoomRequests(song, this.props.currentRoomId)
+    }
   }
 
   renderSearchResult(song) {
@@ -57,6 +70,8 @@ class TrackSearch extends React.Component {
 const mapStateToProps = state => ({
   searchResults: state.SpotifyReducer.searchResults,
   currentRoomId: state.MainReducer.currentRoomId,
+  currentUserId: state.MainReducer.currentUserId,
+  room: state.FirebaseReducer.rooms[state.MainReducer.currentRoomId],
 })
 
 const mapDispatchToProps = dispatch => bindActionCreators({

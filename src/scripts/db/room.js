@@ -109,15 +109,23 @@ const pick = (object, ...keys) => {
   }, {})
 }
 
-export const addSongToRoomQueue = async (song, roomId) => {
-  const relevantSongInformation = pick(song, 'id', 'name', 'uri', 'duration_ms', 'artists')
+const addSongToRoom = async (song, roomId, key = 'requests') => {
+  const relevantSongInformation = pick(song, 'id', 'name', 'uri', 'duration_ms', 'artists', 'contributors')
   const randomKey = Math.floor(Math.random() * 999999)
   relevantSongInformation.key = relevantSongInformation.id + randomKey
   const room = await getRoom(roomId)
-  room.queue = room.queue || []
-  room.queue.push(relevantSongInformation)
+  room[key] = room[key] || []
+  room[key].push(relevantSongInformation)
 
   await updateRoom(roomId, room)
+}
+
+export const addSongToRoomQueue = async (song, roomId) => {
+  await addSongToRoom(song, roomId, 'queue')
+}
+
+export const addSongToRoomRequests = async (song, roomId) => {
+  await addSongToRoom(song, roomId, 'requests')
 }
 
 export const removeSongFromQueue = async (index, roomId) => {
