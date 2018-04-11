@@ -8,6 +8,10 @@ import { TAB_NAMES } from './index';
 
 class RoomList extends React.Component {
   async chooseRoom(id) {
+    if (id === this.props.currentRoomId) {
+      return
+    }
+
     await removeUserFromRoom(this.props.currentUserId)
     addUserToRoom(this.props.currentUserId, id)
     setUserRoom(this.props.currentUserId, id)
@@ -20,9 +24,12 @@ class RoomList extends React.Component {
 
     return roomIds.map((id) => {
       const room = this.props.rooms[id]
+      const isActive = id === this.props.currentRoomId
+
       return (
         <div
           className="room-preview"
+          data-is-active={isActive}
           key={room.id}
           onClick={() => this.chooseRoom(id)}
         >
