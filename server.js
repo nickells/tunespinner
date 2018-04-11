@@ -11,11 +11,17 @@ const express = require('express'); // Express web server framework
 const request = require('request'); // "Request" library
 const querystring = require('querystring');
 const cookieParser = require('cookie-parser');
-const secrets = require('./secrets')
+
+let secrets
+try {
+  secrets = require('./secrets')
+} catch (e) {
+
+}
 
 const client_id = 'f308f0a3bacf4047a41d2b48eff54115'; // Your client id
-const client_secret = secrets.spotify; // Your secret
-const redirect_uri = 'http://localhost:8888/callback'
+const client_secret = secrets ? secrets.spotify : process.env.SPOTIFY_SECRET // Your secret
+const redirect_uri = process.env.NODE_ENV === 'production' ? 'https://tunespinner.herokuapp.com/callback' : 'https://localhost:8888/callback'
 
 /**
  * Generates a random string containing numbers and letters
