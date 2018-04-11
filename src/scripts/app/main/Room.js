@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { setCurrentRoom } from '../actions/app'
-import { advanceQueue } from '../../db/room'
+import { advanceQueue, removeDJ } from '../../db/room'
 import RoomTools from './RoomTools'
 
 class Room extends React.Component {
@@ -16,6 +16,14 @@ class Room extends React.Component {
     }
   }
 
+  componentDidMount() {
+    window.addEventListener('beforeunload', () => {
+      if (this.isDJ()) {
+        removeDJ(this.props.currentUserId, this.props.currentRoomId)
+      }
+    })
+  }
+
   componentDidUpdate(prevProps) {
     if (!this.props.room) return
 
@@ -23,11 +31,15 @@ class Room extends React.Component {
     const prevRoom = prevProps.room || {}
     const currentSong = room.currentSong || {}
     const prevSong = prevRoom.currentSong || {}
+    const djs = room.djs || []
+    const prevDjs = prevRoom.djs || []
 
+    const kingDJChanged = djs[0] !== prevDjs[0]
     const roomChanged = room.id !== prevRoom.id
     const songChanged = currentSong.key !== prevSong.key
 
-    if (roomChanged || songChanged || this.firstUpdate) {
+    if (roomChanged || songChanged || kingDJChanged || this.firstUpdate) {
+      console.log('TRY PLAYING')
       this.firstUpdate = false
 
       const { currentSongStartTime } = room
