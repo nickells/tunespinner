@@ -20,13 +20,13 @@ class RoomTools extends React.Component {
   }
 
   becomeDJ() {
-    const { currentRoomId, currentUserId } = this.props
-    makeDJ(currentUserId, currentRoomId)
+    const { roomId, userId } = this.props
+    makeDJ(userId, roomId)
   }
 
   stopDJing() {
-    const { currentRoomId, currentUserId } = this.props
-    removeDJ(currentUserId, currentRoomId)
+    const { roomId, userId } = this.props
+    removeDJ(userId, roomId)
   }
 
   skipSong() {
