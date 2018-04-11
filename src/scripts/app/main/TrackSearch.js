@@ -49,7 +49,7 @@ class TrackSearch extends React.Component {
 
   renderSearchResult(song) {
     return (
-      <div key={song.id} style={{ borderBottom: '1px solid grey' }} >
+      <div key={song.id} style={{ borderBottom: '1px solid grey' }} onClick={() => this.handleSongClick(song)}>
         <SongListItem song={song} />
       </div>
     )
