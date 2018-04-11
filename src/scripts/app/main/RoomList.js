@@ -20,9 +20,12 @@ class RoomList extends React.Component {
 
     return roomIds.map((id) => {
       const room = this.props.rooms[id]
+      const isActive = id === this.props.currentRoomId
+
       return (
         <div
           className="room-preview"
+          data-is-active={isActive}
           key={room.id}
           onClick={() => this.chooseRoom(id)}
         >
