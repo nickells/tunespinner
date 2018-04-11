@@ -171,7 +171,6 @@ export const advanceQueue = async (roomId) => {
   const currentSong = room.queue.splice(0, 1)[0]
   room.currentSong = currentSong
   room.currentSongStartTime = Date.now()
-  room.queue.push(currentSong)
   console.log(currentSong, room)
   await updateRoom(roomId, room)
 }
