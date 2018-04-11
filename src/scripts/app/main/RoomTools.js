@@ -49,6 +49,7 @@ class RoomTools extends React.Component {
       return (
         <div
           className="tool"
+          data-name={name}
           data-is-active={isActive}
           onClick={isActive ? callback : null}
         >
