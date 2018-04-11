@@ -40,6 +40,15 @@ module.exports = [{
           use: ['css-loader', 'less-loader'],
         }),
       },
+      {
+        test: /\.(png|jpg|gif|svg)$/,
+        use: [
+          {
+            loader: 'file-loader',
+            options: {},
+          },
+        ],
+      },
     ],
   },
   plugins: [
