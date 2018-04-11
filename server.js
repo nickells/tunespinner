@@ -21,7 +21,8 @@ try {
 
 const client_id = 'f308f0a3bacf4047a41d2b48eff54115'; // Your client id
 const client_secret = secrets ? secrets.spotify : process.env.SPOTIFY_SECRET // Your secret
-const redirect_uri = process.env.NODE_ENV === 'production' ? 'https://tunespinner.herokuapp.com/callback' : 'https://localhost:8888/callback'
+const redirect_uri = process.env.NODE_ENV === 'production' ? 'https://tunespinner.herokuapp.com/callback' : 'http://localhost:8888/callback'
+console.log('redirect uri is', redirect_uri)
 
 /**
  * Generates a random string containing numbers and letters
@@ -135,4 +136,5 @@ app.get('/refresh_token', (req, res) => {
   });
 });
 
-app.listen(8888);
+console.log('listening on port', process.env.PORT || 8888)
+app.listen(process.env.PORT || 8888);
