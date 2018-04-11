@@ -89,21 +89,44 @@ class Main extends React.Component {
     )
   }
 
+  renderActiveRoom() {
+    console.log(this.props.rooms)
+    return (
+      <React.Fragment>
+        <h2>Current Room</h2>
+        <h2>{this.props.rooms[this.props.currentRoomId] ? this.props.rooms[this.props.currentRoomId].name : 'None. Sad.'}</h2>
+      </React.Fragment>
+    )
+  }
+
+  renderMenu() {
+    if (this.props.accessToken) {
+      return (
+        <React.Fragment>
+          { this.renderActiveRoom() }
+          { this.state.activeTab === TAB_NAMES.rooms && this.renderRoomsTab() }
+          { this.state.activeTab === TAB_NAMES.queue && this.renderQueueTab() }
+          { this.state.activeTab === TAB_NAMES.profile && <Profile /> }
+          <Tabs
+            labels={Object.values(TAB_NAMES)}
+            activeTab={this.state.activeTab}
+            onClick={this.changeActiveTab}
+          />
+        </React.Fragment>
+      )
+    }
+    return (
+      <Login onClick={this.props.login} />
+    )
+  }
+
   render() {
     return (
       this.state.ready && (
         <main>
           <Room />
           <menu className="menu">
-            <Login onClick={this.props.login} />
-            { this.state.activeTab === TAB_NAMES.rooms && this.renderRoomsTab() }
-            { this.state.activeTab === TAB_NAMES.queue && this.renderQueueTab() }
-            { this.state.activeTab === TAB_NAMES.profile && <Profile />}
-            <Tabs
-              labels={Object.values(TAB_NAMES)}
-              activeTab={this.state.activeTab}
-              onClick={this.changeActiveTab}
-            />
+            { this.renderMenu() }
           </menu>
         </main>
       )
