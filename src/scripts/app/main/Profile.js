@@ -6,8 +6,7 @@ import { updateUser } from '../../db/user'
 import EditableField from './EditableField'
 
 const emojiPickerStyleOverrides = {
-  width: 300,
-  marginLeft: -10,
+  width: 350,
   borderRadius: 0,
 }
 

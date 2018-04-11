@@ -294,6 +294,17 @@ button {
   border: none;
   padding: 5px;
 }
+h2 {
+  color: white;
+  font-size: 14px;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  font-weight: 100;
+}
+h2.supertext {
+  margin-bottom: 0.7em;
+  opacity: 0.5;
+}
 h3 {
   font-size: 11px;
   letter-spacing: 0.1em;
@@ -307,39 +318,59 @@ main {
   position: fixed;
   top: 0;
   right: 0;
-  width: 300px;
+  width: 350px;
   height: 100%;
-  background-color: #F1F1F1;
+  background-color: #242424;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-  padding: 10px;
   box-sizing: border-box;
 }
 .menu .room-list .room-preview {
-  background-color: #FFF;
-  padding: 5px;
-  margin: 5px 0;
   cursor: pointer;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+  color: #FFF;
+  padding: 20px 25px;
+}
+.menu .queue-item {
+  cursor: pointer;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+  color: #FFF;
+  padding: 20px 25px;
+  position: relative;
+}
+.menu .queue-item:hover:after {
+  content: "\1F6AE";
+  font-size: 25px;
+  position: absolute;
+  right: 25px;
+  bottom: 12px;
+}
+.menu .active-room-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: 2em;
+  padding-top: 2em;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.5);
 }
 .menu .tabs {
   position: absolute;
   bottom: 0;
   width: 100%;
   display: flex;
-  margin-left: -10px;
   flex-direction: row;
 }
 .menu .tabs .tab {
   cursor: pointer;
-  height: 75px;
+  height: 50px;
   flex-grow: 1;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-right: 1px solid #242424;
-  border-top: 1px solid #242424;
+  opacity: 0.5;
 }
 .menu .tabs .tab.active {
-  background-color: rgba(0, 0, 0, 0.2);
+  opacity: 1.0;
+  border-bottom: 5px solid rgba(255, 255, 255, 0.5);
 }
 .menu .emoji-mart-preview {
   display: none;
@@ -348,7 +379,7 @@ main {
   position: absolute;
   top: 0;
   left: 0;
-  width: calc(100% - 300px);
+  width: calc(100% - 350px);
   height: 100%;
 }
 .room .room-name {

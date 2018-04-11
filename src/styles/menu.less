@@ -5,20 +5,45 @@
   width: @menu-width;
   height: 100%;
 
-  background-color: @light-gray;
+  background-color: @medium-gray;
   box-shadow: 0 0 10px rgba(0,0,0,0.2);
 
-  padding: 10px;
   box-sizing: border-box;
 
   .room-list {
 
     .room-preview {
-      background-color: @white;
-      padding: 5px;
-      margin: 5px 0;
       cursor: pointer;
+      border-bottom: 1px solid @half-white;
+      color: @white;
+      padding: 20px 25px;
     }
+  }
+
+  .queue-item {
+    cursor: pointer;
+    border-bottom: 1px solid @half-white;
+    color: @white;
+    padding: 20px 25px;
+    position: relative;
+    &:hover{
+      &:after{
+        content: "🚮";
+        font-size: 25px;
+        position: absolute;
+        right: 25px;
+        bottom: 12px;
+      }
+    }
+  }
+
+  .active-room-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 2em;
+    padding-top: 2em;
+    border-bottom: 1px solid @half-white;
   }
 
   .tabs {
@@ -26,19 +51,18 @@
     bottom: 0;
     width: 100%;
     display: flex;
-    margin-left: -10px; // padding compensate
     flex-direction: row;
     .tab {
       cursor: pointer;
-      height: 75px;
+      height: 50px;
       flex-grow: 1;
       display: flex;
       align-items: center;
       justify-content: center;
-      border-right: 1px solid @medium-gray;
-      border-top: 1px solid @medium-gray;
+      opacity: 0.5;
       &.active {
-        background-color: rgba(0, 0, 0, 0.2);
+        opacity: 1.0;
+        border-bottom: 5px solid @half-white;
       }
     }
   }

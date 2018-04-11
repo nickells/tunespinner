@@ -90,12 +90,11 @@ class Main extends React.Component {
   }
 
   renderActiveRoom() {
-    console.log(this.props.rooms)
     return (
-      <React.Fragment>
-        <h2>Current Room</h2>
+      <div className="active-room-header">
+        <h2 className="supertext">Current Room</h2>
         <h2>{this.props.rooms[this.props.currentRoomId] ? this.props.rooms[this.props.currentRoomId].name : 'None. Sad.'}</h2>
-      </React.Fragment>
+      </div>
     )
   }
 
@@ -137,7 +136,7 @@ class Main extends React.Component {
 const mapStateToProps = state => ({
   clicks: state.MainReducer.clicks,
   accessToken: state.MainReducer.accessToken,
-  rooms: state.MainReducer.rooms,
+  rooms: state.FirebaseReducer.rooms,
   currentRoomId: state.MainReducer.currentRoomId,
 })
 
