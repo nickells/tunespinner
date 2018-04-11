@@ -8,6 +8,10 @@ import { TAB_NAMES } from './index';
 
 class RoomList extends React.Component {
   async chooseRoom(id) {
+    if (id === this.props.currentRoomId) {
+      return
+    }
+
     await removeUserFromRoom(this.props.currentUserId)
     addUserToRoom(this.props.currentUserId, id)
     setUserRoom(this.props.currentUserId, id)
