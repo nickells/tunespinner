@@ -134,12 +134,16 @@ const addSongToRoom = async (song, roomId, key = 'requests') => {
 
   await updateRoom(roomId, room)
 
-  if (
-    key === 'queue' &&
-    room[key].length === 1 &&
-    !room.currentSong
-  ) {
-    await advanceQueue(roomId)
+  if (key === 'queue') {
+    if (!room.currentSong || !room.currentSongStartTime) {
+      await advanceQueue(roomId)
+    } else {
+      const now = Date.now()
+      const diff = now - room.currentSongStartTime
+      if (diff > room.currentSong.duration_ms) {
+        await advanceQueue(roomId)
+      }
+    }
   }
 }
 
