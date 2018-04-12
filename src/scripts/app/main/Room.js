@@ -42,14 +42,8 @@ class Room extends React.Component {
       console.log('TRY PLAYING')
       this.firstUpdate = false
 
-      const { currentSongStartTime } = room
-      const now = Date.now()
-      const diff = now - currentSongStartTime
-
-      if (diff < currentSong.duration_ms) {
-        window.spotifyPlayer.setSongAt(currentSong.uri, diff)
-      } else {
-        window.spotifyPlayer.pause()
+      if (roomChanged || songChanged || this.firstUpdate) {
+        this.playSong()
       }
 
       if (this.songTicker) clearInterval(this.songTicker)
@@ -57,6 +51,18 @@ class Room extends React.Component {
       this.songTicker = setInterval(() => {
         this.checkForNextSong(room)
       }, 800)
+    }
+  }
+
+  playSong() {
+    const { currentSong, currentSongStartTime } = this.props.room
+    const now = Date.now()
+    const diff = now - currentSongStartTime
+
+    if (diff < currentSong.duration_ms) {
+      window.spotifyPlayer.setSongAt(currentSong.uri, diff)
+    } else {
+      window.spotifyPlayer.pause()
     }
   }
 
