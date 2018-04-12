@@ -13,7 +13,7 @@ const getTime = (ms) => {
 }
 
 
-const SongListIem = ({ song, retrieveUserData }) => {
+const SongListIem = ({ song, retrieveUserData, isRequest = false }) => {
   const {
     name, artists, contributors, duration_ms,
   } = song
@@ -27,7 +27,7 @@ const SongListIem = ({ song, retrieveUserData }) => {
         { artists.map(artist => artist.name).join(', ') }
       </div>
       {
-        contributors && (
+        !isRequest && contributors && (
           <div className="row">
             added by {contributors.map(retrieveUserData).map(user => user.username).join(', ')}
           </div>

@@ -476,6 +476,9 @@ main {
   padding: 10px;
   cursor: pointer;
 }
+.menu .queue-item.is-request {
+  background: darkblue;
+}
 .menu .active-menu-header {
   display: flex;
   flex-direction: column;
