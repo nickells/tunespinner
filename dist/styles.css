@@ -511,6 +511,23 @@ main {
 .menu .emoji-mart-preview {
   display: none;
 }
+@keyframes dance {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  25% {
+    transform: translate3d(-5px, -10px, 0);
+  }
+  50% {
+    transform: translate3d(0, 0, 0);
+  }
+  75% {
+    transform: translate3d(5px, -10px, 0);
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+}
 .room {
   position: absolute;
   top: 0;
@@ -558,13 +575,6 @@ main {
   width: 120px;
   height: 200px;
   background-color: #242424;
-  transition: background-color 500ms ease-in-out;
-}
-.room .djs .speaker.bump-up {
-  background-color: #79c12a;
-}
-.room .djs .speaker.bump-down {
-  background-color: #b70000;
 }
 .room .djs .speaker::after,
 .room .djs .speaker::before {
@@ -581,7 +591,6 @@ main {
   background-color: #090909;
   border: 10px solid #201C1C;
   box-sizing: border-box;
-  opacity: 0.8;
 }
 .room .djs .speaker::after {
   transform: translate3d(0, -60%, 0);
@@ -676,6 +685,10 @@ main {
 }
 .room .user .emoji {
   font-size: 36px;
+  transition: transform 200ms linear;
+}
+.room .user .emoji.is-dancing {
+  animation: dance 500ms infinite linear;
 }
 .room .user .info {
   margin: auto;
@@ -759,6 +772,9 @@ main {
 }
 .room .tools .tool[data-name="SKIP"]::after {
   background-image: url(3a2a15157bc88e4d4a74e4fc2ab945c9.svg);
+}
+.room .tools .tool[data-name="DANCE"]::after {
+  background-image: url(02a7818b60280f2c98a98f83957738db.svg);
 }
 .room .tools .tool:last-of-type {
   margin-right: 0;
