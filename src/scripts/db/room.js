@@ -165,6 +165,12 @@ export const removeSongFromQueue = async (index, roomId) => {
   await updateRoom(roomId, room)
 }
 
+export const removeSongFromRequests = async (index, roomId) => {
+  const room = await getRoom(roomId)
+  room.requests.splice(index, 1)
+  await updateRoom(roomId, room)
+}
+
 export const makeDJ = async (userId, roomId) => {
   const room = await getRoom(roomId)
   room.djs = room.djs || []

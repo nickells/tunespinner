@@ -13,14 +13,16 @@ const getTime = (ms) => {
 }
 
 
-const SongListIem = ({ song, retrieveUserData, isRequest = false }) => {
+const SongListIem = ({
+  song, prefix, retrieveUserData, isRequest = false,
+}) => {
   const {
     name, artists, contributors, duration_ms,
   } = song
   return (
     <div className="song-list-item">
       <div className="row bright" >
-        <span>{ name }</span>
+        <span className="title">{prefix}{ name }</span>
         <span>{ getTime(duration_ms) }</span>
       </div>
       <div className="row">
@@ -32,7 +34,14 @@ const SongListIem = ({ song, retrieveUserData, isRequest = false }) => {
             added by {contributors.map(retrieveUserData).map(user => user.username).join(', ')}
           </div>
         )
-    }
+      }
+      {
+        isRequest && contributors && (
+          <div className="row">
+            requested by {contributors[0]}
+          </div>
+        )
+      }
     </div>
   )
 }
@@ -46,4 +55,3 @@ export default connect(
   null,
   mapDispatchToProps,
 )(SongListIem)
-
