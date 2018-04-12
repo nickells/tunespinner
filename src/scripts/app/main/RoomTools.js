@@ -8,6 +8,7 @@ import {
   updateRoom,
 } from '../../db/room'
 
+import { startDancing } from '../../db/user'
 
 class RoomTools extends React.Component {
   constructor(props) {
@@ -18,6 +19,7 @@ class RoomTools extends React.Component {
     this.skipSong = this.skipSong.bind(this)
     this.upvote = this.upvote.bind(this)
     this.downvote = this.downvote.bind(this)
+    this.dance = this.dance.bind(this)
   }
 
   becomeDJ() {
@@ -40,6 +42,10 @@ class RoomTools extends React.Component {
 
   downvote() {
     downvoteSong(this.props.userId, this.props.roomId)
+  }
+
+  dance() {
+    startDancing(this.props.userId)
   }
 
   render() {
@@ -71,6 +77,7 @@ class RoomTools extends React.Component {
         </div>
         <div className="group">
           {renderTool('SKIP', this.skipSong, isOwnerDJ)}
+          {renderTool('DANCE', this.dance, true)}
         </div>
       </div>
     )

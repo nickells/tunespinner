@@ -177,9 +177,10 @@ class Room extends React.Component {
     return users.map((userId) => {
       const user = this.props.users[userId]
       if (!user) return null
+      const isDancing = user.lastDanceAt && (user.lastDanceAt + 1000 > Date.now())
       return (
         <div className="user" key={user.id}>
-          <div className="emoji">{user.emoji}</div>
+          <div className={`emoji ${isDancing && 'is-dancing'}`}>{user.emoji}</div>
           <div className="info">
             <div className="username">
               {title}{user.username}
