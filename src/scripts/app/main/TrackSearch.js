@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
+import debounce from 'lodash/debounce'
 import {
   searchForSongs,
   playSong,
@@ -28,12 +29,9 @@ function isTrackInRequests(songId, requests) {
 class TrackSearch extends React.Component {
   constructor(props) {
     super(props)
-    this.state = {
-      query: '',
-    }
 
-    this.searchForSong = this.searchForSong.bind(this)
     this.handleChange = this.handleChange.bind(this)
+    this.delayedCallback = debounce(this.props.searchForSongs)
     this.renderSearchResult = this.renderSearchResult.bind(this)
   }
 
@@ -43,13 +41,9 @@ class TrackSearch extends React.Component {
     return djs.indexOf(this.props.currentUserId) > -1
   }
 
-  searchForSong(e) {
-    e.preventDefault()
-    this.props.searchForSongs(this.state.query)
-  }
-
   handleChange(e) {
-    this.setState({ query: e.target.value })
+    e.persist()
+    e.target.value && this.delayedCallback(e.target.value)
   }
 
   handleSongClick(_song) {
@@ -84,7 +78,7 @@ class TrackSearch extends React.Component {
   render() {
     return (
       <React.Fragment>
-        <form onSubmit={this.searchForSong}>
+        <form>
           <input type="text" placeholder="Search for Tracks" onChange={this.handleChange} />
         </form>
         <div className="search-results">
