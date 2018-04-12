@@ -842,6 +842,7 @@ main {
 .menu .queue-view .room-queue {
   max-height: 100%;
   overflow: scroll;
+  margin-top: 10px;
 }
 .menu .search-view .search-results {
   height: 70vh;

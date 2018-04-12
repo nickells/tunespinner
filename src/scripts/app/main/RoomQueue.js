@@ -47,8 +47,7 @@ class RoomQueue extends React.Component {
         { !this.props.room.queue && <h2 style={{ marginBottom: '20px' }}>There is nothing in the queue. (Sad!)</h2>}
         { this.props.room.currentSong && (
           <div className="queue-item">
-            <span>▸  </span>
-            <SongListItem song={this.props.room.currentSong} />
+            <SongListItem song={this.props.room.currentSong} prefix="▸  " />
           </div>
         )}
         {
@@ -60,7 +59,7 @@ class RoomQueue extends React.Component {
           ))
         }
         {this.renderRequests()}
-      </React.Fragment>
+      </div>
     )
   }
 }
