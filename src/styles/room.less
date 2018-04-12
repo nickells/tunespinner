@@ -81,10 +81,26 @@
 
       &::after {
         transform: translate3d(0, -60%, 0);
+
+        @keyframes bump1 {
+          0% {   transform: translate3d(0, -60%, 0) scale(1); }
+          50% {  transform: translate3d(0, -60%, 0) scale(1.05); }
+          100% { transform: translate3d(0, -60%, 0) scale(1); }
+        }
+
+        animation: bump1 500ms linear infinite;
       }
 
       &::before {
         transform: translate3d(0, 60%, 0);
+
+        @keyframes bump2 {
+          0% {   transform: translate3d(0, 60%, 0) scale(1); }
+          50% {  transform: translate3d(0, 60%, 0) scale(1.05); }
+          100% { transform: translate3d(0, 60%, 0) scale(1); }
+        }
+
+        animation: bump2 500ms linear infinite;
       }
 
       &.left {

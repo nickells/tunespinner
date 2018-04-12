@@ -582,9 +582,33 @@ main {
 }
 .room .djs .speaker::after {
   transform: translate3d(0, -60%, 0);
+  animation: bump1 500ms linear infinite;
+}
+@keyframes bump1 {
+  0% {
+    transform: translate3d(0, -60%, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(0, -60%, 0) scale(1.05);
+  }
+  100% {
+    transform: translate3d(0, -60%, 0) scale(1);
+  }
 }
 .room .djs .speaker::before {
   transform: translate3d(0, 60%, 0);
+  animation: bump2 500ms linear infinite;
+}
+@keyframes bump2 {
+  0% {
+    transform: translate3d(0, 60%, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(0, 60%, 0) scale(1.05);
+  }
+  100% {
+    transform: translate3d(0, 60%, 0) scale(1);
+  }
 }
 .room .djs .speaker.left {
   top: 50%;
