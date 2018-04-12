@@ -109,6 +109,20 @@ const pick = (object, ...keys) => {
   }, {})
 }
 
+export const advanceQueue = async (roomId) => {
+  const room = await getRoom(roomId)
+
+  if (!room.queue || room.queue.length === 0) {
+    return
+  }
+  console.log('NEXT SONG IS:')
+  const currentSong = room.queue.splice(0, 1)[0]
+  room.currentSong = currentSong
+  room.currentSongStartTime = Date.now()
+  console.log(currentSong, room)
+  await updateRoom(roomId, room)
+}
+
 const addSongToRoom = async (song, roomId, key = 'requests') => {
   const relevantSongInformation = pick(song, 'id', 'name', 'uri', 'duration_ms', 'artists', 'contributors')
   const randomKey = Math.floor(Math.random() * 999999)
@@ -119,6 +133,11 @@ const addSongToRoom = async (song, roomId, key = 'requests') => {
   room[key].push(relevantSongInformation)
 
   await updateRoom(roomId, room)
+
+  if (key === 'queue' && room[key].length === 1) {
+    console.log('advance!')
+    await advanceQueue(roomId)
+  }
 }
 
 export const addSongToRoomQueue = async (song, roomId) => {
@@ -157,21 +176,6 @@ export const removeDJ = async (userId, roomId) => {
   }
 
   room.djs.splice(index, 1)
-  await updateRoom(roomId, room)
-}
-
-
-export const advanceQueue = async (roomId) => {
-  const room = await getRoom(roomId)
-
-  if (!room.queue || room.queue.length === 0) {
-    return
-  }
-  console.log('NEXT SONG IS:')
-  const currentSong = room.queue.splice(0, 1)[0]
-  room.currentSong = currentSong
-  room.currentSongStartTime = Date.now()
-  console.log(currentSong, room)
   await updateRoom(roomId, room)
 }
 

@@ -160,10 +160,7 @@ class Room extends React.Component {
 
     if (!room) {
       return (
-        <div className="room">
-          YOU ARE NOT IN A ROOM
-          <h1 className="room-name">sad</h1>
-        </div>
+        <div className="room" />
       )
     }
 
