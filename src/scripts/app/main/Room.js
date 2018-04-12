@@ -90,7 +90,7 @@ class Room extends React.Component {
 
     // currentSong.wasVotedToSkip is true if the song was downvoted by a majority of fans
     if (_diff > currentSong.duration_ms || currentSong.wasVotedToSkip) {
-      songPosition = 0
+      songPosition = currentSong.duration_ms
       if (this.isKingDJ(room)) {
         advanceQueue(room.id)
         clearInterval(this.songTicker)
