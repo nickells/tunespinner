@@ -93,6 +93,10 @@ export const removeUserFromRoom = async (userId) => {
       return
     }
 
+    if (key === 'djs' && index === 0) {
+      roomCopy.lastKingDJAppointment = Date.now()
+    }
+
     group.splice(index, 1)
     roomCopy[key] = group
   })
@@ -169,6 +173,10 @@ export const makeDJ = async (userId, roomId) => {
     return
   }
 
+  if (room.djs.length === 0) {
+    room.lastKingDJAppointment = Date.now()
+  }
+
   room.djs.push(userId)
   await updateRoom(roomId, room)
 }
@@ -180,6 +188,10 @@ export const removeDJ = async (userId, roomId) => {
   const index = room.djs.indexOf(userId)
   if (index === -1) {
     return
+  }
+
+  if (index === 0) {
+    room.lastKingDJAppointment = Date.now()
   }
 
   room.djs.splice(index, 1)

@@ -794,7 +794,6 @@ main {
   opacity: 0.2;
   padding: 0;
   margin-bottom: 20px;
-  font-weight: 700;
   letter-spacing: 0.2em;
   cursor: pointer;
   transition: opacity 300ms ease-in-out;

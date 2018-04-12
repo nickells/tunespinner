@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { setCurrentRoom } from '../actions/app'
-import { advanceQueue, removeDJ } from '../../db/room'
+import { advanceQueue, removeDJ, updateRoom } from '../../db/room'
 import RoomTools from './RoomTools'
 
 class Room extends React.Component {
@@ -67,24 +67,43 @@ class Room extends React.Component {
   }
 
   checkForNextSong() {
-    const { currentSong, currentSongStartTime } = this.props.room
+    const { room } = this.props
+    const { currentSong, currentSongStartTime } = room
 
     if (!currentSong) {
-      if (this.isKingDJ(this.props.room)) {
-        advanceQueue(this.props.room.id)
+      if (this.isKingDJ(room)) {
+        advanceQueue(room.id)
         clearInterval(this.songTicker)
       }
       return
     }
 
-    const _diff = Date.now() - currentSongStartTime
+    const now = Date.now()
+    const _diff = now - currentSongStartTime
     let songPosition = _diff
 
     if (_diff > currentSong.duration_ms) {
       songPosition = 0
-      if (this.isKingDJ(this.props.room)) {
-        advanceQueue(this.props.room.id)
+      if (this.isKingDJ(room)) {
+        advanceQueue(room.id)
         clearInterval(this.songTicker)
+      }
+
+      // If you're king DJ but you've been waiting for over 2s
+      // and there ARE djs in the room and it's KING DJ's fault:
+      else if (
+        room.djs &&
+        room.lastKingDJAppointment &&
+        now - room.lastKingDJAppointment > 5000 &&
+        _diff - currentSong.duration_ms > 5000 &&
+        room.queue &&
+        room.queue.length > 0
+      ) {
+        const djs = room.djs.slice()
+
+        // Impeach the king!
+        djs.splice(0, 1)
+        updateRoom(room.id, { djs })
       }
     }
 
