@@ -78,9 +78,7 @@ class TrackSearch extends React.Component {
   render() {
     return (
       <React.Fragment>
-        <form>
-          <input type="text" placeholder="Search for Tracks" onChange={this.handleChange} />
-        </form>
+        <input type="text" placeholder="Search for Tracks" onChange={this.handleChange} />
         <div className="search-results">
           {
           this.props.searchResults ? this.props.searchResults.map(this.renderSearchResult) : null
