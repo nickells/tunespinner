@@ -56,6 +56,12 @@ class Room extends React.Component {
 
   playSong() {
     const { currentSong, currentSongStartTime } = this.props.room
+
+    if (!currentSong || !currentSongStartTime) {
+      window.spotifyPlayer.pause()
+      return
+    }
+
     const now = Date.now()
     const diff = now - currentSongStartTime
 

@@ -117,13 +117,16 @@ export const advanceQueue = async (roomId) => {
   const room = await getRoom(roomId)
 
   if (!room.queue || room.queue.length === 0) {
-    return
+    room.currentSong = null
+    room.currentSongStartTime = null
+  } else {
+    console.log('NEXT SONG IS:')
+    const currentSong = room.queue.splice(0, 1)[0]
+    room.currentSong = currentSong
+    room.currentSongStartTime = Date.now()
+    console.log(currentSong, room)
   }
-  console.log('NEXT SONG IS:')
-  const currentSong = room.queue.splice(0, 1)[0]
-  room.currentSong = currentSong
-  room.currentSongStartTime = Date.now()
-  console.log(currentSong, room)
+
   await updateRoom(roomId, room)
 }
 
