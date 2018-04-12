@@ -38,7 +38,7 @@ const SongListIem = ({
       {
         isRequest && contributors && (
           <div className="row">
-            requested by {contributors[0]}
+            requested by {retrieveUserData(contributors[0]).username}
           </div>
         )
       }
