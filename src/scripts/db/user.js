@@ -27,7 +27,8 @@ export const updateUser = (id, data = {}) => {
 
 export const createUser = async (_data = {}) => {
   if (_data.id && await getUser(_data.id)) {
-    return updateUser(_data.id, _data)
+    // If the user already exists, only update the email.
+    return updateUser(_data.id, { email: _data.email })
   }
 
   const data = Object.assign({}, DEFAULT_USER, _data)

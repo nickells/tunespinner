@@ -294,6 +294,7 @@ button {
   display: block;
   border: none;
   padding: 5px;
+  font-family: inherit;
 }
 button {
   background-color: black;
@@ -301,6 +302,7 @@ button {
   padding: 10px 15px;
   text-transform: uppercase;
   letter-spacing: 0.2em;
+  cursor: pointer;
 }
 button:focus {
   outline: none;
@@ -331,6 +333,37 @@ h3 {
 main {
   position: relative;
   min-height: 100vh;
+}
+.label {
+  font-size: 8px;
+  font-weight: 300;
+  color: rgba(255, 255, 255, 0.3);
+  margin-bottom: 5px;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+}
+.editable-field {
+  margin-bottom: 20px;
+}
+.editable-field[data-custom-editor="emoji"] .emoji-mart {
+  position: absolute;
+}
+.editable-field[data-custom-editor="emoji"] .value h2,
+.editable-field[data-custom-editor="emoji"] .preview {
+  font-size: 28px;
+}
+.editable-field .field {
+  display: flex;
+  align-items: center;
+}
+.editable-field .value {
+  flex: 1;
+}
+.editable-field input {
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  width: 100%;
+  padding: 9px 10px;
 }
 .login-page {
   display: flex;
@@ -429,7 +462,7 @@ main {
   padding: 10px;
   cursor: pointer;
 }
-.menu .active-room-header {
+.menu .active-menu-header {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -545,10 +578,17 @@ main {
 }
 .room .current-song {
   position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: auto;
   color: #FFF;
   z-index: 1;
   text-align: center;
-  margin-top: 50px;
+  margin-top: 140px;
 }
 .room .current-song .song-name,
 .room .current-song .song-artist,
@@ -558,6 +598,7 @@ main {
   letter-spacing: 0.2em;
   text-transform: uppercase;
   margin-bottom: 5px;
+  max-width: 400px;
 }
 .room .current-song .song-artist {
   font-size: 10px;

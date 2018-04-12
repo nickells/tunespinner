@@ -32,7 +32,7 @@ class RoomTabs extends React.Component {
 
     const creatorView = (
       <React.Fragment>
-        <div className="active-room-header">
+        <div className="active-menu-header">
           <h2>Create a New Room</h2>
         </div>
         {this.renderViewChangeButton(VIEWS.list, '< BACK')}
@@ -42,7 +42,7 @@ class RoomTabs extends React.Component {
 
     const listView = (
       <React.Fragment>
-        <div className="active-room-header">
+        <div className="active-menu-header">
           <h2>Browse all rooms</h2>
         </div>
         {this.renderViewChangeButton(VIEWS.creator, '+ CREATE NEW')}

@@ -47,7 +47,7 @@ export default class QueueTab extends React.Component {
   render() {
     return (
       <React.Fragment>
-        <div className="active-room-header">
+        <div className="active-menu-header">
           <h2 className="supertext">Current Room</h2>
           <h2>{this.props.currentRoom ? this.props.currentRoom.name : 'None. Sad.'}</h2>
         </div>

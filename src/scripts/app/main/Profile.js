@@ -1,14 +1,8 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { Picker } from 'emoji-mart'
 import { updateUser } from '../../db/user'
 import EditableField from './EditableField'
-
-const emojiPickerStyleOverrides = {
-  width: 350,
-  borderRadius: 0,
-}
 
 class Profile extends React.Component {
   constructor(props) {
@@ -18,25 +12,33 @@ class Profile extends React.Component {
   }
 
   updateEmoji(emoji) {
-    updateUser(this.props.currentUser.id, { emoji: emoji.native })
+    updateUser(this.props.currentUser.id, { emoji })
   }
 
   updateDisplayName(name) {
     updateUser(this.props.currentUser.id, { username: name })
   }
 
-
   render() {
     return (
       <React.Fragment>
+        <div className="active-menu-header">
+          <h2>Profile</h2>
+        </div>
         <EditableField
           label="Display Name"
           initialValue={this.props.currentUser.username}
-          placeholder="your name of choice"
+          placeholder="DJ Khaled 420"
           onComplete={this.updateDisplayName}
+          maxLength={18}
         />
-        <h3>Avatar</h3>
-        <Picker onSelect={this.updateEmoji} title="Pick your emoji" emoji="point_up" style={emojiPickerStyleOverrides} />
+        <EditableField
+          label="Avatar"
+          initialValue={this.props.currentUser.emoji}
+          placeholder="🦁"
+          onComplete={this.updateEmoji}
+          customEditor="emoji"
+        />
       </React.Fragment>
     )
   }
