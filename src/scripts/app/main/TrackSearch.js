@@ -68,7 +68,7 @@ class TrackSearch extends React.Component {
 
   renderSearchResult(song) {
     return (
-      <div className="search-item" key={song.id} style={{ borderBottom: '1px solid grey' }} >
+      <div className="search-item" key={song.id} >
         <div className="song-button">{ this.renderAddSongButton(song) }</div>
         <SongListItem song={song} />
       </div>
@@ -78,7 +78,7 @@ class TrackSearch extends React.Component {
   render() {
     return (
       <React.Fragment>
-        <input type="text" placeholder="Search for Tracks" onChange={this.handleChange} />
+        <input className="search-input" type="text" placeholder="Search for Tracks" onChange={this.handleChange} />
         <div className="search-results">
           {
           this.props.searchResults ? this.props.searchResults.map(this.renderSearchResult) : null

@@ -9,17 +9,26 @@
 }
 
 .menu .search-view {
+  .search-input {
+    width: 100%;
+    padding: 10px 15px;
+    margin: 10px 0;
+  }
+
   .search-results {
     height: 70vh; //todo: better calc when we figure out the rest of the UI
     overflow: scroll;
-    padding: 10px;
   }
 
   .search-item {
     display: flex;
     flex-direction: row;
     align-items: center;
+    background: rgba(0,0,0,0.2);
+    margin-bottom: 5px;
+    padding: 10px 10px 10px 0;
   }
+
   .song-button {
     color: white;
     font-size: 16px;
