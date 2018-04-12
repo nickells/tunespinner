@@ -41,7 +41,9 @@ export default class EditableField extends React.Component {
     if (this.props.customEditor === 'emoji') {
       return (
         <React.Fragment>
-          <div className="preview">{this.state.value}</div>
+          <div className="preview">
+            <h2>{this.state.value}</h2>
+          </div>
           <Picker
             onSelect={this.onChangeEmoji}
             title="Pick your emoji"
@@ -76,7 +78,7 @@ export default class EditableField extends React.Component {
               this.renderEditor() : <h2>{this.state.value}</h2>
             }
           </div>
-          <button onClick={this.toggleEdit}>{ this.state.isEditing ? 'Done' : 'Edit'}</button>
+          <button onClick={this.toggleEdit}>{ this.state.isEditing ? 'Save' : 'Edit'}</button>
         </div>
       </div>
     )

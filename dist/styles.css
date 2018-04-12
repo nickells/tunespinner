@@ -295,6 +295,12 @@ button {
   border: none;
   padding: 5px;
   font-family: inherit;
+  box-sizing: border-box;
+}
+input:focus,
+textarea:focus,
+button:focus {
+  outline: none;
 }
 button {
   background-color: black;
@@ -303,9 +309,6 @@ button {
   text-transform: uppercase;
   letter-spacing: 0.2em;
   cursor: pointer;
-}
-button:focus {
-  outline: none;
 }
 h1 {
   color: white;
@@ -349,15 +352,26 @@ main {
   position: absolute;
 }
 .editable-field[data-custom-editor="emoji"] .value h2,
-.editable-field[data-custom-editor="emoji"] .preview {
+.editable-field[data-custom-editor="emoji"] .preview h2 {
   font-size: 28px;
+  padding-top: 2px;
+  box-sizing: border-box;
 }
 .editable-field .field {
   display: flex;
   align-items: center;
 }
-.editable-field .value {
+.editable-field .value,
+.editable-field .preview {
   flex: 1;
+}
+.editable-field .value h2,
+.editable-field .preview h2 {
+  height: 34px;
+  background-color: rgba(0, 0, 0, 0.2);
+  display: flex;
+  align-items: center;
+  padding-left: 10px;
 }
 .editable-field input {
   text-transform: uppercase;

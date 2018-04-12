@@ -16,6 +16,11 @@ button {
   border: none;
   padding: 5px;
   font-family: inherit;
+  box-sizing: border-box;
+
+  &:focus {
+    outline: none;
+  }
 }
 
 button {
@@ -25,10 +30,6 @@ button {
   text-transform: uppercase;
   letter-spacing: 0.2em;
   cursor: pointer;
-
-  &:focus {
-    outline: none;
-  }
 }
 
 h1 {
@@ -80,8 +81,10 @@ main {
     }
 
     .value h2,
-    .preview {
+    .preview h2 {
       font-size: 28px;
+      padding-top: 2px;
+      box-sizing: border-box;
     }
   }
 
@@ -90,8 +93,17 @@ main {
     align-items: center;
   }
 
-  .value {
+  .value,
+  .preview {
     flex: 1;
+
+    h2 {
+      height: 34px; // sorry
+      background-color: rgba(0,0,0,0.2);
+      display: flex;
+      align-items: center;
+      padding-left: 10px;
+    }
   }
 
   input {
