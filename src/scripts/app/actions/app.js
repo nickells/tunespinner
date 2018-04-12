@@ -40,10 +40,11 @@ export const setCurrentUser = () => async (dispatch) => {
   let resolvedUser
 
   try {
+    const username = `${user.display_name || user.id || '' }`
     resolvedUser = await createUser({
       id: user.id,
       email: user.email,
-      username: user.display_name || user.id,
+      username: username.substring(0, 18),
     })
   } catch (e) {
     console.log('error creating user', e)
