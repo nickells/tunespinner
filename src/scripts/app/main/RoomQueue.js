@@ -11,6 +11,9 @@ class RoomQueue extends React.Component {
     super(props)
   }
 
+  shouldShowRequests() {
+    return this.props.room.djs && this.props.room.djs.includes(this.props.currentUserId) && this.props.room.requests
+  }
 
   render() {
     if (!this.props.room) return null
