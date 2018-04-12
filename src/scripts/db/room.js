@@ -75,10 +75,7 @@ export const addUserToRoom = async (userId, roomId, key = 'fans') => {
   await updateRoom(roomId, roomCopy)
 }
 
-export const removeUserFromRoom = async (userId) => {
-  const user = await getUser(userId)
-  if (!user.currentRoom) return
-  const roomId = user.currentRoom
+export const removeUserFromRoom = async (userId, roomId) => {
   const room = await getRoom(roomId)
 
   if (!room) return

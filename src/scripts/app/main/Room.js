@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { setCurrentRoom } from '../actions/app'
-import { advanceQueue, removeDJ, updateRoom } from '../../db/room'
+import { advanceQueue, removeDJ, updateRoom, removeUserFromRoom, addUserToRoom } from '../../db/room'
 import RoomTools from './RoomTools'
 
 class Room extends React.Component {
@@ -18,9 +18,7 @@ class Room extends React.Component {
 
   componentDidMount() {
     window.addEventListener('beforeunload', () => {
-      if (this.isDJ()) {
-        removeDJ(this.props.currentUserId, this.props.currentRoomId)
-      }
+      removeUserFromRoom(this.props.currentUserId, this.props.currentRoomId)
     })
   }
 
@@ -38,8 +36,11 @@ class Room extends React.Component {
     const roomChanged = room.id !== prevRoom.id
     const songChanged = currentSong.key !== prevSong.key
 
+    if (this.firstUpdate) {
+      addUserToRoom(this.props.currentUserId, room.id)
+    }
+
     if (roomChanged || songChanged || kingDJChanged || this.firstUpdate) {
-      console.log('TRY PLAYING')
       this.firstUpdate = false
 
       if (roomChanged || songChanged || this.firstUpdate) {
@@ -159,7 +160,12 @@ class Room extends React.Component {
       return (
         <div className="user" key={user.id}>
           <div className="emoji">{user.emoji}</div>
-          <div className="info">{title}{user.username}</div>
+          <div className="info">
+            <div className="username">
+              {title}{user.username}
+            </div>
+          </div>
+          <div className="score">{user.score}</div>
         </div>
       )
     })

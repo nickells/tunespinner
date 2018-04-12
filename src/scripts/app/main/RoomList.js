@@ -12,7 +12,10 @@ class RoomList extends React.Component {
       return
     }
 
-    await removeUserFromRoom(this.props.currentUserId)
+    if (this.props.currentRoomId) {
+      await removeUserFromRoom(this.props.currentUserId, this.props.currentRoomId)
+    }
+
     addUserToRoom(this.props.currentUserId, id)
     setUserRoom(this.props.currentUserId, id)
     this.props.setCurrentRoom(id)
