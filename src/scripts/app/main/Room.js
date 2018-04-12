@@ -180,7 +180,7 @@ class Room extends React.Component {
       const isDancing = user.lastDanceAt && (user.lastDanceAt + 1000 > Date.now())
       return (
         <div className="user" key={user.id}>
-          <div className={`emoji ${isDancing && 'is-dancing'}`}>{user.emoji}</div>
+          <div className={`emoji ${isDancing ? 'is-dancing' : ''}`}>{user.emoji}</div>
           <div className="info">
             <div className="username">
               {title}{user.username}
