@@ -1,0 +1,37 @@
+.menu .queue-view {
+
+}
+
+.menu .search-view {
+  .search-results {
+    height: 70vh; //todo: better calc when we figure out the rest of the UI
+    overflow: scroll;
+    padding: 10px;
+  }
+
+  .search-item {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+  .song-button {
+    color: white;
+    font-size: 16px;
+    max-width: 50px;
+
+    .button-requested {
+      padding: 0px 20px;
+      opacity: 1.0;
+    }
+
+    .button-check {
+      padding: 0px 20px;
+      opacity: 1.0;
+    }
+    .button-plus {
+      cursor: pointer;
+      opacity: 0.5;
+      padding: 0px 20px;
+    }
+  }
+}

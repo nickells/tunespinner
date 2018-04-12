@@ -608,3 +608,31 @@ main {
 .song-list-item .row.bright {
   color: #FFFFFF;
 }
+.menu .search-view .search-results {
+  height: 70vh;
+  overflow: scroll;
+  padding: 10px;
+}
+.menu .search-view .search-item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.menu .search-view .song-button {
+  color: white;
+  font-size: 16px;
+  max-width: 50px;
+}
+.menu .search-view .song-button .button-requested {
+  padding: 0px 20px;
+  opacity: 1.0;
+}
+.menu .search-view .song-button .button-check {
+  padding: 0px 20px;
+  opacity: 1.0;
+}
+.menu .search-view .song-button .button-plus {
+  cursor: pointer;
+  opacity: 0.5;
+  padding: 0px 20px;
+}

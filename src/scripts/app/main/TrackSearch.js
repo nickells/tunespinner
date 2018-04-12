@@ -8,6 +8,22 @@ import {
 import { addSongToRoomQueue, addSongToRoomRequests } from '../../db/room'
 import SongListItem from './SongListItem'
 
+function isTrackInQueue(songId, queue) {
+  if (!queue) return false
+  for (let i = 0; i < queue.length; i++) {
+    if (queue[i].id === songId) return true
+  }
+  return false
+}
+
+function isTrackInRequests(songId, requests) {
+  if (!requests) return false
+  for (let i = 0; i < requests.length; i++) {
+    if (requests[i].id === songId) return true
+  }
+  return false
+}
+
 
 class TrackSearch extends React.Component {
   constructor(props) {
@@ -47,9 +63,19 @@ class TrackSearch extends React.Component {
     }
   }
 
+  renderAddSongButton(song) {
+    if (isTrackInQueue(song.id, this.props.room.queue)) {
+      return <span className="button-check">✓</span>
+    } else if (isTrackInRequests(song.id, this.props.room.requests)) {
+      return <span className="button-requested">•</span>
+    }
+    return <span className="button-plus" onClick={() => this.handleSongClick(song)}>+</span>
+  }
+
   renderSearchResult(song) {
     return (
-      <div key={song.id} style={{ borderBottom: '1px solid grey' }} onClick={() => this.handleSongClick(song)}>
+      <div className="search-item" key={song.id} style={{ borderBottom: '1px solid grey' }} >
+        <div className="song-button">{ this.renderAddSongButton(song) }</div>
         <SongListItem song={song} />
       </div>
     )
