@@ -204,12 +204,12 @@ export const removeDJ = async (userId, roomId) => {
 export const voteSong = diff => async (voterId, roomId) => {
   const room = await getRoom(roomId)
   if (!room.currentSong) {
-    console.warn('tried to upvote a room without a song')
+    console.warn('tried to vote a room without a song')
     return
   }
 
   if (room.currentSong.contributors.includes(voterId)) {
-    console.warn('tried to upvote a song that you added')
+    console.warn('tried to vote a song that you added')
     return
   }
 
@@ -233,6 +233,10 @@ export const voteSong = diff => async (voterId, roomId) => {
     user.score += diff
     updateUser(contributorId, user)
   })
+
+  if (room.currentSong.downvotes.length > Math.floor(room.fans.length / 2)) {
+    room.currentSong.wasVotedToSkip = true
+  }
 
   await updateRoom(roomId, room)
 }
