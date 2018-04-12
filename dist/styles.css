@@ -466,18 +466,31 @@ main {
   box-sizing: border-box;
 }
 .menu .queue-item {
-  border-bottom: 1px solid rgba(255, 255, 255, 0.5);
   color: #FFF;
-  padding: 20px 25px;
   position: relative;
   display: flex;
-}
-.menu .queue-item .remove-item {
+  flex-direction: column;
+  background: rgba(0, 0, 0, 0.2);
+  margin-bottom: 10px;
   padding: 10px;
+  box-sizing: border-box;
+}
+.menu .queue-item .option {
+  display: inline-block;
+  font-size: 8px;
+  text-transform: uppercase;
   cursor: pointer;
+  padding: 5px 10px;
+  background: rgba(0, 0, 0, 0.2);
+  margin-right: auto;
+  letter-spacing: 0.3em;
+  margin-top: 5px;
+}
+.menu .queue-item .option.accept {
+  margin-left: 5px;
 }
 .menu .queue-item.is-request {
-  background: darkblue;
+  background: #240a84;
 }
 .menu .active-menu-header {
   display: flex;
@@ -787,6 +800,14 @@ main {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin-bottom: 3px;
+}
+.song-list-item .row .title {
+  font-size: 11px;
+  margin-right: 10px;
 }
 .song-list-item .row.bright {
   color: #FFFFFF;
