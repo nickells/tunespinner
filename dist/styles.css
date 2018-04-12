@@ -632,6 +632,8 @@ main {
   text-align: center;
   margin: 0 15px;
   cursor: pointer;
+  width: 80px;
+  margin-bottom: 30px;
 }
 .room .user:hover .score {
   opacity: 1;
