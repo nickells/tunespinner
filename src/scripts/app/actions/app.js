@@ -67,9 +67,15 @@ export const setCurrentUser = () => async (dispatch) => {
   }
 }
 
+
 export const switchTab = (tab) => {
   return {
     type: SWITCH_TAB,
     tab,
   }
+}
+
+// this one just retrieves data
+export const retrieveUserData = userId => (dispatch, getState) => {
+  return getState().FirebaseReducer.users[userId]
 }

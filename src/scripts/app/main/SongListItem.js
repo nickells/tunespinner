@@ -1,4 +1,8 @@
 import React from 'react'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import { retrieveUserData } from '../actions/app';
+
 
 const getTime = (ms) => {
   const sec = Math.round(ms / 1000)
@@ -8,7 +12,8 @@ const getTime = (ms) => {
   return `${min}:${addZero(moduloSeconds(sec))}`
 }
 
-const SongListIem = ({ song }) => {
+
+const SongListIem = ({ song, retrieveUserData }) => {
   const {
     name, artists, contributors, duration_ms,
   } = song
@@ -24,7 +29,7 @@ const SongListIem = ({ song }) => {
       {
         contributors && (
           <div className="row">
-            added by {contributors.join(', ')}
+            added by {contributors.map(retrieveUserData).map(user => user.username).join(', ')}
           </div>
         )
     }
@@ -32,4 +37,13 @@ const SongListIem = ({ song }) => {
   )
 }
 
-export default SongListIem
+
+const mapDispatchToProps = dispatch => bindActionCreators({
+  retrieveUserData,
+}, dispatch)
+
+export default connect(
+  null,
+  mapDispatchToProps,
+)(SongListIem)
+
