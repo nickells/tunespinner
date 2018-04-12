@@ -788,6 +788,13 @@ main {
 .song-list-item .row.bright {
   color: #FFFFFF;
 }
+.menu .queue-view {
+  height: calc(100% - 168px);
+}
+.menu .queue-view .room-queue {
+  max-height: 100%;
+  overflow: scroll;
+}
 .menu .search-view .search-results {
   height: 70vh;
   overflow: scroll;

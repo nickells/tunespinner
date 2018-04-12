@@ -18,7 +18,7 @@ class RoomQueue extends React.Component {
       return item.contributors && item.contributors.includes(this.props.currentUserId) && this.props.room.djs && this.props.room.djs.includes(this.props.currentUserId)
     }
     return (
-      <React.Fragment>
+      <div className="room-queue">
         { !this.props.room.queue && <h2 style={{ marginBottom: '20px' }}>There is nothing in the queue. (Sad!)</h2>}
         {
           this.props.room.queue && this.props.room.queue.map((item, index) => (
@@ -29,7 +29,7 @@ class RoomQueue extends React.Component {
             </div>
           ))
         }
-      </React.Fragment>
+      </div>
     )
   }
 }
