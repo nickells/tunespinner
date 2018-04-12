@@ -5,6 +5,7 @@ import {
   advanceQueue,
   upvoteSong,
   downvoteSong,
+  updateRoom,
 } from '../../db/room'
 
 

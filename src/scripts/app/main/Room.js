@@ -10,6 +10,7 @@ class Room extends React.Component {
     super(props)
 
     this.firstUpdate = true
+    this.addSpeaker = this.addSpeaker.bind(this)
 
     this.state = {
       songPosition: 0,
@@ -40,6 +41,12 @@ class Room extends React.Component {
       addUserToRoom(this.props.currentUserId, room.id)
     }
 
+    const now = Date.now()
+    const shouldBumpSpeakersUp = !!room.lastUpvote && ((now - room.lastUpvote) < 1000)
+    const shouldBumpSpeakersDown = !!room.lastDownvote && ((now - room.lastDownvote) < 1000)
+    this.bumpSpeakers('up', shouldBumpSpeakersUp)
+    this.bumpSpeakers('down', shouldBumpSpeakersDown)
+
     if (roomChanged || songChanged || kingDJChanged || this.firstUpdate) {
       this.firstUpdate = false
 
@@ -53,6 +60,19 @@ class Room extends React.Component {
         this.checkForNextSong(room)
       }, 800)
     }
+  }
+
+  addSpeaker(ref) {
+    this.speakers = this.speakers || []
+    this.speakers.push(ref)
+  }
+
+  bumpSpeakers(type = 'up', active) {
+    const method = active ? 'add' : 'remove'
+    this.speakers.forEach((speaker) => {
+      const className = `bump-${type}`
+      speaker.classList[method](className)
+    })
   }
 
   playSong() {
@@ -208,8 +228,8 @@ class Room extends React.Component {
         <div className="djs-wrapper">
           <div className="djs">
             {this.renderDJs(room)}
-            <div className="speaker left" />
-            <div className="speaker right" />
+            <div ref={this.addSpeaker} className="speaker left" />
+            <div ref={this.addSpeaker} className="speaker right" />
           </div>
 
           {this.renderCurrentSong()}
@@ -222,6 +242,8 @@ class Room extends React.Component {
           isSongOwner={this.isSongOwner()}
           roomId={this.props.currentRoomId}
           userId={this.props.currentUserId}
+          onUpvote={() => this.bumpSpeakers('up')}
+          onDownvote={() => this.bumpSpeakers('down')}
         />
       </div>
     )

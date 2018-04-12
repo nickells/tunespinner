@@ -202,12 +202,12 @@ export const voteSong = diff => async (voterId, roomId) => {
   const room = await getRoom(roomId)
   if (!room.currentSong) {
     console.warn('tried to vote a room without a song')
-    return
+    return null
   }
 
   if (room.currentSong.contributors.includes(voterId)) {
     console.warn('tried to vote a song that you added')
-    return
+    return null
   }
 
   const [key, antikey] = diff > 0 ? ['upvotes', 'downvotes'] : ['downvotes', 'upvotes']
@@ -217,7 +217,7 @@ export const voteSong = diff => async (voterId, roomId) => {
 
   if (room.currentSong[key].includes(voterId)) {
     console.warn('you already voted for this song')
-    return
+    return null
   }
   if (room.currentSong[antikey].includes(voterId)) {
     room.currentSong[antikey].splice(room.currentSong[antikey].indexOf(voterId), 1)
@@ -235,7 +235,11 @@ export const voteSong = diff => async (voterId, roomId) => {
     room.currentSong.wasVotedToSkip = true
   }
 
+  if (key === 'upvotes') room.lastUpvote = Date.now()
+  if (key === 'downvotes') room.lastDownvote = Date.now()
+
   await updateRoom(roomId, room)
+  return room.currentSong
 }
 
 export const upvoteSong = voteSong(+1)

@@ -51,6 +51,15 @@
       width: 120px;
       height: 200px;
       background-color: @medium-gray;
+      transition: background-color 500ms ease-in-out;
+
+      &.bump-up {
+        background-color: @green;
+      }
+
+      &.bump-down {
+        background-color: @red;
+      }
 
       &::after,
       &::before {
@@ -67,6 +76,7 @@
         background-color: @dark-gray-1;
         border: 10px solid @dark-gray-2;
         box-sizing: border-box;
+        opacity: 0.8;
       }
 
       &::after {
