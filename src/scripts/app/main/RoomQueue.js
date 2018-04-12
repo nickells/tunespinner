@@ -11,6 +11,9 @@ class RoomQueue extends React.Component {
     super(props)
   }
 
+  shouldShowRequests() {
+    return this.props.room.djs && this.props.room.djs.includes(this.props.currentUserId) && this.props.room.requests
+  }
 
   render() {
     if (!this.props.room) return null
@@ -26,6 +29,15 @@ class RoomQueue extends React.Component {
               <span>{index + 1}. </span>
               <SongListItem song={item} />
               { canRemove(item) && <span className="remove-item" onClick={() => removeSongFromQueue(index, this.props.currentRoomId)}>✕</span> }
+            </div>
+          ))
+        }
+        {
+          this.shouldShowRequests() && this.props.room.requests.map((item, index) => (
+            <div className="queue-item is-request" key={`${item.id}${index}`}>
+              <span>{index + 1}. </span>
+              <SongListItem song={item} isRequest />
+              {canRemove(item) && <span className="remove-item" onClick={() => removeSongFromQueue(index, this.props.currentRoomId)}>✕</span>}
             </div>
           ))
         }
