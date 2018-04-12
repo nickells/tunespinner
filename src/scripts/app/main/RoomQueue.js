@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { setCurrentRoom } from '../actions/app'
 import { removeSongFromQueue } from '../../db/room'
-import SongListIem from './SongListItem';
+import SongListItem from './SongListItem';
 
 
 class RoomQueue extends React.Component {
@@ -13,17 +13,18 @@ class RoomQueue extends React.Component {
 
 
   render() {
-    if (!this.props.room || !this.props.room.queue) return null
+    if (!this.props.room) return null
     const canRemove = (item) => {
       return item.contributors && item.contributors.includes(this.props.currentUserId) && this.props.room.djs && this.props.room.djs.includes(this.props.currentUserId)
     }
     return (
       <React.Fragment>
+        { !this.props.room.queue && <h2 style={{ marginBottom: '20px' }}>There is nothing in the queue. (Sad!)</h2>}
         {
-          this.props.room.queue.map((item, index) => (
+          this.props.room.queue && this.props.room.queue.map((item, index) => (
             <div className="queue-item" key={`${item.id}${index}`}>
               <span>{index + 1}. </span>
-              <SongListIem song={item} />
+              <SongListItem song={item} />
               { canRemove(item) && <span className="remove-item" onClick={() => removeSongFromQueue(index, this.props.currentRoomId)}>✕</span> }
             </div>
           ))

@@ -490,6 +490,7 @@ main {
   width: 100%;
   display: flex;
   flex-direction: row;
+  margin-left: -10px;
 }
 .menu .tabs .tab {
   cursor: pointer;
