@@ -42,9 +42,6 @@ class RoomList extends React.Component {
   render() {
     return (
       <div className="room-list">
-        <div className="active-room-header">
-          <h2>Browse all rooms</h2>
-        </div>
         {this.renderRooms()}
       </div>
     )

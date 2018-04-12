@@ -295,6 +295,16 @@ button {
   border: none;
   padding: 5px;
 }
+button {
+  background-color: black;
+  color: white;
+  padding: 10px 15px;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+}
+button:focus {
+  outline: none;
+}
 h1 {
   color: white;
   font-size: 16px;
@@ -405,20 +415,8 @@ main {
   height: 100%;
   background-color: #242424;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  padding: 10px;
   box-sizing: border-box;
-}
-.menu .room-list .room-preview {
-  cursor: pointer;
-  color: #FFF;
-  padding: 20px 25px;
-  background-color: rgba(0, 0, 0, 0.2);
-  margin: 5px;
-  font-size: 13px;
-  text-transform: uppercase;
-  letter-spacing: 0.2em;
-}
-.menu .room-list .room-preview[data-is-active="true"] {
-  background-color: rgba(0, 0, 0, 0.6);
 }
 .menu .queue-item {
   border-bottom: 1px solid rgba(255, 255, 255, 0.5);
@@ -435,8 +433,8 @@ main {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-bottom: 2em;
-  padding-top: 2em;
+  padding-bottom: 1.5em;
+  padding-top: 1.5em;
   opacity: 0.3;
 }
 .menu .tabs {
@@ -718,4 +716,44 @@ main {
   cursor: pointer;
   opacity: 0.5;
   padding: 0px 20px;
+}
+.menu .room-preview {
+  cursor: pointer;
+  color: #FFF;
+  padding: 15px 20px;
+  background-color: rgba(0, 0, 0, 0.2);
+  margin: 5px 0;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+}
+.menu .room-preview[data-is-active="true"] {
+  background-color: rgba(0, 0, 0, 0.6);
+}
+.menu .room-preview:hover {
+  background-color: rgba(0, 0, 0, 0.4);
+}
+.menu button.change-view {
+  background: none;
+  color: #F1F1F1;
+  opacity: 0.2;
+  padding: 0;
+  margin-bottom: 20px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  cursor: pointer;
+  transition: opacity 300ms ease-in-out;
+}
+.menu button.change-view:hover {
+  opacity: 0.6;
+}
+.menu .room-creator input,
+.menu .room-creator textarea {
+  width: 100%;
+  margin-bottom: 5px;
+  box-sizing: border-box;
+  padding: 10px;
+}
+.menu .room-creator textarea {
+  min-height: 100px;
 }

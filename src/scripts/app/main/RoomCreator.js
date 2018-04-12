@@ -33,7 +33,7 @@ class RoomCreator extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="room-creator">
         <input
           name="name"
           type="text"

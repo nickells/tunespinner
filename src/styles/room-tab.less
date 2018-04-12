@@ -1,0 +1,54 @@
+.menu {
+  .room-list {
+
+  }
+
+  .room-preview {
+    cursor: pointer;
+    color: @white;
+    padding: 15px 20px;
+    background-color: rgba(0,0,0,0.2);
+    margin: 5px 0;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+
+    &[data-is-active="true"] {
+      background-color: rgba(0,0,0,0.6);
+    }
+
+    &:hover {
+      background-color: rgba(0,0,0,0.4);
+    }
+  }
+
+  button.change-view {
+    background: none;
+    color: @light-gray;
+    opacity: 0.2;
+    padding: 0;
+    margin-bottom: 20px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    cursor: pointer;
+    transition: opacity 300ms ease-in-out;
+
+    &:hover {
+      opacity: 0.6;
+    }
+  }
+
+  .room-creator {
+    input,
+    textarea {
+      width: 100%;
+      margin-bottom: 5px;
+      box-sizing: border-box;
+      padding: 10px;
+    }
+
+    textarea {
+      min-height: 100px;
+    }
+  }
+}
