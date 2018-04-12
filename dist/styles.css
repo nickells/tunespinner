@@ -286,6 +286,7 @@
 body {
   font-family: 'Futura', sans-serif;
   background: linear-gradient(#090909, #201C1C);
+  min-height: 100vh;
 }
 input,
 textarea,
@@ -293,6 +294,13 @@ button {
   display: block;
   border: none;
   padding: 5px;
+}
+h1 {
+  color: white;
+  font-size: 16px;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  font-weight: 100;
 }
 h2 {
   color: white;
@@ -313,6 +321,81 @@ h3 {
 main {
   position: relative;
   min-height: 100vh;
+}
+.login-page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.login-page[data-is-ready="true"] .content {
+  transform: none;
+}
+.login-page[data-is-ready="true"] button {
+  opacity: 1;
+}
+.login-page[data-is-ready="true"] p {
+  opacity: 0.6;
+}
+.login-page .content {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  flex-direction: column;
+  transform: translate3d(0, 60px, 0);
+  transition: transform 600ms ease-in-out;
+}
+.login-page button {
+  position: relative;
+  background: linear-gradient(#0089FF, #6d00ff);
+  border: none;
+  padding: 10px 25px;
+  border-radius: 16px;
+  color: white;
+  text-transform: uppercase;
+  letter-spacing: 0.3em;
+  cursor: pointer;
+  overflow: hidden;
+  margin-top: 40px;
+  margin-bottom: 20px;
+  opacity: 0;
+  transition: transform 300ms ease, opacity 600ms ease-in-out;
+  transform: scale(1.01);
+}
+.login-page button:hover {
+  transform: scale(1.05);
+  outline: none;
+}
+.login-page p {
+  color: white;
+  font-size: 10px;
+  font-family: Helvetica;
+  letter-spacing: 0.05em;
+  opacity: 0;
+  transition: opacity 600ms ease-in-out;
+}
+.login-page .record {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  margin: auto;
+  z-index: -1;
+  width: 50vw;
+  height: 50vw;
+  border-radius: 100%;
+  background: linear-gradient(rgba(0, 0, 0, 0.1), rgba(255, 255, 255, 0.01));
+  animation: spin 1s infinite linear;
+}
+@keyframes spin {
+  0% {
+    transform: rotateZ(0deg);
+  }
+  100% {
+    transform: rotateZ(359.9999deg);
+  }
 }
 .menu {
   position: fixed;

@@ -28,12 +28,6 @@ const waitForSpotify = () => new Promise((resolve) => {
   }
 })
 
-const Login = ({ onClick }) => (
-  <div className="button" onClick={onClick}>
-    Login
-  </div>
-)
-
 class Main extends React.Component {
   constructor(props) {
     super(props)
@@ -51,8 +45,6 @@ class Main extends React.Component {
     if (this.props.accessToken) {
       window.spotifyPlayer = new SpotifyPlayer(this.props.accessToken)
       await window.spotifyPlayer.init()
-    } else {
-      console.log('Please log in!')
     }
 
     this.setState({
@@ -72,35 +64,43 @@ class Main extends React.Component {
   }
 
   renderMenu() {
-    if (this.props.accessToken) {
-      return (
-        <React.Fragment>
-          { this.props.activeTab === TAB_NAMES.rooms && <RoomsTab /> }
-          { this.props.activeTab === TAB_NAMES.queue && <QueueTab currentRoom={this.props.rooms[this.props.currentRoomId]} /> }
-          { this.props.activeTab === TAB_NAMES.profile && <Profile /> }
-          <Tabs
-            labels={Object.values(TAB_NAMES)}
-            activeTab={this.props.activeTab}
-            onClick={this.changeActiveTab}
-          />
-        </React.Fragment>
-      )
-    }
     return (
-      <Login onClick={this.props.login} />
+      <React.Fragment>
+        { this.props.activeTab === TAB_NAMES.rooms && <RoomsTab /> }
+        { this.props.activeTab === TAB_NAMES.queue && <QueueTab currentRoom={this.props.rooms[this.props.currentRoomId]} /> }
+        { this.props.activeTab === TAB_NAMES.profile && <Profile /> }
+        <Tabs
+          labels={Object.values(TAB_NAMES)}
+          activeTab={this.props.activeTab}
+          onClick={this.changeActiveTab}
+        />
+      </React.Fragment>
     )
   }
 
   render() {
-    return (
-      this.state.ready && (
-        <main>
-          <Room />
-          <menu className="menu">
-            { this.renderMenu() }
-          </menu>
-        </main>
+    if (this.props.accessToken) {
+      return (
+        this.state.ready && (
+          <main>
+            <Room />
+            <menu className="menu">
+              { this.renderMenu() }
+            </menu>
+          </main>
+        )
       )
+    }
+
+    return (
+      <main className="login-page" data-is-ready={this.state.ready}>
+        <div className="content">
+          <h1>Tunespinner</h1>
+          <button className="login" onClick={this.props.login}>Log In</button>
+          <p>Log in with your Spotify Premium account.</p>
+        </div>
+        <div className="record" />
+      </main>
     )
   }
 }
