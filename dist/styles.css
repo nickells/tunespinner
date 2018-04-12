@@ -466,18 +466,31 @@ main {
   box-sizing: border-box;
 }
 .menu .queue-item {
-  border-bottom: 1px solid rgba(255, 255, 255, 0.5);
   color: #FFF;
-  padding: 20px 25px;
   position: relative;
   display: flex;
-}
-.menu .queue-item span {
-  padding-right: 10px;
-}
-.menu .queue-item .remove-item {
+  flex-direction: column;
+  background: rgba(0, 0, 0, 0.2);
+  margin-bottom: 10px;
   padding: 10px;
+  box-sizing: border-box;
+}
+.menu .queue-item .option {
+  display: inline-block;
+  font-size: 8px;
+  text-transform: uppercase;
   cursor: pointer;
+  padding: 5px 10px;
+  background: rgba(0, 0, 0, 0.2);
+  margin-right: auto;
+  letter-spacing: 0.3em;
+  margin-top: 5px;
+}
+.menu .queue-item .option.accept {
+  margin-left: 5px;
+}
+.menu .queue-item.is-request {
+  background: #240a84;
 }
 .menu .active-menu-header {
   display: flex;
@@ -811,6 +824,14 @@ main {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin-bottom: 3px;
+}
+.song-list-item .row .title {
+  font-size: 11px;
+  margin-right: 10px;
 }
 .song-list-item .row.bright {
   color: #FFFFFF;
@@ -821,16 +842,24 @@ main {
 .menu .queue-view .room-queue {
   max-height: 100%;
   overflow: scroll;
+  margin-top: 10px;
+}
+.menu .search-view .search-input {
+  width: 100%;
+  padding: 10px 15px;
+  margin: 10px 0;
 }
 .menu .search-view .search-results {
   height: 70vh;
   overflow: scroll;
-  padding: 10px;
 }
 .menu .search-view .search-item {
   display: flex;
   flex-direction: row;
   align-items: center;
+  background: rgba(0, 0, 0, 0.2);
+  margin-bottom: 5px;
+  padding: 10px 10px 10px 0;
 }
 .menu .search-view .song-button {
   color: white;
@@ -848,7 +877,10 @@ main {
 .menu .search-view .song-button .button-plus {
   cursor: pointer;
   opacity: 0.5;
-  padding: 0px 20px;
+  padding: 15px;
+}
+.menu .search-view .song-button .button-plus:hover {
+  opacity: 1;
 }
 .menu .room-preview {
   cursor: pointer;

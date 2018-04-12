@@ -12,17 +12,33 @@
   box-sizing: border-box;
 
   .queue-item {
-    border-bottom: 1px solid @half-white;
     color: @white;
-    padding: 20px 25px;
     position: relative;
     display: flex;
-    span {
-      padding-right: 10px;
-    }
-    .remove-item {
-      padding: 10px;
+    flex-direction: column;
+    background: rgba(0,0,0,0.2);
+    margin-bottom: 10px;
+    padding: 10px;
+    box-sizing: border-box;
+
+    .option {
+      display: inline-block;
+      font-size: 8px;
+      text-transform: uppercase;
       cursor: pointer;
+      padding: 5px 10px;
+      background: rgba(0,0,0,0.2);
+      margin-right: auto;
+      letter-spacing: 0.3em;
+      margin-top: 5px;
+
+      &.accept {
+        margin-left: 5px;
+      }
+    }
+
+    &.is-request {
+      background: @dark-blue;
     }
   }
 
