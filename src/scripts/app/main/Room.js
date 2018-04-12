@@ -176,7 +176,7 @@ class Room extends React.Component {
 
     if (!currentSong) return null
 
-    const artists = currentSong.artists.map(a => a.name).join('')
+    const artists = currentSong.artists.map(a => a.name).join(', ')
 
     const { songPosition } = this.state
 
