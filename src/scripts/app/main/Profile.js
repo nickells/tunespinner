@@ -30,7 +30,7 @@ class Profile extends React.Component {
           initialValue={this.props.currentUser.username}
           placeholder="DJ Khaled 420"
           onComplete={this.updateDisplayName}
-          maxLength={18}
+          maxLength={15}
         />
         <EditableField
           label="Avatar"

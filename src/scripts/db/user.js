@@ -33,6 +33,10 @@ export const createUser = async (_data = {}) => {
 
   const data = Object.assign({}, DEFAULT_USER, _data)
 
+  if (data.username) {
+    data.username = data.username.substring(0, 15)
+  }
+
   let userRef
   const userData = { ...data }
 
