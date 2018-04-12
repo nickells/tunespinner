@@ -134,8 +134,11 @@ const addSongToRoom = async (song, roomId, key = 'requests') => {
 
   await updateRoom(roomId, room)
 
-  if (key === 'queue' && room[key].length === 1) {
-    console.log('advance!')
+  if (
+    key === 'queue' &&
+    room[key].length === 1 &&
+    !room.currentSong
+  ) {
     await advanceQueue(roomId)
   }
 }
