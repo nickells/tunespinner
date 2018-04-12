@@ -29,8 +29,8 @@ export default class QueueTab extends React.Component {
   renderQueueView() {
     return (
       <div className="queue-view">
-        <RoomQueue />
         <button className="add-song" onClick={this.setSearchView}>+ ADD</button>
+        <RoomQueue />
       </div>
     )
   }
