@@ -20,23 +20,23 @@ class SpotifyPlayer {
         resolve()
       }
 
-      const onErr = async (err) => {
-        const newC = await refreshToken()
-        if (!newC) {
-          resolve()
-          return
-        }
-        this.accessToken = newC.spotify_access_token
-        this.init()
-          .then(resolve)
-      }
+      this.onErr = this.onErr.bind(this)
 
-      this.player.on('initialization_error', onErr)
-      this.player.on('authentication_error', onErr)
+      this.player.on('initialization_error', this.onErr)
+      this.player.on('authentication_error', this.onErr)
       this.player.addListener('ready', handleReady)
       this.player.connect()
       this.playerId = this.player._options.id
     })
+  }
+
+  async onErr(err) {
+    const newC = await refreshToken()
+    if (!newC) {
+      return
+    }
+    this.accessToken = newC.spotify_access_token
+    this.init()
   }
 
   async setSong(songURI) {
@@ -80,6 +80,9 @@ class SpotifyPlayer {
           console.log(seekTime, state)
           this.player.seek(seekTime)
         })
+      })
+      .catch((err) => {
+        this.onErr(err)
       })
   }
 
