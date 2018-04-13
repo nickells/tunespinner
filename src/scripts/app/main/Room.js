@@ -178,9 +178,9 @@ class Room extends React.Component {
 
   renderUsers(users, title) {
     if (!users || users.length === 0) return null
-    return users.map((userId) => {
+    return users.map((userId, i) => {
       const EMPTY_DJ = {
-        id: Math.floor(Math.random() * 999),
+        id: Math.floor(Math.random() * 9999999),
         emoji: '🕳',
       }
 
@@ -188,7 +188,7 @@ class Room extends React.Component {
       if (!user) return null
       const isDancing = user.lastDanceAt && (user.lastDanceAt + 1000 > Date.now())
       return (
-        <div className="user" key={user.id}>
+        <div className="user" key={i}>
           <div className={`emoji ${isDancing ? 'is-dancing' : ''}`}>{user.emoji}</div>
           <div className="info">
             <div className="username">
