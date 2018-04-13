@@ -179,6 +179,11 @@ export const makeDJ = async (userId, roomId) => {
   const room = await getRoom(roomId)
   room.djs = room.djs || []
 
+  if (room.djs.length === 3) {
+    console.error('this room already has 3 djs')
+    return
+  }
+
   if (room.djs.indexOf(userId) > -1) {
     return
   }

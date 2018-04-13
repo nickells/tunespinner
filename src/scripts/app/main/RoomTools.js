@@ -49,8 +49,14 @@ class RoomTools extends React.Component {
   }
 
   render() {
-    const { isDJ, isSongOwner, hasDJ } = this.props
+    const { isDJ, isSongOwner, currentDJs } = this.props
     const isOwnerDJ = isDJ && isSongOwner
+    const canDJ = (() => {
+      if (isDJ) return false
+      else if (!currentDJs) return true
+      else if (currentDJs.length < 3) return true
+      return false
+    })()
 
     const renderTool = (name, callback, isActive) => {
       return (
@@ -68,7 +74,7 @@ class RoomTools extends React.Component {
     return (
       <div className="tools">
         <div className="group">
-          {renderTool('START DJING', this.becomeDJ, !isDJ)}
+          {renderTool('START DJING', this.becomeDJ, canDJ)}
           {renderTool('STOP DJING', this.stopDJing, isDJ)}
         </div>
         <div className="group">
@@ -77,7 +83,7 @@ class RoomTools extends React.Component {
         </div>
         <div className="group">
           {renderTool('SKIP', this.skipSong, isOwnerDJ)}
-          {renderTool('DANCE', this.dance, hasDJ)}
+          {renderTool('DANCE', this.dance, !!currentDJs)}
         </div>
       </div>
     )

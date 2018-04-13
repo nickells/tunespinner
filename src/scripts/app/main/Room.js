@@ -240,7 +240,7 @@ class Room extends React.Component {
         </div>
         <RoomTools
           isDJ={this.isDJ()}
-          hasDJ={!!this.props.room.djs}
+          currentDJs={this.props.room.djs}
           isSongOwner={this.isSongOwner()}
           roomId={this.props.currentRoomId}
           userId={this.props.currentUserId}
