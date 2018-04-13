@@ -163,7 +163,8 @@ class Room extends React.Component {
   }
 
   renderDJs(room = {}) {
-    const djs = room.djs || []
+    let djs = room.djs || []
+    djs = djs.slice()
     while (djs.length < 3) {
       djs.push('empty')
     }

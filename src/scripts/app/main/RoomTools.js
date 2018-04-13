@@ -51,6 +51,8 @@ class RoomTools extends React.Component {
   render() {
     const { isDJ, isSongOwner, currentDJs } = this.props
     const isOwnerDJ = isDJ && isSongOwner
+
+
     const canDJ = (() => {
       if (isDJ) return false
       else if (!currentDJs) return true
