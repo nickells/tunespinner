@@ -882,6 +882,10 @@ main {
 .menu .search-view .song-button .button-plus:hover {
   opacity: 1;
 }
+.menu .room-list {
+  height: calc(100% - 146px);
+  overflow: scroll;
+}
 .menu .room-preview {
   cursor: pointer;
   color: #FFF;
