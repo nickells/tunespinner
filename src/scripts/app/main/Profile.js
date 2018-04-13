@@ -4,6 +4,15 @@ import { bindActionCreators } from 'redux'
 import { updateUser } from '../../db/user'
 import EditableField from './EditableField'
 
+const Score = ({points}) => {
+  return (
+    <div className="points-display">
+      <h2>Score</h2>
+      <div className="points-score">{points}</div>
+    </div>
+  )
+}
+
 class Profile extends React.Component {
   constructor(props) {
     super(props)
@@ -39,6 +48,7 @@ class Profile extends React.Component {
           onComplete={this.updateEmoji}
           customEditor="emoji"
         />
+        <Score points={this.props.currentUser.score} />
       </React.Fragment>
     )
   }
