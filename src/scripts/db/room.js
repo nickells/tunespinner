@@ -246,7 +246,7 @@ export const voteSong = diff => async (voterId, roomId) => {
     updateUser(contributorId, user)
   })
 
-  if (room.currentSong.downvotes.length > Math.floor(room.fans.length / 2)) {
+  if (room.currentSong.downvotes.length > Math.floor(room.fans.length * 0.4)) {
     room.currentSong.wasVotedToSkip = true
   }
 
