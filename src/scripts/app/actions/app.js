@@ -86,8 +86,12 @@ export const setCurrentUser = () => async (dispatch) => {
 
   try {
     const username = `${user.display_name || user.id || ''}`
+
+    // solve for this stupid case
+    const id = [...user.id].map(str => str.charCodeAt(0)).join('')
+
     resolvedUser = await createUser({
-      id: user.id,
+      id,
       email: user.email,
       username: username.substring(0, 15),
     })
