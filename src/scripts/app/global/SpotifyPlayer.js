@@ -31,12 +31,13 @@ class SpotifyPlayer {
   }
 
   async onErr(err) {
-    const newC = await refreshToken()
-    if (!newC) {
-      return
-    }
-    this.accessToken = newC.spotify_access_token
-    this.init()
+    console.log('This should refresh your token but it doesn\'t')
+    // const newC = await refreshToken()
+    // if (!newC) {
+    //   return
+    // }
+    // this.accessToken = newC.spotify_access_token
+    // this.init()
   }
 
   async setSong(songURI) {
@@ -82,7 +83,7 @@ class SpotifyPlayer {
         })
       })
       .catch((err) => {
-        // this.onErr(err)
+        this.onErr(err)
       })
   }
 
