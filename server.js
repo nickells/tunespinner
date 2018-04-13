@@ -13,6 +13,7 @@ const path = require('path')
 const favicon = require('serve-favicon')
 const querystring = require('querystring');
 const cookieParser = require('cookie-parser');
+const enforce = require('express-sslify');
 
 let secrets
 try {
@@ -45,9 +46,12 @@ const stateKey = 'spotify_auth_state';
 
 const app = express();
 
+if (process.env.NODE_ENV === 'development') {
+  app.use(enforce.HTTPS({ trustProtoHeader: true }))
+}
+
 app.use(express.static(`${__dirname}/dist`))
   .use(cookieParser());
-
 
 app.use(favicon(path.join(__dirname, 'favicon.png')))
 
