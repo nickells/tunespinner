@@ -9,6 +9,8 @@
 
 const express = require('express'); // Express web server framework
 const request = require('request'); // "Request" library
+const path = require('path')
+const favicon = require('serve-favicon')
 const querystring = require('querystring');
 const cookieParser = require('cookie-parser');
 
@@ -45,6 +47,9 @@ const app = express();
 
 app.use(express.static(`${__dirname}/dist`))
   .use(cookieParser());
+
+
+app.use(favicon(path.join(__dirname, 'favicon.png')))
 
 
 app.get('/login', (req, res) => {
