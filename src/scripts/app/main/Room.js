@@ -163,7 +163,10 @@ class Room extends React.Component {
   }
 
   renderDJs(room = {}) {
-    const { djs } = room
+    const djs = room.djs || []
+    while (djs.length < 3) {
+      djs.push('empty')
+    }
     return this.renderUsers(djs, 'DJ ')
   }
 
@@ -175,7 +178,12 @@ class Room extends React.Component {
   renderUsers(users, title) {
     if (!users || users.length === 0) return null
     return users.map((userId) => {
-      const user = this.props.users[userId]
+      const EMPTY_DJ = {
+        id: Math.floor(Math.random() * 999),
+        emoji: '🕳',
+      }
+
+      const user = userId === 'empty' ? EMPTY_DJ : this.props.users[userId]
       if (!user) return null
       const isDancing = user.lastDanceAt && (user.lastDanceAt + 1000 > Date.now())
       return (
@@ -183,7 +191,7 @@ class Room extends React.Component {
           <div className={`emoji ${isDancing ? 'is-dancing' : ''}`}>{user.emoji}</div>
           <div className="info">
             <div className="username">
-              {title}{user.username}
+              {userId === 'empty' ? '' : title}{user.username}
             </div>
           </div>
           <div className="score">{user.score}</div>

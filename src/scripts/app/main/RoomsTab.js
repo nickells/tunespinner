@@ -19,7 +19,6 @@ class RoomTabs extends React.Component {
   renderViewChangeButton(view, text) {
     return (
       <button
-        className="change-view"
         onClick={() => this.setState({ view })}
       >
         {text}
