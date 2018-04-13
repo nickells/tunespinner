@@ -49,7 +49,7 @@ class RoomTools extends React.Component {
   }
 
   render() {
-    const { isDJ, isSongOwner } = this.props
+    const { isDJ, isSongOwner, hasDJ } = this.props
     const isOwnerDJ = isDJ && isSongOwner
 
     const renderTool = (name, callback, isActive) => {
@@ -77,7 +77,7 @@ class RoomTools extends React.Component {
         </div>
         <div className="group">
           {renderTool('SKIP', this.skipSong, isOwnerDJ)}
-          {renderTool('DANCE', this.dance, true)}
+          {renderTool('DANCE', this.dance, hasDJ)}
         </div>
       </div>
     )
