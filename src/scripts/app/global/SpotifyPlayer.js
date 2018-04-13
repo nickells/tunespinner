@@ -1,8 +1,9 @@
 import axios from 'axios'
+import { refreshToken } from '../actions/app'
 
 class SpotifyPlayer {
   constructor(accessToken) {
-    this.accessToken = accessToken
+    this.accessToken = `${accessToken}`
   }
 
   async init() {
@@ -19,6 +20,19 @@ class SpotifyPlayer {
         resolve()
       }
 
+      const onErr = async (err) => {
+        const newC = await refreshToken()
+        if (!newC) {
+          resolve()
+          return
+        }
+        this.accessToken = newC.spotify_access_token
+        this.init()
+          .then(resolve)
+      }
+
+      this.player.on('initialization_error', onErr)
+      this.player.on('authentication_error', onErr)
       this.player.addListener('ready', handleReady)
       this.player.connect()
       this.playerId = this.player._options.id
@@ -26,7 +40,7 @@ class SpotifyPlayer {
   }
 
   async setSong(songURI) {
-    return new Promise((resolve) => {
+    return new Promise((resolve, reject) => {
       const handleStateChange = (state) => {
         const { current_track } = state.track_window
         if (current_track && current_track.uri === songURI && state.duration) {
@@ -45,7 +59,9 @@ class SpotifyPlayer {
             Authorization: `Bearer ${this.accessToken}`,
           },
         },
-      )
+      ).catch((error) => {
+        reject(error)
+      })
     })
   }
 
@@ -54,14 +70,17 @@ class SpotifyPlayer {
   }
 
   async setSongAt(songURI, seekTime = 0) {
-    await this.setSong(songURI)
-    const state = await this.getState()
-    if (seekTime > state.duration) {
-      console.log('ITS OVER YO')
-      return
-    }
-    console.log(seekTime, state)
-    this.player.seek(seekTime)
+    return this.setSong(songURI)
+      .then(() => {
+        this.getState().then((state) => {
+          if (seekTime > state.duration) {
+            console.log('ITS OVER YO')
+            return
+          }
+          console.log(seekTime, state)
+          this.player.seek(seekTime)
+        })
+      })
   }
 
   async pause() {

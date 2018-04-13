@@ -129,6 +129,10 @@ export const advanceQueue = async (roomId) => {
 
 const addSongToRoom = async (song, roomId, key = 'requests') => {
   const relevantSongInformation = pick(song, 'id', 'name', 'uri', 'duration_ms', 'artists', 'contributors')
+  if (!relevantSongInformation.contributors) {
+    relevantSongInformation.contributors = []
+  }
+
   const randomKey = Math.floor(Math.random() * 999999)
   relevantSongInformation.key = relevantSongInformation.id + randomKey
   relevantSongInformation.score = 0 // Initialize score for upvoting purposes

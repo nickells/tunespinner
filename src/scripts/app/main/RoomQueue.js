@@ -44,7 +44,7 @@ class RoomQueue extends React.Component {
     if (!this.props.room) return null
     return (
       <div className="room-queue">
-        { !this.props.room.queue && <h2 style={{ marginBottom: '20px' }}>There is nothing in the queue. (Sad!)</h2>}
+        { !this.props.room.queue && <h2 style={{ marginBottom: '20px' }}>No songs in the queue. (Sad!)</h2>}
         { this.props.room.currentSong && (
           <div className="queue-item">
             <SongListItem song={this.props.room.currentSong} prefix="▸  " />

@@ -120,7 +120,8 @@ app.get('/callback', (req, res) => {
 
 app.get('/refresh_token', (req, res) => {
   // requesting access token from refresh token
-  const refresh_token = req.query.refresh_token;
+  const { refresh_token } = req.query;
+  console.log('hi,', refresh_token)
   const authOptions = {
     url: 'https://accounts.spotify.com/api/token',
     headers: { Authorization: `Basic ${new Buffer(`${client_id}:${client_secret}`).toString('base64')}` },
@@ -133,13 +134,21 @@ app.get('/refresh_token', (req, res) => {
 
   request.post(authOptions, (error, response, body) => {
     if (!error && response.statusCode === 200) {
-      const access_token = body.access_token;
+      const opts = {
+        maxAge: 900000,
+        httpOnly: false,
+      }
+
+      res.cookie('spotify_access_token', body.access_token, opts)
       res.send({
-        access_token,
-      });
+        access_token: body.access_token,
+        refresh_token,
+      })
+    } else {
+      console.log(error, response)
     }
-  });
-});
+  })
+})
 
 console.log('listening on port', process.env.PORT || 8888)
 app.listen(process.env.PORT || 8888);

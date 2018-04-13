@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { setCurrentRoom } from '../actions/app'
+import { setCurrentRoom, setAccessToken } from '../actions/app'
 import { advanceQueue, removeDJ, updateRoom, removeUserFromRoom, addUserToRoom } from '../../db/room'
 import RoomTools from './RoomTools'
 

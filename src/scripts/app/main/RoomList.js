@@ -25,16 +25,28 @@ class RoomList extends React.Component {
   renderRooms() {
     const roomIds = Object.keys(this.props.rooms)
 
-    return roomIds.map((id) => {
-      const room = this.props.rooms[id]
-      const isActive = id === this.props.currentRoomId
+    const roomsArray = Object.values(this.props.rooms)
+    const orderedRooms = roomsArray.sort((a, b) => {
+      const aFans = a.fans || []
+      const bFans = b.fans || []
+
+      if (aFans.length === bFans.length) {
+        return 0
+      }
+
+      return aFans.length > bFans.length ? -1 : 1
+    })
+
+    window.rooms = this.props.rooms
+    return orderedRooms.map((room) => {
+      const isActive = room.id === this.props.currentRoomId
 
       return (
         <div
           className="room-preview"
           data-is-active={isActive}
           key={room.id}
-          onClick={() => this.chooseRoom(id)}
+          onClick={() => this.chooseRoom(room.id)}
         >
           {room.name || 'Untitled Room'} {room.fans && `(${room.fans.length})`}
         </div>

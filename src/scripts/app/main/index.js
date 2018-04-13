@@ -1,13 +1,11 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { increaseClick, setCurrentUser, login, switchTab } from '../actions/app'
+import { increaseClick, setCurrentUser, login, switchTab, setAccessToken } from '../actions/app'
 import { setRooms, setUsers } from '../actions/firebase'
 import SpotifyPlayer from '../global/SpotifyPlayer'
-import RoomQueue from './RoomQueue'
 import Room from './Room'
 import Profile from './Profile'
-import TrackSearch from './TrackSearch'
 import Tabs from './Tabs'
 import { watchRooms } from '../../db/room'
 import { watchUsers } from '../../db/user'
@@ -50,6 +48,7 @@ class Main extends React.Component {
     this.setState({
       ready: true,
     })
+
     watchRooms((rooms) => {
       this.props.setRooms(rooms)
     })

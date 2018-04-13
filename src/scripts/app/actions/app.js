@@ -7,6 +7,7 @@ export const INCREASE_CLICK = 'INCREASE_CLICK'
 export const SET_CURRENT_ROOM = 'SET_CURRENT_ROOM'
 export const LOGIN = 'LOGIN'
 export const SET_CURRENT_USER = 'SET_CURRENT_USER'
+export const SET_ACCESS_TOKEN = 'SET_ACCESS_TOKEN'
 export const SWITCH_TAB = 'SWITCH_TAB'
 
 export const setCurrentRoom = (roomId) => {
@@ -25,11 +26,55 @@ export const login = () => async (dispatch, getState) => {
   window.location = redirectURI
 }
 
-export const setCurrentUser = () => async (dispatch) => {
+export const refreshToken = async () => {
   const cookies = cookie.parse(document.cookie)
+  const { spotify_refresh_token } = cookies
+
+  if (!spotify_refresh_token) {
+    return null
+  }
+
+  const response = await axios.get(`/refresh_token?refresh_token=${spotify_refresh_token}`)
+  console.log('refreshed:', response)
+
+  const newCookies = cookie.parse(document.cookie)
+  return newCookies
+}
+
+export const setAccessToken = () => async (dispatch) => {
+  const cookies = await refreshToken()
+  if (!cookies) {
+    console.log('No access!')
+    window.location = '/'
+    return
+  }
+
   const { spotify_access_token, spotify_refresh_token } = cookies
 
-  if (!spotify_access_token) return
+  dispatch({
+    type: SET_ACCESS_TOKEN,
+    access_token: spotify_access_token,
+  })
+}
+
+export const setCurrentUser = () => async (dispatch) => {
+  let cookies = cookie.parse(document.cookie)
+  let { spotify_access_token, spotify_refresh_token } = cookies
+
+  if (!spotify_access_token) {
+    cookies = await refreshToken()
+    if (!cookies) {
+      console.log('still nothing')
+      return
+    }
+
+    spotify_access_token = cookies.spotify_access_token
+
+    if (!spotify_access_token) {
+      console.log('still nothing')
+      return
+    }
+  }
 
   const response = await axios.get('https://api.spotify.com/v1/me', {
     headers: { Authorization: `Bearer ${spotify_access_token}` },

@@ -4,6 +4,7 @@ import {
   SET_ROOMS,
   SET_CURRENT_USER,
   SWITCH_TAB,
+  SET_ACCESS_TOKEN,
 } from '../actions/app'
 import { TAB_NAMES } from '../main';
 
@@ -39,6 +40,11 @@ export default (state = initialState, action) => {
         ...state,
         accessToken: action.access_token,
         currentUserId: action.userId,
+      }
+    case SET_ACCESS_TOKEN:
+      return {
+        ...state,
+        accessToken: action.access_token,
       }
     case SWITCH_TAB:
       return {
