@@ -82,7 +82,7 @@ class SpotifyPlayer {
         })
       })
       .catch((err) => {
-        this.onErr(err)
+        // this.onErr(err)
       })
   }
 
